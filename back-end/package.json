@@ -1,0 +1,11 @@
+{
+  "name": "ecommerce-pern-app-back-end",
+  "version": "1.0.0",
+  "description": "The back-end of a Codecademy independent practice project to build a PERN app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris Mastris",
+  "license": "ISC"
+}
