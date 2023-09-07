@@ -13,5 +13,5 @@ api.use(logging(process.env.LOGGING));
 api.use('/auth', auth);
 
 api.listen(port, () => {
-  console.log(`API server listening on port ${port}.`);
+  console.log(`Server listening on port ${port} in the ${process.env.NODE_ENV} environment.`);
 });
