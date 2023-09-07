@@ -1,0 +1,65 @@
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id serial [pk, increment]
+  username varchar(50) [not null, unique]
+  hashed_pw text [not null]
+}
+
+Table addresses {
+  id serial [pk, increment]
+  address varchar(300) [not null, unique]
+  postcode varchar(8) [not null]
+}
+
+Table products {
+  id serial [pk, increment]
+  name varchar(100) [not null]
+  price money [not null]
+  stock_count integer [not null]
+  short_description varchar(200)
+  long_description text
+  size varchar(25)
+  avg_rating decimal(3, 2)
+  rating_count integer
+}
+
+Table cart_products {
+  user_id integer [ref: > users.id]
+  product_id integer [ref: > products.id]
+  quantity smallint [not null, default: 1]
+  indexes {
+  (user_id, product_id) [pk]
+  }
+}
+
+Table orders {
+  id serial [pk, increment]
+  user_id integer [ref: > users.id]
+  address_id integer [ref: > addresses.id]
+  order_placed_time timestamp [not null]
+  total_cost money [not null]
+}
+
+Table order_products {
+  order_id integer [ref: > orders.id]
+  product_id integer [ref: > products.id]
+  indexes {
+  (order_id, product_id) [pk]
+  }
+}
+
+Table categories {
+  id serial [pk, increment]
+  name varchar(100) [not null]
+  description text
+  url_slug varchar(50)
+}
+
+Table product_categories {
+  product_id integer [ref: > products.id]
+  category_id integer [ref: > categories.id]
+  indexes {
+  (product_id, category_id) [pk]
+  }
+}
