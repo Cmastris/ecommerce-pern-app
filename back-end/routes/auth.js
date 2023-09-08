@@ -11,7 +11,7 @@ const jsonParser = bodyParser.json();
 
 
 router.get('/register', jsonParser, (req, res) => {
-  res.send('Hello World!');
+  res.status(404).send('Please make a valid POST request to register.');
 });
 
 router.post('/register', jsonParser, async (req, res) => {
