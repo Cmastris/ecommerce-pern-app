@@ -20,9 +20,18 @@ const usernameExists = async (username) => {
   return res.rowCount > 0;
 };
 
+const addUser = async (username, hashed_pw) => {
+  const res = await query(
+    'INSERT INTO users(username, hashed_pw) VALUES($1, $2) RETURNING id, username',
+    [username, hashed_pw]
+  );
+  return res.rows[0];
+};
+
 
 // Exports
 module.exports = {
   query,
   usernameExists,
+  addUser
 };
