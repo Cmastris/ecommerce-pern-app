@@ -8,6 +8,11 @@ test('GET /auth/register returns a 404 status code', async () => {
    expect(res.statusCode).toBe(404);
 });
 
+test('GET /auth/login returns a 404 status code', async () => {
+  const res = await request(api).get('/auth/login');
+  expect(res.statusCode).toBe(404);
+});
+
 afterAll(() => {
   // https://stackoverflow.com/q/8659011/11262798
   api.server.close();

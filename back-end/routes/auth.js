@@ -38,6 +38,10 @@ router.post('/register', jsonParser, async (req, res) => {
   }
 });
 
+router.get('/login', jsonParser, (req, res) => {
+  res.status(404).send('Please make a valid POST request to log in.');
+});
+
 router.post('/login', jsonParser, async (req, res) => {
   try {
     const { username, password } = req.body;
