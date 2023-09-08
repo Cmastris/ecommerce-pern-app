@@ -1,11 +1,28 @@
 const pg = require('pg');
- 
+
+// Setup
 const pool = new pg.Pool();
- 
+
 const query = (text, params, callback) => {
   console.log('Making query...');
   // https://node-postgres.com/features/pooling#single-query
   return pool.query(text, params, callback);
 };
 
-module.exports = query;
+
+// Users
+
+const usernameExists = async (username) => {
+  const res = await query(
+    'SELECT username FROM users WHERE username=$1',
+    [username]
+  );
+  return res.rowCount > 0;
+};
+
+
+// Exports
+module.exports = {
+  query,
+  usernameExists,
+};
