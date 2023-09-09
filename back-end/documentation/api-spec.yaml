@@ -59,6 +59,55 @@ paths:
           description: The provided credentials (username or password) are incorrect.
       tags:
         - auth
+  /users/{id}:
+    summary: Used to retrieve and modify user account details.
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          description: The user id.
+    get:
+      summary: Retrieves a user's account details.
+      description: ''
+      operationId: get_user
+      responses:
+        '200':
+          description: A success response containing the user data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: >-
+            Invalid credentials (not logged in as a user that has the required
+            permissions).
+      tags:
+        - users
+    put:
+      summary: Updates the user's password.
+      description: ''
+      operationId: update_user
+      requestBody:
+        required: true
+        description: An object containing the new password.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        '200':
+          description: A success response.
+        '401':
+          description: >-
+            Invalid credentials (not logged in as a user that has the required
+            permissions).
+      tags:
+        - users
 components:
   schemas:
     UserCredentials:
