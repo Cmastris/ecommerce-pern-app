@@ -36,11 +36,20 @@ const addUser = async (username, hashed_pw) => {
   return res.rows[0];
 };
 
+const updateUserPassword = async (id, hashed_pw) => {
+  await query(
+    'UPDATE users SET hashed_pw = $1 WHERE id=$2',
+    [hashed_pw, id]
+  );
+  return;
+};
+
 
 // Exports
 module.exports = {
   query,
   usernameExists,
   getUserByUsername,
-  addUser
+  addUser,
+  updateUserPassword
 };

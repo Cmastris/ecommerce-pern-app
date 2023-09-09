@@ -37,10 +37,16 @@ const addUser = (username, hashed_pw) => {
   return { "id": 1, "username": username };
 };
 
+const updateUserPassword = async (id, hashed_pw) => {
+  throwIfArgsUndefined([id, hashed_pw]);
+  return;
+};
+
 
 // Exports
 module.exports = {
   usernameExists,
   getUserByUsername,
-  addUser
+  addUser,
+  updateUserPassword
 };

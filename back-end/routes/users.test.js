@@ -12,6 +12,11 @@ test('GET /users/:id returns a 401 status code when logged out', async () => {
    expect(res.statusCode).toBe(401);
 });
 
+test('PUT /users/:id returns a 401 status code when logged out', async () => {
+  const res = await request(api).put('/users/1');
+  expect(res.statusCode).toBe(401);
+});
+
 
 afterAll(() => {
   // https://stackoverflow.com/q/8659011/11262798
