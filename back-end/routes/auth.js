@@ -58,9 +58,16 @@ router.post('/register', jsonParser, async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const userData = await db.addUser(username, hashedPassword);
-    res.status(201).json(userData);
+    
+    try {
+      req.login(userData, function() {
+        return res.status(201).json(userData);
+      });
+    } catch(err) {
+      // Login failed; just return new user data
+      return res.status(201).json(userData);
+    }
   } catch(err) {
-    console.log(err);
     res.status(500).send(
       'Registration failed. Please ensure you are providing the required data.'
     );
