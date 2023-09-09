@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Codecademy Ecommerce App API
+  version: 1.0.0
+  description: The API of a fake (independent practice project) ecommerce app.
+  contact:
+    name: Chris Mastris
+    url: https://github.com/Cmastris/ecommerce-pern-app
+paths:
+  /auth/register:
+    summary: Used to register for an account.
+    post:
+      summary: Creates a new user account.
+      description: >-
+        Creates a new user account based on a provided username and password, if
+        the provided username does not already exist.
+      operationId: create_account
+      requestBody:
+        required: true
+        description: A user credentials object.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '201':
+          description: A success response containing the newly created user data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '400':
+          description: A user with the provided username already exists.
+      tags:
+        - auth
+  /auth/login:
+    summary: Used to log in to an account (authenticate).
+    post:
+      summary: Logs in to an existing user account.
+      description: >-
+        Logs into a user account using the provided username and password
+        credentials.
+      operationId: login
+      requestBody:
+        required: true
+        description: A user credentials object.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '200':
+          description: A success response containing the user data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: The provided credentials (username or password) are incorrect.
+      tags:
+        - auth
+components:
+  schemas:
+    UserCredentials:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
