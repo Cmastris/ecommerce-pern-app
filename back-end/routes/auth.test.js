@@ -4,6 +4,7 @@ const api = require('../index');
 // https://jestjs.io/docs/manual-mocks
 jest.mock('../db/index');
 
+// https://github.com/ladjs/supertest
 // https://www.albertgao.xyz/2017/05/24/how-to-test-expressjs-with-jest-and-supertest/
 
 test('GET /auth/register returns a 404 status code', async () => {
@@ -35,6 +36,29 @@ test('POST /auth/register with a new username returns a success response', async
 test('GET /auth/login returns a 404 status code', async () => {
   const res = await request(api).get('/auth/login');
   expect(res.statusCode).toBe(404);
+});
+
+test('POST /auth/login with missing data returns a 400 status code', async () => {
+  const res = await request(api).post('/auth/login').send({});
+  expect(res.statusCode).toBe(400);
+});
+
+test('POST /auth/login with incorrect data returns a 401 status code', async () => {
+  const res = await request(api).post('/auth/login').send({
+    "username": "usernameExists",
+    "password": "wrongpw"
+  });
+  expect(res.statusCode).toBe(401);
+});
+
+test('POST /auth/login with correct data returns a success response', async () => {
+  const res = await request(api).post('/auth/login').send({
+    "username": "usernameExists",
+    "password": "pw"
+  });
+
+  expect(res.statusCode).toBe(200);
+  expect(res.body).toStrictEqual({ id: 1, username: "usernameExists" });
 });
 
 afterAll(() => {

@@ -1,5 +1,7 @@
 // https://jestjs.io/docs/manual-mocks
 
+const bcrypt = require('bcrypt');
+
 const isDefined = data => {
   return typeof data !== "undefined";
 };
@@ -20,9 +22,14 @@ const usernameExists = (username) => {
   return username === "usernameExists";
 };
 
-const getUserByUsername = (username) => {
+const getUserByUsername = async (username) => {
   throwIfArgsUndefined([username]);
-  return { "id": 1, "username": username };
+  if (username === "usernameExists") {
+    const hashedPassword = await bcrypt.hash("pw", 1);
+    return { "id": 1, "username": "usernameExists", hashed_pw: hashedPassword };
+  } else {
+    return undefined;
+  }
 };
 
 const addUser = (username, hashed_pw) => {
