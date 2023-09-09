@@ -4,7 +4,7 @@
   "description": "The back-end of a Codecademy independent practice project to build a PERN app.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "author": "Chris Mastris",
   "license": "ISC",

@@ -4,7 +4,8 @@ const logging = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 
-const auth = require('./routes/auth');
+const authRouter = require('./routes/auth');
+const usersRouter = require('./routes/users');
 
 const api = express();
 const port = process.env.PORT;
@@ -44,7 +45,8 @@ api.get('/', (req, res) => {
   );
 });
 
-api.use('/auth', auth);
+api.use('/auth', authRouter);
+api.use('/users', usersRouter);
 
 api.server = api.listen(port, () => {
   console.log(`Server listening on port ${port} in the ${process.env.NODE_ENV} environment.`);
