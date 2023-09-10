@@ -35,6 +35,7 @@ CREATE TABLE "orders" (
   "user_id" integer,
   "address_id" integer,
   "order_placed_time" timestamp NOT NULL,
+  "status" varchar(100) NOT NULL,
   "total_cost" money NOT NULL
 );
 

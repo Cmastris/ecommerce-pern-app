@@ -39,6 +39,7 @@ Table orders {
   user_id integer [ref: > users.id]
   address_id integer [ref: > addresses.id]
   order_placed_time timestamp [not null]
+  status varchar(100) [not null]
   total_cost money [not null]
 }
 
