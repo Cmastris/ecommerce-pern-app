@@ -18,18 +18,19 @@ const jsonParser = bodyParser.json();
 // https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
 
 async function verify(username, password, done) {
+  const email_address = username;
   try {
-    const user = await db.getUserByUsername(username);
+    const user = await db.getUserByEmail(email_address);
     if (!user) {
       return done(null, false,
-        { message: `An account with the username '${username}' does not exist.` }
+        { message: `An account with the email address '${email_address}' does not exist.` }
       );
     }
     const matchedPassword = await bcrypt.compare(password, user.hashed_pw);
     if (!matchedPassword) {
-      return done(null, false, { message: 'Incorrect username or password.' });
+      return done(null, false, { message: 'Incorrect email address or password.' });
     }
-    return done(null, { id: user.id, username: user.username });
+    return done(null, { id: user.id, email_address: user.email_address });
 
   } catch(err) {
     return done(err);
@@ -45,19 +46,19 @@ router.get('/register', jsonParser, (req, res) => {
 
 router.post('/register', jsonParser, async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email_address, password } = req.body;
 
-    const userExists = await db.usernameExists(username);
+    const userExists = await db.emailExists(email_address);
     if (userExists) {
       return res.status(400).send(
-        `Registration failed. The username '${username}' is not available; please choose another.`
+        `Registration failed. The email '${email_address}' is already registered; please use another.`
       );
     }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const userData = await db.addUser(username, hashedPassword);
+    const userData = await db.addUser(email_address, hashedPassword);
     
     try {
       req.login(userData, function() {
@@ -82,7 +83,7 @@ router.post('/login',
   jsonParser,
   passport.authenticate('local', { failureMessage: true }),
   function(req, res) {
-    res.status(200).json({ id: req.user.id, username: req.user.username });
+    res.status(200).json({ id: req.user.id, email_address: req.user.email_address });
   });
 
 module.exports = router;

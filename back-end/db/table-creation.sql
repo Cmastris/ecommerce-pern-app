@@ -1,6 +1,6 @@
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
-  "username" varchar(50) UNIQUE NOT NULL,
+  "email_address" varchar(100) UNIQUE NOT NULL,
   "hashed_pw" text NOT NULL
 );
 

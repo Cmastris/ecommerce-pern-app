@@ -19,7 +19,7 @@ router.param('id', (req, res, next, id) => {
 });
 
 router.get('/:id', (req, res) => {
-  res.status(200).send({ id: req.user.id, username: req.user.username });
+  res.status(200).send({ id: req.user.id, email_address: req.user.email_address });
 });
 
 router.put('/:id', jsonParser, async (req, res) => {

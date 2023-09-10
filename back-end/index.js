@@ -28,7 +28,7 @@ api.use(passport.authenticate('session'));
 
 passport.serializeUser(function(user, done) {
   process.nextTick(function() {
-    return done(null, { id: user.id, username: user.username });
+    return done(null, { id: user.id, email_address: user.email_address });
   });
 });
 
@@ -41,7 +41,7 @@ passport.deserializeUser(function(user, done) {
 
 api.get('/', (req, res) => {
   res.status(200).send(
-    req.isAuthenticated() ? `Logged in as ${req.user.username}.` : 'Logged out.'
+    req.isAuthenticated() ? `Logged in as ${req.user.email_address}.` : 'Logged out.'
   );
 });
 

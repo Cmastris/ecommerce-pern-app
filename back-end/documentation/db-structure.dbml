@@ -2,7 +2,7 @@
 
 Table users {
   id serial [pk, increment]
-  username varchar(50) [not null, unique]
+  email_address varchar(100) [not null, unique]
   hashed_pw text [not null]
 }
 

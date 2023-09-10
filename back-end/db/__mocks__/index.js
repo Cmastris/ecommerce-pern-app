@@ -17,24 +17,24 @@ const throwIfArgsUndefined = arr => {
   }
 };
 
-const usernameExists = (username) => {
-  throwIfArgsUndefined([username]);
-  return username === "usernameExists";
+const emailExists = (email_address) => {
+  throwIfArgsUndefined([email_address]);
+  return email_address === "emailExists@example.com";
 };
 
-const getUserByUsername = async (username) => {
-  throwIfArgsUndefined([username]);
-  if (username === "usernameExists") {
+const getUserByEmail = async (email_address) => {
+  throwIfArgsUndefined([email_address]);
+  if (email_address === "emailExists@example.com") {
     const hashedPassword = await bcrypt.hash("pw", 1);
-    return { "id": 1, "username": "usernameExists", hashed_pw: hashedPassword };
+    return { "id": 1, "email_address": "emailExists@example.com", hashed_pw: hashedPassword };
   } else {
     return undefined;
   }
 };
 
-const addUser = (username, hashed_pw) => {
-  throwIfArgsUndefined([username, hashed_pw]);
-  return { "id": 1, "username": username };
+const addUser = (email_address, hashed_pw) => {
+  throwIfArgsUndefined([email_address, hashed_pw]);
+  return { "id": 1, "email_address": email_address };
 };
 
 const updateUserPassword = async (id, hashed_pw) => {
@@ -45,8 +45,8 @@ const updateUserPassword = async (id, hashed_pw) => {
 
 // Exports
 module.exports = {
-  usernameExists,
-  getUserByUsername,
+  emailExists,
+  getUserByEmail,
   addUser,
   updateUserPassword
 };

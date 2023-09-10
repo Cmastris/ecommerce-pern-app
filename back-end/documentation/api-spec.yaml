@@ -17,11 +17,11 @@ paths:
       operationId: create_account
       requestBody:
         required: true
-        description: A user credentials object.
+        description: A user registration object (email address and password).
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCredentials'
+              $ref: '#/components/schemas/UserRegistration'
       responses:
         '201':
           description: A success response containing the newly created user data.
@@ -43,7 +43,7 @@ paths:
       operationId: login
       requestBody:
         required: true
-        description: A user credentials object.
+        description: A user credentials object (email address as 'username' and password).
         content:
           application/json:
             schema:
@@ -110,11 +110,19 @@ paths:
         - users
 components:
   schemas:
+    UserRegistration:
+      type: object
+      properties:
+        email_address:
+          type: string
+        password:
+          type: string
     UserCredentials:
       type: object
       properties:
         username:
           type: string
+          description: The user's email address.
         password:
           type: string
     UserDetails:
@@ -122,5 +130,5 @@ components:
       properties:
         id:
           type: integer
-        username:
+        email_address:
           type: string

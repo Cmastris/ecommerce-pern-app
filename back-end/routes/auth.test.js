@@ -17,20 +17,20 @@ test('POST /auth/register with missing data returns a 500 status code', async ()
   expect(res.statusCode).toBe(500);
 });
 
-test('POST /auth/register with an existing username returns a 400 status code', async () => {
+test('POST /auth/register with an existing email returns a 400 status code', async () => {
   const res = await request(api).post('/auth/register').send(
-    { username: "usernameExists", password: "pw" }
+    { email_address: "emailExists@example.com", password: "pw" }
   );
   expect(res.statusCode).toBe(400);
 });
 
-test('POST /auth/register with a new username returns a success response', async () => {
+test('POST /auth/register with a new email returns a success response', async () => {
   const res = await request(api).post('/auth/register').send(
-    { username: "newUsername", password: "pw" }
+    { email_address: "newEmail@example.com", password: "pw" }
   );
 
   expect(res.statusCode).toBe(201);
-  expect(res.body).toStrictEqual({ id: 1, username: "newUsername" });
+  expect(res.body).toStrictEqual({ id: 1, email_address: "newEmail@example.com" });
 });
 
 test('GET /auth/login returns a 404 status code', async () => {
@@ -45,7 +45,7 @@ test('POST /auth/login with missing data returns a 400 status code', async () =>
 
 test('POST /auth/login with incorrect data returns a 401 status code', async () => {
   const res = await request(api).post('/auth/login').send({
-    "username": "usernameExists",
+    "username": "emailExists@example.com",
     "password": "wrongpw"
   });
   expect(res.statusCode).toBe(401);
@@ -53,12 +53,12 @@ test('POST /auth/login with incorrect data returns a 401 status code', async () 
 
 test('POST /auth/login with correct data returns a success response', async () => {
   const res = await request(api).post('/auth/login').send({
-    "username": "usernameExists",
+    "username": "emailExists@example.com",
     "password": "pw"
   });
 
   expect(res.statusCode).toBe(200);
-  expect(res.body).toStrictEqual({ id: 1, username: "usernameExists" });
+  expect(res.body).toStrictEqual({ id: 1, email_address: "emailExists@example.com" });
 });
 
 afterAll(() => {

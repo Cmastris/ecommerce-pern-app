@@ -12,26 +12,26 @@ const query = (text, params, callback) => {
 
 // Users
 
-const usernameExists = async (username) => {
+const emailExists = async (email_address) => {
   const res = await query(
-    'SELECT username FROM users WHERE username=$1',
-    [username]
+    'SELECT email_address FROM users WHERE email_address=$1',
+    [email_address]
   );
   return res.rowCount > 0;
 };
 
-const getUserByUsername = async (username) => {
+const getUserByEmail = async (email_address) => {
   const res = await query(
-    'SELECT id, username, hashed_pw FROM users WHERE username=$1',
-    [username]
+    'SELECT id, email_address, hashed_pw FROM users WHERE email_address=$1',
+    [email_address]
   );
   return res.rows[0];
 };
 
-const addUser = async (username, hashed_pw) => {
+const addUser = async (email_address, hashed_pw) => {
   const res = await query(
-    'INSERT INTO users(username, hashed_pw) VALUES($1, $2) RETURNING id, username',
-    [username, hashed_pw]
+    'INSERT INTO users(email_address, hashed_pw) VALUES($1, $2) RETURNING id, email_address',
+    [email_address, hashed_pw]
   );
   return res.rows[0];
 };
@@ -48,8 +48,8 @@ const updateUserPassword = async (id, hashed_pw) => {
 // Exports
 module.exports = {
   query,
-  usernameExists,
-  getUserByUsername,
+  emailExists,
+  getUserByEmail,
   addUser,
   updateUserPassword
 };
