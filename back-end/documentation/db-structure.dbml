@@ -17,6 +17,7 @@ Table products {
   name varchar(100) [not null]
   price money [not null]
   stock_count integer [not null]
+  available_stock_count integer [not null]
   short_description varchar(200)
   long_description text
   size varchar(25)

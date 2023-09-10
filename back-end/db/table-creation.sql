@@ -15,6 +15,7 @@ CREATE TABLE "products" (
   "name" varchar(100) NOT NULL,
   "price" money NOT NULL,
   "stock_count" integer NOT NULL,
+  "available_stock_count" integer NOT NULL,
   "short_description" varchar(200),
   "long_description" text,
   "size" varchar(25),
