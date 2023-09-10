@@ -34,7 +34,7 @@ CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "address_id" integer,
-  "order_placed_time" timestamp NOT NULL,
+  "order_placed_time" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "status" varchar(100) NOT NULL,
   "total_cost" money NOT NULL
 );
