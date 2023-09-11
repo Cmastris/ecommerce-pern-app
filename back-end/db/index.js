@@ -11,7 +11,6 @@ const query = (text, params, callback) => {
 
 
 // Users
-
 const emailExists = async (email_address) => {
   const res = await query(
     'SELECT email_address FROM users WHERE email_address=$1',
@@ -67,6 +66,13 @@ const getProductById = async (id) => {
 };
 
 
+// Categories
+const getCategories = async () => {
+  res = await query('SELECT id, name, description, url_slug FROM categories');
+  return res.rows;
+};
+
+
 // Exports
 module.exports = {
   query,
@@ -75,5 +81,6 @@ module.exports = {
   addUser,
   updateUserPassword,
   getProducts,
-  getProductById
+  getProductById,
+  getCategories
 };

@@ -58,6 +58,10 @@ const getProductById = (id) => {
   return undefined;
 };
 
+const getCategories = () => {
+  return [{}, {}, {}];
+};
+
 
 // Exports
 module.exports = {
@@ -66,5 +70,6 @@ module.exports = {
   addUser,
   updateUserPassword,
   getProducts,
-  getProductById
+  getProductById,
+  getCategories
 };
