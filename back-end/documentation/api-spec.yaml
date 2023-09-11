@@ -152,6 +152,21 @@ paths:
                 $ref: '#/components/schemas/ProductDetails'
       tags:
         - products
+  /categories:
+    summary: Used to retrieve the details of multiple categories.
+    get:
+      summary: Retrieves the details of multiple categories.
+      description: ''
+      operationId: get_categories
+      responses:
+        '200':
+          description: A success response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfCategoryDetails'
+      tags:
+        - categories
 components:
   schemas:
     UserRegistration:
@@ -199,3 +214,18 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ProductDetails'
+    CategoryDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        url_slug:
+          type: string
+    ArrayOfCategoryDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/CategoryDetails'
