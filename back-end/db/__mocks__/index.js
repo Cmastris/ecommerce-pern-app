@@ -51,6 +51,13 @@ const getProducts = (category_id=undefined) => {
   return res;
 };
 
+const getProductById = (id) => {
+  if (id === '1') {
+    return {};
+  }
+  return undefined;
+};
+
 
 // Exports
 module.exports = {
@@ -58,5 +65,6 @@ module.exports = {
   getUserByEmail,
   addUser,
   updateUserPassword,
-  getProducts
+  getProducts,
+  getProductById
 };

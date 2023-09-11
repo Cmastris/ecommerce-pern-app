@@ -22,6 +22,16 @@ test('GET /products with a category_id query returns filtered products', async (
   expect(res.text).toBe('[{},{},{}]');
 });
 
+test('GET /products/:id with a valid ID returns a 200 status code', async () => {
+  const res = await request(api).get('/products/1');
+  expect(res.statusCode).toBe(200);
+});
+
+test('GET /products/:id with a non-existent ID returns a 404 status code', async () => {
+  const res = await request(api).get('/products/-1');
+  expect(res.statusCode).toBe(404);
+});
+
 
 afterAll(() => {
   // https://stackoverflow.com/q/8659011/11262798

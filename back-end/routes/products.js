@@ -14,5 +14,17 @@ router.get('', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    productData = await db.getProductById(req.params.id);
+    if (!productData) {
+      return res.status(404).send(`A product with the ID '${req.params.id}' does not exist.`);
+    }
+    res.status(200).json(productData);
+  } catch(err) {
+    res.status(500).send('Query failed.');
+  }
+});
+
 
 module.exports = router;

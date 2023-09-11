@@ -60,6 +60,12 @@ const getProducts = async (category_id=undefined) => {
   return res.rows;
 };
 
+const getProductById = async (id) => {
+  const baseQuery = 'SELECT id, name, price, available_stock_count, short_description, long_description, avg_rating, rating_count FROM products';
+  const res = await query(baseQuery + ' WHERE id=$1', [id]);
+  return res.rows[0];
+};
+
 
 // Exports
 module.exports = {
@@ -68,5 +74,6 @@ module.exports = {
   getUserByEmail,
   addUser,
   updateUserPassword,
-  getProducts
+  getProducts,
+  getProductById
 };
