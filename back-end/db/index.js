@@ -45,11 +45,28 @@ const updateUserPassword = async (id, hashed_pw) => {
 };
 
 
+// Products
+const getProducts = async (category_id=undefined) => {
+  const baseQuery = 'SELECT id, name, price, available_stock_count, short_description, long_description, avg_rating, rating_count FROM products';
+  let res;
+  if (category_id) {
+    res = await query(
+      baseQuery + ' JOIN product_categories ON products.id=product_categories.product_id WHERE product_categories.category_id=$1',
+      [category_id]
+    );
+  } else {
+    res = await query(baseQuery);
+  }
+  return res.rows;
+};
+
+
 // Exports
 module.exports = {
   query,
   emailExists,
   getUserByEmail,
   addUser,
-  updateUserPassword
+  updateUserPassword,
+  getProducts
 };

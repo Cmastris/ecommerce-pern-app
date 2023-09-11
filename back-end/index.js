@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const authRouter = require('./routes/auth');
+const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 
 const api = express();
@@ -46,6 +47,7 @@ api.get('/', (req, res) => {
 });
 
 api.use('/auth', authRouter);
+api.use('/products', productsRouter);
 api.use('/users', usersRouter);
 
 api.server = api.listen(port, () => {

@@ -37,9 +37,18 @@ const addUser = (email_address, hashed_pw) => {
   return { "id": 1, "email_address": email_address };
 };
 
-const updateUserPassword = async (id, hashed_pw) => {
+const updateUserPassword = (id, hashed_pw) => {
   throwIfArgsUndefined([id, hashed_pw]);
   return;
+};
+
+const getProducts = (category_id=undefined) => {
+  if (category_id) {
+    res = [{}, {}, {}];
+  } else {
+    res = [{}, {}, {}, {}, {}];
+  }
+  return res;
 };
 
 
@@ -48,5 +57,6 @@ module.exports = {
   emailExists,
   getUserByEmail,
   addUser,
-  updateUserPassword
+  updateUserPassword,
+  getProducts
 };
