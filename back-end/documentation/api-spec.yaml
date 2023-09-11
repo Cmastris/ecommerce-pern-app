@@ -108,6 +108,50 @@ paths:
             permissions).
       tags:
         - users
+  /products:
+    summary: Used to retrieve the details of multiple products.
+    get:
+      summary: Retrieves the details of multiple products.
+      description: ''
+      operationId: get_products
+      parameters:
+        - in: query
+          name: category_id
+          required: false
+          description: The category id to filter products by (optional).
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A success response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfProductDetails'
+      tags:
+        - products
+  /products/{id}:
+    summary: Used to retrieve the details of a single product.
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: The product id.
+        schema:
+          type: integer
+    get:
+      summary: Retrieves the details of a single product.
+      description: ''
+      operationId: get_product
+      responses:
+        '200':
+          description: A success response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetails'
+      tags:
+        - products
 components:
   schemas:
     UserRegistration:
@@ -132,3 +176,26 @@ components:
           type: integer
         email_address:
           type: string
+    ProductDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: string
+        available_stock_count:
+          type: integer
+        short_description:
+          type: string
+        long_description:
+          type: string
+        avg_rating:
+          type: string
+        rating_count:
+          type: integer
+    ArrayOfProductDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProductDetails'
