@@ -42,6 +42,7 @@ CREATE TABLE "orders" (
 CREATE TABLE "order_products" (
   "order_id" integer,
   "product_id" integer,
+  "product_quantity" smallint NOT NULL DEFAULT 1,
   PRIMARY KEY ("order_id", "product_id")
 );
 

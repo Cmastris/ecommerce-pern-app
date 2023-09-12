@@ -46,6 +46,7 @@ Table orders {
 Table order_products {
   order_id integer [ref: > orders.id]
   product_id integer [ref: > products.id]
+  product_quantity smallint [not null, default: 1]
   indexes {
   (order_id, product_id) [pk]
   }
