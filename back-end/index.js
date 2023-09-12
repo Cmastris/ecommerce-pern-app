@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const authRouter = require('./routes/auth');
+const cartRouter = require('./routes/cart');
 const categoriesRouter = require('./routes/categories');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
@@ -48,6 +49,7 @@ api.get('/', (req, res) => {
 });
 
 api.use('/auth', authRouter);
+api.use('/cart', cartRouter);
 api.use('/categories', categoriesRouter);
 api.use('/products', productsRouter);
 api.use('/users', usersRouter);

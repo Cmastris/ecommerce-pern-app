@@ -73,6 +73,27 @@ const getCategories = async () => {
 };
 
 
+// Cart
+const cartItemExists = async (user_id, product_id) => {
+  res = await query(
+    'SELECT user_id, product_id FROM cart_products WHERE user_id=$1 AND product_id=$2',
+    [user_id, product_id]
+  );
+  return res.rowCount > 0;
+};
+
+const addCartItem = async (user_id, product_id, product_quantity=1) => {
+  const insert = 'INSERT INTO cart_products(user_id, product_id, quantity) VALUES($1, $2, $3)';
+  const update = 'UPDATE products SET available_stock_count = (available_stock_count - $3) WHERE id=$2 RETURNING name';
+  const res = await query(
+    `WITH product AS (${insert}) ${update}`,
+    [user_id, product_id, product_quantity]
+  );
+  const product_name = res.rows[0].name;
+  return { product_id, product_name, product_quantity };
+};
+
+
 // Exports
 module.exports = {
   query,
@@ -82,5 +103,7 @@ module.exports = {
   updateUserPassword,
   getProducts,
   getProductById,
-  getCategories
+  getCategories,
+  cartItemExists,
+  addCartItem
 };
