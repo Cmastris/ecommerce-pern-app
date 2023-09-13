@@ -35,5 +35,19 @@ router.post('/:id', requireLogin, async (req, res) => {
   }
 });
 
+router.delete('/:id', requireLogin, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const userId = req.user.id;
+
+    await db.deleteCartItem(userId, productId);
+    res.status(204).send();
+  } catch(err) {
+    res.status(500).send(
+      'Cart update failed. Please ensure you are providing valid data.'
+    );
+  }
+});
+
 
 module.exports = router;

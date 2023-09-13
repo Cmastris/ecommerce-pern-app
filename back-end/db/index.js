@@ -93,6 +93,24 @@ const addCartItem = async (user_id, product_id, product_quantity=1) => {
   return { product_id, product_name, product_quantity };
 };
 
+const deleteCartItem = async (user_id, product_id) => {
+  const deleteRes = await query(
+    'DELETE FROM cart_products WHERE user_id=$1 AND product_id=$2 RETURNING quantity',
+    [user_id, product_id]
+  );
+  try {
+    // TypeError if cart item didn't exist (quantity undefined)
+    const quantity = deleteRes.rows[0].quantity;
+    await query(
+      'UPDATE products SET available_stock_count = (available_stock_count + $1) WHERE id=$2',
+      [quantity, product_id]
+    );
+  } catch(err) {
+    console.log(err);
+  }
+  return;
+};
+
 
 // Exports
 module.exports = {
@@ -105,5 +123,6 @@ module.exports = {
   getProductById,
   getCategories,
   cartItemExists,
-  addCartItem
+  addCartItem,
+  deleteCartItem
 };
