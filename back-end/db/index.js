@@ -75,7 +75,7 @@ const getCategories = async () => {
 
 // Cart
 const getCartItems = async (user_id) => {
-  const select = 'SELECT product_id, name AS product_name, quantity AS product_quantity FROM cart_products';
+  const select = 'SELECT product_id, name AS product_name, price AS product_price, quantity AS product_quantity FROM cart_products';
   const join = 'JOIN products ON cart_products.product_id = products.id';
   res = await query(`${select} ${join} WHERE user_id=$1`, [user_id]);
   return res.rows;
@@ -91,13 +91,14 @@ const cartItemExists = async (user_id, product_id) => {
 
 const addCartItem = async (user_id, product_id, product_quantity=1) => {
   const insert = 'INSERT INTO cart_products(user_id, product_id, quantity) VALUES($1, $2, $3)';
-  const update = 'UPDATE products SET available_stock_count = (available_stock_count - $3) WHERE id=$2 RETURNING name';
+  const update = 'UPDATE products SET available_stock_count = (available_stock_count - $3) WHERE id=$2 RETURNING name, price';
   const res = await query(
     `WITH product AS (${insert}) ${update}`,
     [user_id, product_id, product_quantity]
   );
   const product_name = res.rows[0].name;
-  return { product_id, product_name, product_quantity };
+  const product_price = res.rows[0].price;
+  return { product_id, product_name, product_price, product_quantity };
 };
 
 const deleteCartItem = async (user_id, product_id) => {
