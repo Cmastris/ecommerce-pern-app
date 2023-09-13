@@ -5,6 +5,16 @@ const requireLogin = require('./middleware');
 
 const router = express.Router();
 
+router.get('', requireLogin, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const cartItems = await db.getCartItems(userId);
+    res.status(200).json(cartItems);
+  } catch(err) {
+    res.status(500).send('Cart retrieval failed.');
+  }
+});
+
 router.post('/:id', requireLogin, async (req, res) => {
   try {
     const productId = Number(req.params.id);

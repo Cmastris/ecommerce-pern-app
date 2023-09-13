@@ -74,6 +74,13 @@ const getCategories = async () => {
 
 
 // Cart
+const getCartItems = async (user_id) => {
+  const select = 'SELECT product_id, name AS product_name, quantity AS product_quantity FROM cart_products';
+  const join = 'JOIN products ON cart_products.product_id = products.id';
+  res = await query(`${select} ${join} WHERE user_id=$1`, [user_id]);
+  return res.rows;
+};
+
 const cartItemExists = async (user_id, product_id) => {
   res = await query(
     'SELECT user_id, product_id FROM cart_products WHERE user_id=$1 AND product_id=$2',
@@ -122,6 +129,7 @@ module.exports = {
   getProducts,
   getProductById,
   getCategories,
+  getCartItems,
   cartItemExists,
   addCartItem,
   deleteCartItem
