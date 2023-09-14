@@ -167,6 +167,95 @@ paths:
                 $ref: '#/components/schemas/ArrayOfCategoryDetails'
       tags:
         - categories
+  /cart:
+    summary: Used to retrieve all items from the logged in user's cart.
+    get:
+      summary: Retrieves all items from the logged in user's cart.
+      description: ''
+      operationId: get_cart
+      responses:
+        '200':
+          description: A success response containing the cart items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfCartItems'
+        '401':
+          description: The cart can't be accessed because the user isn't logged in.
+      tags:
+        - cart
+  /cart/items/{product_id}:
+    summary: Used to add and delete user cart items.
+    parameters:
+      - in: path
+        name: product_id
+        required: true
+        description: The product id.
+        schema:
+          type: integer
+    post:
+      summary: Adds a product to the logged in user's cart.
+      description: ''
+      operationId: add_cart_product
+      parameters:
+        - in: query
+          name: quantity
+          required: false
+          description: The product quantity (optional; defaults to 1).
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: A success response containing the new cart item details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid request. The requested quantity is greater than the available quantity or the product is already in the user's cart.
+        '401':
+          description: The cart can't be accessed because the user isn't logged in.
+        '404':
+          description: The product ID doesn't exist.
+      tags:
+        - cart
+    delete:
+      summary: Deletes a product from the logged in user's cart.
+      description: ''
+      operationId: delete_cart_product
+      responses:
+        '204':
+          description: A success response indicating that the cart item was deleted or didn't exist.
+        '401':
+          description: The cart can't be accessed because the user isn't logged in.
+      tags:
+        - cart
+  /cart/checkout:
+    summary: Used to place an order for the current cart items.
+    post:
+      summary: Places an order for the items in the logged in user's cart and empties the cart.
+      description: ''
+      operationId: checkout
+      requestBody:
+        required: true
+        description: A postal address object (postal address and postcode).
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostalAddress'
+      responses:
+        '201':
+          description: A success response containing the new order details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetails'
+        '400':
+          description: Invalid request. The user's cart is empty or address details weren't provided.
+        '401':
+          description: The cart can't be accessed because the user isn't logged in.
+      tags:
+        - cart
 components:
   schemas:
     UserRegistration:
@@ -229,3 +318,55 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/CategoryDetails'
+    CartItem:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        product_name:
+          type: string
+        product_price:
+          type: string
+        product_quantity:
+          type: integer
+    ArrayOfCartItems:
+      type: array
+      items:
+        $ref: '#/components/schemas/CartItem'
+    PostalAddress:
+      type: object
+      properties:
+        address:
+          type: string
+        postcode:
+          type: string
+    OrderItem:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        product_name:
+          type: string
+        product_price:
+          type: string
+        product_quantity:
+          type: integer
+    OrderDetails:
+      type: object
+      properties:
+        order_id:
+          type: integer
+        order_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        order_placed_time:
+          type: string
+        order_status:
+          type: string
+        total_cost:
+          type: string
+        address:
+          type: string
+        postcode:
+          type: string
