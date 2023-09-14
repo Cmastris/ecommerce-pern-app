@@ -137,6 +137,87 @@ const addAddress = async (address, postcode) => {
   return res.rows[0].id;
 };
 
+
+// Checkout
+const checkout = async (user_id, address_id) => {
+
+  // Get cart items
+  const cartItems = await getCartItems(user_id);
+
+  // https://node-postgres.com/features/transactions
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // Create initial order record
+    let total_cost = 0;
+    const order_status = "pending";
+    const orderCreationRes = await client.query(
+      'INSERT INTO orders(user_id, address_id, status, total_cost) VALUES($1, $2, $3, $4) RETURNING id',
+      [user_id, address_id, order_status, total_cost]
+    );
+    const order_id = orderCreationRes.rows[0].id;
+
+    // Update `products` and `order_products` tables; calculate total order cost
+    for await (const p of cartItems) {
+      const { product_id, product_quantity, product_price } = p;
+
+      // Reduce product stock count
+      await client.query(
+        'UPDATE products SET stock_count = (stock_count - $1) WHERE id=$2',
+        [product_quantity, product_id]
+      );
+
+      // Add product to order_products table
+      await client.query(
+        'INSERT INTO order_products(order_id, product_id, product_quantity) VALUES($1, $2, $3)',
+        [order_id, product_id, product_quantity]
+      );
+
+      // Increment total order cost
+      total_cost += Number(product_price.substring(1)) * product_quantity;
+    };
+
+    // Delete all items from cart
+    await client.query('DELETE FROM cart_products WHERE user_id=$1', [user_id]);
+
+    // Update order total_cost and retrieve order details
+    const orderSummaryRes = await client.query(
+      'UPDATE orders SET total_cost=$1 WHERE id=$2 RETURNING order_placed_time, total_cost',
+      [total_cost, order_id]
+    );
+    const order_placed_time = orderSummaryRes.rows[0].order_placed_time;
+    total_cost = orderSummaryRes.rows[0].total_cost;
+
+    // Retrieve address details
+    const addressRes = await client.query(
+      'SELECT address, postcode FROM addresses WHERE id=$1',
+      [address_id]
+    );
+    const { address, postcode } = addressRes.rows[0];
+
+    // Commit updates and return order details
+    await client.query('COMMIT');
+    return {
+      order_id,
+      order_items: cartItems,
+      order_placed_time,
+      order_status,
+      total_cost,
+      address,
+      postcode
+    };
+
+  } catch(err) {
+    await client.query('ROLLBACK');
+    throw err;
+
+  } finally {
+    client.release();
+  }
+};
+
+
 // Exports
 module.exports = {
   query,
@@ -152,5 +233,6 @@ module.exports = {
   addCartItem,
   deleteCartItem,
   getAddressId,
-  addAddress
+  addAddress,
+  checkout
 };
