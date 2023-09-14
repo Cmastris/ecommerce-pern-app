@@ -120,6 +120,23 @@ const deleteCartItem = async (user_id, product_id) => {
 };
 
 
+// Addresses
+const getAddressId = async (address, postcode) => {
+  const res = await query(
+    'SELECT id FROM addresses WHERE address=$1 AND postcode=$2',
+    [address, postcode]
+  );
+  return res.rows.length === 1 ? res.rows[0].id : undefined;
+};
+
+const addAddress = async (address, postcode) => {
+  const res = await query(
+    'INSERT INTO addresses(address, postcode) VALUES($1, $2) RETURNING id',
+    [address, postcode]
+  );
+  return res.rows[0].id;
+};
+
 // Exports
 module.exports = {
   query,
@@ -133,5 +150,7 @@ module.exports = {
   getCartItems,
   cartItemExists,
   addCartItem,
-  deleteCartItem
+  deleteCartItem,
+  getAddressId,
+  addAddress
 };
