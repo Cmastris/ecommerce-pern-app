@@ -6,8 +6,9 @@ CREATE TABLE "users" (
 
 CREATE TABLE "addresses" (
   "id" SERIAL PRIMARY KEY,
-  "address" varchar(300) UNIQUE NOT NULL,
-  "postcode" varchar(8) NOT NULL
+  "address" varchar(300) NOT NULL,
+  "postcode" varchar(8) NOT NULL,
+  UNIQUE ("address", "postcode")
 );
 
 CREATE TABLE "products" (

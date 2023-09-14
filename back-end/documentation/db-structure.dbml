@@ -8,8 +8,11 @@ Table users {
 
 Table addresses {
   id serial [pk, increment]
-  address varchar(300) [not null, unique]
+  address varchar(300) [not null]
   postcode varchar(8) [not null]
+  indexes {
+  (address, postcode) [unique]
+  }
 }
 
 Table products {
