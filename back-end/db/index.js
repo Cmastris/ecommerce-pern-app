@@ -218,6 +218,17 @@ const checkout = async (user_id, address_id) => {
 };
 
 
+// Orders
+const getOrdersSummary = async (user_id) => {
+  const select = 'SELECT id AS order_id, order_placed_time, status AS order_status, total_cost';
+  res = await query(
+    `${select} FROM orders WHERE user_id=$1`,
+    [user_id]
+  );
+  return res.rows;
+};
+
+
 // Exports
 module.exports = {
   query,
@@ -234,5 +245,6 @@ module.exports = {
   deleteCartItem,
   getAddressId,
   addAddress,
-  checkout
+  checkout,
+  getOrdersSummary
 };
