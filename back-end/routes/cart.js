@@ -15,7 +15,7 @@ router.get('', requireLogin, async (req, res) => {
   }
 });
 
-router.post('/:id', requireLogin, async (req, res) => {
+router.post('/items/:id', requireLogin, async (req, res) => {
   try {
     const productId = Number(req.params.id);
     const product = await db.getProductById(productId);
@@ -45,7 +45,7 @@ router.post('/:id', requireLogin, async (req, res) => {
   }
 });
 
-router.delete('/:id', requireLogin, async (req, res) => {
+router.delete('/items/:id', requireLogin, async (req, res) => {
   try {
     const productId = req.params.id;
     const userId = req.user.id;
