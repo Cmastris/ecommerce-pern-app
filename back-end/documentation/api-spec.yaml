@@ -34,11 +34,11 @@ paths:
       tags:
         - auth
   /auth/login:
-    summary: Used to log in to an account (authenticate).
+    summary: Used to log in to an account (authenticate); required for some endpoints.
     post:
       summary: Logs in to an existing user account.
       description: >-
-        Logs into a user account using the provided username and password
+        Logs in to a user account using the provided username and password
         credentials.
       operationId: login
       requestBody:
@@ -60,14 +60,14 @@ paths:
       tags:
         - auth
   /users/{id}:
-    summary: Used to retrieve and modify user account details.
+    summary: Used to retrieve and modify a user's account details.
     parameters:
       - in: path
         name: id
         required: true
+        description: The user id.
         schema:
           type: integer
-          description: The user id.
     get:
       summary: Retrieves a user's account details.
       description: ''
@@ -80,9 +80,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserDetails'
         '401':
-          description: >-
-            Invalid credentials (not logged in as a user that has the required
-            permissions).
+          description: The logged in user doesn't have permission to access this user's details.
       tags:
         - users
     put:
@@ -103,9 +101,7 @@ paths:
         '200':
           description: A success response.
         '401':
-          description: >-
-            Invalid credentials (not logged in as a user that has the required
-            permissions).
+          description: The logged in user doesn't have permission to access this user's details.
       tags:
         - users
   /products:
@@ -150,6 +146,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductDetails'
+        '404':
+          description: The product ID doesn't exist.
       tags:
         - products
   /categories:
@@ -233,8 +231,8 @@ paths:
   /cart/checkout:
     summary: Used to place an order for the current cart items.
     post:
-      summary: Places an order for the items in the logged in user's cart and empties the cart.
-      description: ''
+      summary: Places an order for the items in the cart.
+      description: Places an order for the items in the logged in user's cart and empties the cart.
       operationId: checkout
       requestBody:
         required: true
@@ -301,7 +299,7 @@ paths:
         - orders
     delete:
       summary: Cancels a pending order.
-      description: ''
+      description: Cancels an order if its current status is 'pending'.
       operationId: cancel_order
       responses:
         '204':
