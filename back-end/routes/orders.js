@@ -15,5 +15,26 @@ router.get('', requireLogin, async (req, res) => {
   }
 });
 
+router.get('/:id', requireLogin, async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const orderUserId = await db.getOrderUserId(orderId);
+    if (!orderUserId) {
+      return res.status(404).send(`An order with the ID '${orderId}' does not exist.`);
+    } else if (orderUserId !== req.user.id) {
+      return res.status(401).send(
+        'Invalid credentials. You cannot view another user\'s order.'
+      );
+    }
+
+    const orderData = await db.getOrderById(orderId);
+    res.status(200).json(orderData);
+
+  } catch(err) {
+    console.log(err);
+    res.status(500).send('Query failed. Please ensure you provided a valid order ID.');
+  }
+});
+
 
 module.exports = router;

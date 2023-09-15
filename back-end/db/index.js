@@ -233,6 +233,38 @@ const getOrdersSummary = async (user_id) => {
   return res.rows;
 };
 
+const getOrderUserId = async (id) => {
+  const res = await query('SELECT user_id FROM orders WHERE id=$1', [id]);
+  return res.rows[0] ? res.rows[0].user_id : undefined;
+};
+
+const getOrderById = async (id) => {
+  const orderSelect = 'SELECT orders.id, user_id, order_placed_time, status, total_cost, address, postcode';
+  const addressesJoin = 'JOIN addresses ON orders.address_id = addresses.id';
+  const orderRes = await query(
+    `${orderSelect} FROM orders ${addressesJoin} WHERE orders.id=$1`,
+    [id]
+  );
+
+  const orderItemsSelect = 'SELECT product_id, name AS product_name, price AS product_price, product_quantity';
+  const productsJoin = 'JOIN products ON order_products.product_id = products.id'
+  const orderItemsRes = await query(
+    `${orderItemsSelect} FROM order_products ${productsJoin} WHERE order_id=$1`,
+    [id]
+  );
+
+  return {
+    order_id: orderRes.rows[0].id,
+    user_id: orderRes.rows[0].user_id,
+    order_items: orderItemsRes.rows,
+    order_placed_time: orderRes.rows[0].order_placed_time,
+    order_status: orderRes.rows[0].status,
+    total_cost: orderRes.rows[0].total_cost,
+    address: orderRes.rows[0].address,
+    postcode: orderRes.rows[0].postcode
+  };
+};
+
 
 // Exports
 module.exports = {
@@ -252,5 +284,7 @@ module.exports = {
   getAddressId,
   addAddress,
   checkout,
-  getOrdersSummary
+  getOrdersSummary,
+  getOrderUserId,
+  getOrderById
 };
