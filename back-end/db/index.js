@@ -239,6 +239,11 @@ const getOrderUserId = async (id) => {
   return res.rows[0] ? res.rows[0].user_id : undefined;
 };
 
+const getOrderStatus = async (id) => {
+  const res = await query('SELECT status FROM orders WHERE id=$1', [id]);
+  return res.rows[0] ? res.rows[0].status : undefined;
+};
+
 const getOrderById = async (id) => {
   const orderSelect = 'SELECT orders.id, user_id, order_placed_time, status, total_cost, address, postcode';
   const addressesJoin = 'JOIN addresses ON orders.address_id = addresses.id';
@@ -266,6 +271,14 @@ const getOrderById = async (id) => {
   };
 };
 
+const cancelOrder = async (id) => {
+  await query(
+    'UPDATE orders SET status=$1 WHERE id=$2',
+    ['cancelled', id]
+  );
+  return;
+};
+
 
 // Exports
 module.exports = {
@@ -287,5 +300,7 @@ module.exports = {
   checkout,
   getOrdersSummary,
   getOrderUserId,
-  getOrderById
+  getOrderStatus,
+  getOrderById,
+  cancelOrder
 };

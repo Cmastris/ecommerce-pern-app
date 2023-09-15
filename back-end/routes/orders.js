@@ -44,5 +44,24 @@ router.get('/:id', requireLogin, checkIdValidity, async (req, res) => {
   }
 });
 
+router.delete('/:id', requireLogin, checkIdValidity, async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const orderStatus = await db.getOrderStatus(orderId);
+    if (orderStatus === 'cancelled') {
+      return res.status(204).send();
+    } else if (orderStatus !== 'pending') {
+      return res.status(400).send(
+        `Only 'pending' orders can be cancelled; this order's status is '${orderStatus}'.`
+      );
+    }
+    await db.cancelOrder(orderId);
+    res.status(204).send();
+
+  } catch(err) {
+    res.status(500).send('Query failed. Please ensure you provided a valid order ID.');
+  }
+});
+
 
 module.exports = router;
