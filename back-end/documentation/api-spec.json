@@ -1,0 +1,677 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Codecademy Ecommerce App API",
+    "version": "1.0.0",
+    "description": "The API of a fake (independent practice project) ecommerce app.",
+    "contact": {
+      "name": "Chris Mastris",
+      "url": "https://github.com/Cmastris/ecommerce-pern-app"
+    }
+  },
+  "paths": {
+    "/auth/register": {
+      "summary": "Used to register for an account.",
+      "post": {
+        "summary": "Creates a new user account.",
+        "description": "Creates a new user account based on a provided username and password, if the provided username does not already exist.",
+        "operationId": "create_account",
+        "requestBody": {
+          "required": true,
+          "description": "A user registration object (email address and password).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A success response containing the newly created user data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A user with the provided username already exists."
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "summary": "Used to log in to an account (authenticate); required for some endpoints.",
+      "post": {
+        "summary": "Logs in to an existing user account.",
+        "description": "Logs in to a user account using the provided username and password credentials.",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "description": "A user credentials object (email address as 'username' and password).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCredentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A success response containing the user data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The provided credentials (username or password) are incorrect."
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "summary": "Used to retrieve and modify a user's account details.",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The user id.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieves a user's account details.",
+        "description": "",
+        "operationId": "get_user",
+        "responses": {
+          "200": {
+            "description": "A success response containing the user data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The logged in user doesn't have permission to access this user's details."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "put": {
+        "summary": "Updates the user's password.",
+        "description": "",
+        "operationId": "update_user",
+        "requestBody": {
+          "required": true,
+          "description": "An object containing the new password.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A success response."
+          },
+          "401": {
+            "description": "The logged in user doesn't have permission to access this user's details."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/products": {
+      "summary": "Used to retrieve the details of multiple products.",
+      "get": {
+        "summary": "Retrieves the details of multiple products.",
+        "description": "",
+        "operationId": "get_products",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category_id",
+            "required": false,
+            "description": "The category id to filter products by (optional).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A success response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfProductDetails"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "summary": "Used to retrieve the details of a single product.",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The product id.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieves the details of a single product.",
+        "description": "",
+        "operationId": "get_product",
+        "responses": {
+          "200": {
+            "description": "A success response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The product ID doesn't exist."
+          }
+        },
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/categories": {
+      "summary": "Used to retrieve the details of multiple categories.",
+      "get": {
+        "summary": "Retrieves the details of multiple categories.",
+        "description": "",
+        "operationId": "get_categories",
+        "responses": {
+          "200": {
+            "description": "A success response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfCategoryDetails"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/cart": {
+      "summary": "Used to retrieve all items from the logged in user's cart.",
+      "get": {
+        "summary": "Retrieves all items from the logged in user's cart.",
+        "description": "",
+        "operationId": "get_cart",
+        "responses": {
+          "200": {
+            "description": "A success response containing the cart items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfCartItems"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The cart can't be accessed because the user isn't logged in."
+          }
+        },
+        "tags": [
+          "cart"
+        ]
+      }
+    },
+    "/cart/items/{product_id}": {
+      "summary": "Used to add and delete user cart items.",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "product_id",
+          "required": true,
+          "description": "The product id.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Adds a product to the logged in user's cart.",
+        "description": "",
+        "operationId": "add_cart_product",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "quantity",
+            "required": false,
+            "description": "The product quantity (optional; defaults to 1).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A success response containing the new cart item details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. The requested quantity is greater than the available quantity or the product is already in the user's cart."
+          },
+          "401": {
+            "description": "The cart can't be accessed because the user isn't logged in."
+          },
+          "404": {
+            "description": "The product ID doesn't exist."
+          }
+        },
+        "tags": [
+          "cart"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a product from the logged in user's cart.",
+        "description": "",
+        "operationId": "delete_cart_product",
+        "responses": {
+          "204": {
+            "description": "A success response indicating that the cart item was deleted or didn't exist."
+          },
+          "401": {
+            "description": "The cart can't be accessed because the user isn't logged in."
+          }
+        },
+        "tags": [
+          "cart"
+        ]
+      }
+    },
+    "/cart/checkout": {
+      "summary": "Used to place an order for the current cart items.",
+      "post": {
+        "summary": "Places an order for the items in the cart.",
+        "description": "Places an order for the items in the logged in user's cart and empties the cart.",
+        "operationId": "checkout",
+        "requestBody": {
+          "required": true,
+          "description": "A postal address object (postal address and postcode).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostalAddress"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A success response containing the new order details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. The user's cart is empty or address details weren't provided."
+          },
+          "401": {
+            "description": "The cart can't be accessed because the user isn't logged in."
+          }
+        },
+        "tags": [
+          "cart"
+        ]
+      }
+    },
+    "/orders": {
+      "summary": "Used to retrieve a summary of all previous orders by the logged in user.",
+      "get": {
+        "summary": "Retrieves a summary of all previous orders by the logged in user.",
+        "description": "",
+        "operationId": "get_orders",
+        "responses": {
+          "200": {
+            "description": "A success response containing the orders summary data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfOrderSummaryItems"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Orders can't be accessed because the user isn't logged in."
+          }
+        },
+        "tags": [
+          "orders"
+        ]
+      }
+    },
+    "/orders/{id}": {
+      "summary": "Used to retrieve the details of a single previous order.",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "description": "The order id.",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieves the details of a single previous order.",
+        "description": "",
+        "operationId": "get_order",
+        "responses": {
+          "200": {
+            "description": "A success response containing the order details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The user isn't logged in as the user who made the order."
+          },
+          "404": {
+            "description": "The order ID doesn't exist."
+          }
+        },
+        "tags": [
+          "orders"
+        ]
+      },
+      "delete": {
+        "summary": "Cancels a pending order.",
+        "description": "Cancels an order if its current status is 'pending'.",
+        "operationId": "cancel_order",
+        "responses": {
+          "204": {
+            "description": "A success response indicating that the order is cancelled."
+          },
+          "400": {
+            "description": "Invalid request. The order does not have a status of 'pending'."
+          },
+          "401": {
+            "description": "The user isn't logged in as the user who made the order."
+          },
+          "404": {
+            "description": "The order ID doesn't exist."
+          }
+        },
+        "tags": [
+          "orders"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserRegistration": {
+        "type": "object",
+        "properties": {
+          "email_address": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserCredentials": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The user's email address."
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "email_address": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "available_stock_count": {
+            "type": "integer"
+          },
+          "short_description": {
+            "type": "string"
+          },
+          "long_description": {
+            "type": "string"
+          },
+          "avg_rating": {
+            "type": "string"
+          },
+          "rating_count": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArrayOfProductDetails": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ProductDetails"
+        }
+      },
+      "CategoryDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url_slug": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfCategoryDetails": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CategoryDetails"
+        }
+      },
+      "CartItem": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "product_price": {
+            "type": "string"
+          },
+          "product_quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArrayOfCartItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CartItem"
+        }
+      },
+      "PostalAddress": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderItem": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "product_price": {
+            "type": "string"
+          },
+          "product_quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "OrderDetails": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "order_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          },
+          "order_placed_time": {
+            "type": "string"
+          },
+          "order_status": {
+            "type": "string"
+          },
+          "total_cost": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderSummaryItem": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "integer"
+          },
+          "order_placed_time": {
+            "type": "string"
+          },
+          "order_status": {
+            "type": "string"
+          },
+          "total_cost": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfOrderSummaryItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrderSummaryItem"
+        }
+      }
+    }
+  }
+}
