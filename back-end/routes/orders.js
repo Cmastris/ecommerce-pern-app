@@ -5,17 +5,7 @@ const requireLogin = require('./middleware');
 
 const router = express.Router();
 
-router.get('', requireLogin, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const ordersSummary = await db.getOrdersSummary(userId);
-    res.status(200).json(ordersSummary);
-  } catch(err) {
-    res.status(500).send('Orders retrieval failed.');
-  }
-});
-
-router.get('/:id', requireLogin, async (req, res) => {
+const checkIdValidity = async (req, res, next) => {
   try {
     const orderId = req.params.id;
     const orderUserId = await db.getOrderUserId(orderId);
@@ -26,12 +16,30 @@ router.get('/:id', requireLogin, async (req, res) => {
         'Invalid credentials. You cannot view another user\'s order.'
       );
     }
+    next();
 
+  } catch(err) {
+    res.status(500).send('Query failed. Please ensure you provided a valid order ID.');
+  }
+};
+
+router.get('', requireLogin, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const ordersSummary = await db.getOrdersSummary(userId);
+    res.status(200).json(ordersSummary);
+  } catch(err) {
+    res.status(500).send('Orders retrieval failed.');
+  }
+});
+
+router.get('/:id', requireLogin, checkIdValidity, async (req, res) => {
+  try {
+    const orderId = req.params.id;
     const orderData = await db.getOrderById(orderId);
     res.status(200).json(orderData);
 
   } catch(err) {
-    console.log(err);
     res.status(500).send('Query failed. Please ensure you provided a valid order ID.');
   }
 });
