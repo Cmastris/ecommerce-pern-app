@@ -121,6 +121,11 @@ const deleteCartItem = async (user_id, product_id) => {
 
 
 // Addresses
+const getAddressById = async (id) => {
+  const res = await query('SELECT address, postcode FROM addresses WHERE id=$1', [id]);
+  return res.rows[0];
+};
+
 const getAddressId = async (address, postcode) => {
   const res = await query(
     'SELECT id FROM addresses WHERE address=$1 AND postcode=$2',
@@ -243,6 +248,7 @@ module.exports = {
   cartItemExists,
   addCartItem,
   deleteCartItem,
+  getAddressById,
   getAddressId,
   addAddress,
   checkout,
