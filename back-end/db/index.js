@@ -205,6 +205,7 @@ const checkout = async (user_id, address_id) => {
     await client.query('COMMIT');
     return {
       order_id,
+      user_id: Number(user_id),
       order_items: cartItems,
       order_placed_time,
       order_status,
