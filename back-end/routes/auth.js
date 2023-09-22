@@ -94,6 +94,18 @@ router.post('/login',
   passport.authenticate('local', { failureMessage: true }),
   function(req, res) {
     res.status(200).json({ id: req.user.id, email_address: req.user.email_address });
-  });
+  }
+);
+
+router.post('/logout', (req, res) => {
+  if (req.isAuthenticated()) {
+    req.logout((err) => {
+      if (err) {
+        return res.status(500).send('Sorry, logout failed.');
+      }
+    });
+  }
+  res.status(200).send();
+});
 
 module.exports = router;
