@@ -7,6 +7,23 @@ info:
     name: Chris Mastris
     url: https://github.com/Cmastris/ecommerce-pern-app
 paths:
+  /auth/status:
+    summary: Used to retrieve the current user's authentication status.
+    get:
+      summary: Retrieves the current user's authentication status.
+      description: >-
+        Retrieves a summary of the current user's authentication (logged in) status,
+        including their account details if logged in.
+      operationId: get_auth_status
+      responses:
+        '200':
+          description: A success response containing the authentication summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthStatus'
+      tags:
+        - auth
   /auth/register:
     summary: Used to register for an account.
     post:
@@ -57,6 +74,17 @@ paths:
                 $ref: '#/components/schemas/UserDetails'
         '401':
           description: The provided credentials (username or password) are incorrect.
+      tags:
+        - auth
+  /auth/logout:
+    summary: Used to log out of the current user account.
+    post:
+      summary: Logs out of the current user account.
+      description: ''
+      operationId: logout
+      responses:
+        '200':
+          description: A success response indicating that the user is logged out.
       tags:
         - auth
   /users/{id}:
@@ -314,6 +342,17 @@ paths:
         - orders
 components:
   schemas:
+    AuthStatus:
+      type: object
+      properties:
+        logged_in:
+          type: boolean
+        id:
+          type: integer
+          nullable: true
+        email_address:
+          type: string
+          nullable: true
     UserRegistration:
       type: object
       properties:
