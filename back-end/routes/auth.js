@@ -40,6 +40,16 @@ async function verify(username, password, done) {
 passport.use(new LocalStrategy(verify));
 
 
+router.get('/status', (req, res) => {
+  let jsonData;
+  if (!req.isAuthenticated()) {
+    jsonData = { logged_in: false, id: null, email_address: null };
+  } else {
+    jsonData = { logged_in: true, id: req.user.id, email_address: req.user.email_address };
+  }
+  res.status(200).json(jsonData);
+});
+
 router.get('/register', jsonParser, (req, res) => {
   res.status(404).send('Please make a valid POST request to register.');
 });
