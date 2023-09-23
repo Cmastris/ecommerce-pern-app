@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import App from "./App/App";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
-import { LoginPage } from "./features/auth/LoginPage";
+import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
 
 
@@ -16,6 +16,7 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+        action: loginAction,
       },
       {
         path: "register",
