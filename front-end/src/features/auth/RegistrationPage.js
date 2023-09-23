@@ -1,10 +1,30 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 
 export async function registerAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
   // https://reactrouter.com/en/main/route/action
-  console.log('Form submitted');
-  return null;
+  let formData = await request.formData();
+  try {
+    const email_address = formData.get("email_address");
+    const password = formData.get("password");
+    const res = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+      {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email_address, password })
+      }
+    );
+
+    if (res.ok) {
+      return redirect("/account");
+    } else if (res.status === 400) {
+      return "Sorry, someone is already registered with this email address.";
+    }
+    throw new Error('Unexpected status code.');
+  } catch (error) {
+    return "Sorry, registration failed. Please try again later.";
+  }
 }
 
 
