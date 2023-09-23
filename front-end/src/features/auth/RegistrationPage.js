@@ -1,4 +1,4 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useActionData } from "react-router-dom";
 
 export async function registerAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -30,6 +30,9 @@ export async function registerAction({ request }) {
 
 export function RegistrationPage() {
   // https://reactrouter.com/en/main/components/form
+  // https://reactrouter.com/en/main/hooks/use-action-data
+  const registrationError = useActionData();
+
   return (
     <div>
       <h1>Create your account</h1>
@@ -41,6 +44,7 @@ export function RegistrationPage() {
         <input id="password" type="password" name="password" minLength={8} maxLength={25} required />
         <button type="submit">Register</button>
       </Form>
+      <p>{registrationError ? registrationError : null}</p>
     </div>
   );
 }
