@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const logging = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
@@ -17,6 +18,10 @@ const port = process.env.PORT;
 
 // https://expressjs.com/en/resources/middleware/morgan.html
 api.use(logging(process.env.LOGGING));
+
+
+// https://expressjs.com/en/resources/middleware/cors.html
+api.use(cors());
 
 
 // https://www.passportjs.org/concepts/authentication/sessions/
