@@ -1,8 +1,14 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
+import { createRouterProvider } from "../test-setup/testRouters";
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+// https://testing-library.com/docs/react-testing-library/intro
+// https://testing-library.com/docs/react-testing-library/example-intro
+// https://github.com/testing-library/jest-dom
+
+test('App name is rendered', () => {
+  render(createRouterProvider(<App />));
+  expect(screen.getByText("Pernecom")).toBeInTheDocument();
 });
