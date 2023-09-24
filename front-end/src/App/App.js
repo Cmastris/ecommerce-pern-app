@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 
 
@@ -22,11 +22,9 @@ export async function authLoader() {
 
 
 export function App() {
-  const authData = useLoaderData();
   return (
     <div className="App">
       <Header />
-      <p>{authData.logged_in ? "Logged in" : "Logged out"}</p>
       <main>
         <Outlet />
       </main>

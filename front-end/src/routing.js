@@ -13,6 +13,7 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     loader: authLoader,
+    id: "app",
     children: [
       {
         path: "login",

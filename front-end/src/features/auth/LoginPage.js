@@ -1,4 +1,4 @@
-import { Form, Link, redirect, useActionData } from "react-router-dom";
+import { Form, Link, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
 
 export async function loginAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -32,12 +32,18 @@ export async function loginAction({ request }) {
 export function LoginPage() {
   // https://reactrouter.com/en/main/components/form
   // https://reactrouter.com/en/main/hooks/use-action-data
+  // https://reactrouter.com/en/main/hooks/use-route-loader-data
+  const authData = useRouteLoaderData("app");
   const loginError = useActionData();
+
+  const registerLink = <Link to="/register">register</Link>;
+  const loggedOutContent = <p>If you haven't created an account, please {registerLink} instead.</p>;
+  const loggedInContent = <p>You are already logged in as {authData.email_address}.</p>;
 
   return (
     <div>
       <h1>Log in</h1>
-      <p>If you haven't created an account, please <Link to="/register">register</Link> instead.</p>
+      {authData.logged_in ? loggedInContent : loggedOutContent}
       <Form method="post">
         <label htmlFor="email_address">Email</label>
         <input id="email_address" type="email" name="email_address" required />
