@@ -12,6 +12,7 @@ export async function registerAction({ request }) {
       {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({ email_address, password })
       }
     );
