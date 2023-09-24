@@ -21,7 +21,10 @@ api.use(logging(process.env.LOGGING));
 
 
 // https://expressjs.com/en/resources/middleware/cors.html
-api.use(cors());
+api.use(cors({
+  origin: ["http://localhost:3000", "https://web.postman.co/"],  // Change in PROD
+  credentials: true,
+}));
 
 
 // https://www.passportjs.org/concepts/authentication/sessions/
