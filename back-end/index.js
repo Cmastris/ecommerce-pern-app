@@ -29,10 +29,12 @@ api.use(cors({
 
 // https://www.passportjs.org/concepts/authentication/sessions/
 // https://www.passportjs.org/howtos/session/
+// https://expressjs.com/en/resources/middleware/session.html
 api.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { secure: false },  // Change in PROD
 }))
 
 // Authenticate all routes and add user data to req.user
