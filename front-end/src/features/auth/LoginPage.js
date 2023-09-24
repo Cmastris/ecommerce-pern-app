@@ -1,10 +1,30 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 
 export async function loginAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
   // https://reactrouter.com/en/main/route/action
-  console.log('Form submitted');
-  return null;
+  let formData = await request.formData();
+  try {
+    const username = formData.get("email_address");
+    const password = formData.get("password");
+    const res = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+      {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      }
+    );
+
+    if (res.ok) {
+      return redirect("/account");
+    } else if (res.status === 401) {
+      return "Login failed. The username or password is incorrect.";
+    }
+    throw new Error('Unexpected status code.');
+  } catch (error) {
+    return "Sorry, login failed. Please try again later.";
+  }
 }
 
 
