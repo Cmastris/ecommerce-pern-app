@@ -4,6 +4,7 @@ import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
+import { ProductFeed } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
 
 
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
     loader: authLoader,
     id: "app",
     children: [
+      {
+        path: "",
+        element: <ProductFeed />,
+      },
       {
         path: "account",
         element: <AccountPage />,
