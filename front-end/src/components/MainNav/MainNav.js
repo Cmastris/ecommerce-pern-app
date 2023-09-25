@@ -29,8 +29,8 @@ export default function MainNav() {
     <nav>
       <ul>
         <li><NavLink to="/">All Products</NavLink></li>
-        <li><NavLink to="/books">Books</NavLink></li>
-        <li><NavLink to="/movies">Movies</NavLink></li>
+        <li><NavLink to="/category/books">Books</NavLink></li>
+        <li><NavLink to="/category/movies">Movies</NavLink></li>
       </ul>
       
       {authData.logged_in ?
