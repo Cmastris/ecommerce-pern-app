@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
         element: <RegistrationPage />,
         action: registerAction,
       },
+      {
+        path: "category/:categoryName",
+        element: <ProductFeed />,
+      },
     ],
   },
 ]);
