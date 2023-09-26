@@ -1,3 +1,5 @@
+import { useLoaderData } from "react-router-dom";
+
 async function fetchCategoryData(categorySlug) {
   // Fetch all categories data
   const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/categories`);
@@ -22,7 +24,7 @@ export async function productFeedLoader({ params }) {
   try {
     let productsFetchURL = `${process.env.REACT_APP_API_BASE_URL}/products`;
     let categoryData = null;
-    
+
     if (params.categorySlug) {
       // Fetch category data and add filter query string
       categoryData = await fetchCategoryData(params.categorySlug);
@@ -49,9 +51,19 @@ export async function productFeedLoader({ params }) {
 
 
 export function ProductFeed() {
+  // https://reactrouter.com/en/main/hooks/use-route-loader-data
+  const { productsData, categoryData } = useLoaderData();
+
+  function renderFeedItems() {
+    // TODO: render error or array of `ProductFeedItem`s
+    return <div>Products Data</div>;
+  }
+
   return (
     <div>
-      <h1>All Products</h1>
+      <h1>{categoryData ? categoryData.name : 'All Products'}</h1>
+      <p>{categoryData ? categoryData.description : 'Browse our full range of products.'}</p>
+      {renderFeedItems()}
     </div>
   );
 }
