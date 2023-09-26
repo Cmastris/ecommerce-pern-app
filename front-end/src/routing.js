@@ -4,7 +4,7 @@ import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
-import { ProductFeed } from "./features/products/ProductFeed";
+import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
 
 
@@ -20,6 +20,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <ProductFeed />,
+        loader: productFeedLoader,
       },
       {
         path: "account",
@@ -36,8 +37,9 @@ export const router = createBrowserRouter([
         action: registerAction,
       },
       {
-        path: "category/:categoryName",
+        path: "category/:categorySlug",
         element: <ProductFeed />,
+        loader: productFeedLoader,
       },
     ],
   },
