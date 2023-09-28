@@ -7,7 +7,7 @@ export default function ProductFeedItem({ productData }) {
   return (
     <article>
       <a href={detailPath}>
-        <img src={imagePath}></img>
+        <img src={imagePath} alt={productData.name}></img>
         <h3>{productData.name}</h3>
       </a>
       <div>
