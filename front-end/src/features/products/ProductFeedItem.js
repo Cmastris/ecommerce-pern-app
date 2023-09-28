@@ -1,4 +1,5 @@
 import { getProductDetailPath, getProductImagePath } from "./utils";
+import StarRating from "../../components/StarRating/StarRating";
 
 export default function ProductFeedItem({ productData }) {
   const detailPath = getProductDetailPath(productData.id, productData.name);
@@ -12,7 +13,7 @@ export default function ProductFeedItem({ productData }) {
       </a>
       <div>
         <p>{productData.price}</p>
-        <p>{productData.avg_rating}/5.00</p>
+        <StarRating rating={productData.avg_rating} />
       </div> 
     </article>
   );
