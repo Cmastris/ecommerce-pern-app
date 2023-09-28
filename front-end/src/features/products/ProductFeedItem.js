@@ -1,7 +1,19 @@
+import { getProductDetailPath, getProductImagePath } from "./utils";
+
 export default function ProductFeedItem({ productData }) {
+  const detailPath = getProductDetailPath(productData.id, productData.name);
+  const imagePath = getProductImagePath(productData.id, productData.name);
+
   return (
     <article>
-      <h3>{productData.name}</h3>
+      <a href={detailPath}>
+        <img src={imagePath}></img>
+        <h3>{productData.name}</h3>
+      </a>
+      <div>
+        <p>{productData.price}</p>
+        <p>{productData.avg_rating}/5.00</p>
+      </div> 
     </article>
   );
 }
