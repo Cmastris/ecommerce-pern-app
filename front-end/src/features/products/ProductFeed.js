@@ -1,4 +1,6 @@
 import { useLoaderData } from "react-router-dom";
+import ProductFeedItem from "./ProductFeedItem";
+
 
 async function fetchCategoryData(categorySlug) {
   // Fetch all categories data
@@ -52,11 +54,14 @@ export async function productFeedLoader({ params }) {
 
 export function ProductFeed() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const { productsData, categoryData } = useLoaderData();
+  const { categoryData, productsData, error } = useLoaderData();
 
   function renderFeedItems() {
-    // TODO: render error or array of `ProductFeedItem`s
-    return <div>Products Data</div>;
+    if (error) {
+      return <p>{error}</p>
+    }
+    const feedItems = productsData.map(p => <ProductFeedItem key={p.id} productData={p} />);
+    return <div>{feedItems}</div>;
   }
 
   return (
