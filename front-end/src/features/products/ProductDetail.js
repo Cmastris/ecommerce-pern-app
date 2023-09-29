@@ -1,7 +1,32 @@
-import { redirect, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 import { getProductDetailPath, getProductImagePath } from "./utils";
 import StarRating from "../../components/StarRating/StarRating";
+
+
+export async function addToCartAction({ params }) {
+  // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
+  // https://reactrouter.com/en/main/route/action
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/cart/items/${params.id}`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (res.ok) {
+      return "This product has been added to your cart.";
+    } else if (res.status === 400) {
+      const errorMessage = await res.text();
+      return errorMessage;
+    }
+    throw new Error("Unexpected status code.");
+  } catch (error) {
+    return "Sorry, this item couldn't be added to your cart.";
+  }
+}
 
 
 export async function productDetailLoader({ params }) {
@@ -40,6 +65,7 @@ export async function productDetailLoader({ params }) {
 export function ProductDetail() {
   const { productData, error } = useLoaderData();
   const authData = useRouteLoaderData("app");
+  const addToCartMessage = useActionData();
   const navigate = useNavigate();
 
   if (error) {
@@ -56,11 +82,10 @@ export function ProductDetail() {
   const imagePath = getProductImagePath(productData.id, productData.name);
 
   function renderButton() {
-    // TODO: add onclick functionality
     if (stock_count < 1) {
       return <button disabled>Out of stock</button>;
     } else if (authData.logged_in) {
-      return <button>Add to cart</button>;
+      return <Form method="post"><button type="submit">Add to cart</button></Form>;
     } else {
       const currentPath = getProductDetailPath(productData.id, productData.name);
       return <button onClick={() => navigate(`/login?redirect=${currentPath}`)}>Log in</button>;
@@ -81,6 +106,7 @@ export function ProductDetail() {
           <hr />
           {(stock_count >= 1 && stock_count <= 5) ? <p>Only {stock_count} left in stock!</p> : null }
           {renderButton()}
+          {addToCartMessage ? <p>{addToCartMessage}</p> : null}
           <StarRating rating={avg_rating} />
           <p>Rated {avg_rating}/5.00 based on {rating_count} ratings</p>
         </div>
