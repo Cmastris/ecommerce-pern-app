@@ -8,15 +8,15 @@ export default function StarRating({ rating }) {
     const ratingElements = [];
 
     for (let x=0; x < wholeStars; x++) {
-      ratingElements.push(<MdStar />);
+      ratingElements.push(<MdStar key={ratingElements.length} />);
     }
 
     if (stars % 1 !== 0) {
-      ratingElements.push(<MdStarHalf />);
+      ratingElements.push(<MdStarHalf key={ratingElements.length} />);
     }
 
     while (ratingElements.length < 5) {
-      ratingElements.push(<MdStarOutline />);
+      ratingElements.push(<MdStarOutline key={ratingElements.length} />);
     }
 
     return ratingElements;
