@@ -1,4 +1,5 @@
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
+import { getProductDetailPath } from "./utils";
 
 
 export async function productDetailLoader({ params }) {
@@ -6,7 +7,7 @@ export async function productDetailLoader({ params }) {
   // https://reactrouter.com/en/main/route/loader
   try {
     const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/products/${params.id}`);
-    
+
     if (res.status === 404) {
       // https://reactrouter.com/en/main/route/error-element#throwing-manually
       throw new Response('Not Found', { status: 404 });
@@ -15,6 +16,14 @@ export async function productDetailLoader({ params }) {
     }
 
     const productData = await res.json();
+
+    // Redirect non-canonical matched paths to the canonical path
+    const currentPath = `/products/${params.id}/${params.productNameSlug}`;
+    const canonicalPath = getProductDetailPath(productData.id, productData.name);
+    if (currentPath !== canonicalPath) {
+      return redirect(canonicalPath);
+    }
+
     return { productData };
 
   } catch (error) {
