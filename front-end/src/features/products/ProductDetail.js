@@ -1,5 +1,7 @@
-import { redirect, useLoaderData } from "react-router-dom";
-import { getProductDetailPath } from "./utils";
+import { redirect, useLoaderData, useRouteLoaderData } from "react-router-dom";
+
+import { getProductDetailPath, getProductImagePath } from "./utils";
+import StarRating from "../../components/StarRating/StarRating";
 
 
 export async function productDetailLoader({ params }) {
@@ -37,10 +39,55 @@ export async function productDetailLoader({ params }) {
 
 export function ProductDetail() {
   const { productData, error } = useLoaderData();
+  const authData = useRouteLoaderData("app");
+
+  if (error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  const { short_description, long_description, avg_rating, rating_count, price } = productData;
+  const stock_count = productData.available_stock_count;
+  const imagePath = getProductImagePath(productData.id, productData.name);
+
+  function renderButton() {
+    // TODO: add onclick functionality
+    if (stock_count < 1) {
+      return <button disabled>Out of stock</button>;
+    } else if (authData.logged_in) {
+      return <button>Add to cart</button>;
+    } else {
+      return <button>Log in</button>;
+    }
+  }
 
   return (
     <div>
-      <h1>{error ? error : productData.name }</h1>
+      <section>
+        <div>
+          <img src={imagePath} alt={productData.name}></img>
+        </div>
+        <div>
+          <h1>{productData.name}</h1>
+          <p>{price}</p>
+          <hr />
+          <p>{short_description}</p>
+          <hr />
+          {(stock_count >= 1 && stock_count <= 5) ? <p>Only {stock_count} left in stock!</p> : null }
+          {renderButton()}
+          <StarRating rating={avg_rating} />
+          <p>Rated {avg_rating}/5.00 based on {rating_count} ratings</p>
+        </div>
+      </section>
+      <section>
+        <h2>Description</h2>
+        <p>{short_description}</p>
+        <p>{long_description}</p>
+      </section>
     </div>
   );
 }
