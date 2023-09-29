@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
+import { Cart } from "./features/cart/Cart";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <AccountPage />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
       {
         path: "login",
