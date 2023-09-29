@@ -1,4 +1,4 @@
-import { redirect, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 import { getProductDetailPath, getProductImagePath } from "./utils";
 import StarRating from "../../components/StarRating/StarRating";
@@ -40,6 +40,7 @@ export async function productDetailLoader({ params }) {
 export function ProductDetail() {
   const { productData, error } = useLoaderData();
   const authData = useRouteLoaderData("app");
+  const navigate = useNavigate();
 
   if (error) {
     return (
@@ -61,7 +62,7 @@ export function ProductDetail() {
     } else if (authData.logged_in) {
       return <button>Add to cart</button>;
     } else {
-      return <button>Log in</button>;
+      return <button onClick={() => navigate('/login')}>Log in</button>;
     }
   }
 
