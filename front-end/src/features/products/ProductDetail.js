@@ -62,7 +62,8 @@ export function ProductDetail() {
     } else if (authData.logged_in) {
       return <button>Add to cart</button>;
     } else {
-      return <button onClick={() => navigate('/login')}>Log in</button>;
+      const currentPath = getProductDetailPath(productData.id, productData.name);
+      return <button onClick={() => navigate(`/login?redirect=${currentPath}`)}>Log in</button>;
     }
   }
 

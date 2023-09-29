@@ -18,7 +18,17 @@ export async function loginAction({ request }) {
     );
 
     if (res.ok) {
-      return redirect("/account");
+      let redirectPath = new URL(request.url).searchParams.get('redirect');
+      if (redirectPath) {
+        if (redirectPath[0] !== '/') {
+          // Prevent external navigation
+          redirectPath = `/${redirectPath}`;
+        }
+      } else {
+        redirectPath = '/account';
+      }
+      return redirect(redirectPath);
+
     } else if (res.status === 401) {
       return "Login failed. The username or password is incorrect.";
     }
