@@ -4,7 +4,7 @@ import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
-import { ProductDetail } from "./features/products/ProductDetail";
+import { ProductDetail, productDetailLoader } from "./features/products/ProductDetail";
 import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
 
@@ -45,6 +45,7 @@ export const router = createBrowserRouter([
       {
         path: "products/:id/:productNameSlug",
         element: <ProductDetail />,
+        loader: productDetailLoader,
       },
     ],
   },
