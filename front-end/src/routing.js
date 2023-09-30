@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import { Cart, cartLoader } from "./features/cart/Cart";
+import CheckoutPage from "./components/CheckoutPage/CheckoutPage";
 import { removeCartItemAction } from "./features/cart/CartItem";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
         element: <Cart />,
         loader: cartLoader,
         action: removeCartItemAction,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
       },
       {
         path: "login",
