@@ -15,13 +15,13 @@ export async function cartLoader() {
     if (res.ok) {
       const cartData = await res.json();
       if (cartData.length === 0) {
-        return { error: "Your cart is empty." };
+        return { cartLoaderError: "Your cart is empty." };
       }
       return { cartData };
     }
     throw new Error('Unexpected status code.');
   } catch (error) {
-    return { error: "Sorry, your cart items could not be retrieved." };
+    return { cartLoaderError: "Sorry, your cart items could not be retrieved." };
   }
 }
 
@@ -40,7 +40,7 @@ export function renderCartItems(cartData, error, editable=true) {
 export function Cart() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
-  const { cartData, error } = useLoaderData();
+  const { cartData, cartLoaderError } = useLoaderData();
   const removalResult = useActionData();
 
   if (!authData.logged_in) {
@@ -62,7 +62,7 @@ export function Cart() {
   }
 
   function renderCheckoutButton() {
-    if (!error) {
+    if (!cartLoaderError) {
       return <Link to="/checkout">Go to checkout</Link>;
     }
   }
@@ -73,7 +73,7 @@ export function Cart() {
       <p>You are logged in as {authData.email_address}.</p>
       {cartData?.length > 2 ? renderCheckoutButton() : null}
       {removalResult ? renderRemovalMessage() : null}
-      {renderCartItems(cartData, error)}
+      {renderCartItems(cartData, cartLoaderError)}
       <hr />
       {renderCheckoutButton()}
     </div>
