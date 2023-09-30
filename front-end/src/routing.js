@@ -5,7 +5,7 @@ import { App, authLoader } from "./App/App";
 import { Cart, cartLoader } from "./features/cart/Cart";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage";
 import { removeCartItemAction } from "./features/cart/CartItem";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
 import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <FallbackErrorPage />,
     loader: authLoader,
     id: "app",
     children: [

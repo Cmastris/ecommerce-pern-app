@@ -1,6 +1,6 @@
 import { Link, useRouteError } from "react-router-dom";
 
-export default function ErrorPage() {
+export default function FallbackErrorPage() {
   const error = useRouteError();
   const is404 = error.status === 404;
   console.error(error);
