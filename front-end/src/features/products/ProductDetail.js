@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Form, Link, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 import { getProductDetailPath, getProductImagePath } from "./utils";
 import StarRating from "../../components/StarRating/StarRating";
@@ -17,7 +17,7 @@ export async function addToCartAction({ params }) {
     );
 
     if (res.ok) {
-      return "This product has been added to your cart.";
+      return <div>This product has been added to your <Link to="/cart">cart</Link>.</div>;
     } else if (res.status === 400) {
       const errorMessage = await res.text();
       return errorMessage;
