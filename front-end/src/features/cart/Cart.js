@@ -1,5 +1,7 @@
-import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
+
 import CartItem from "./CartItem";
+import { getProductDetailPath } from "../products/utils";
 
 
 export async function cartLoader() {
@@ -28,6 +30,7 @@ export function Cart() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
   const { cartData, error } = useLoaderData();
+  const removalResult = useActionData();
 
   if (!authData.logged_in) {
     return (
@@ -36,6 +39,15 @@ export function Cart() {
         <p>Please <Link to="/login?redirect=/cart">log in</Link> to view your cart.</p>
       </div>
     );
+  }
+
+  function renderRemovalMessage() {
+    const { error, productId, productName } = removalResult;
+    if (error) {
+      return <p>Sorry, '{productName}' couldn't be removed from your cart.</p>;
+    }
+    const productPath = getProductDetailPath(productId, productName);
+    return <p>'<Link to={productPath}>{productName}</Link>' was removed from your cart.</p>;
   }
 
   function renderCartItems() {
@@ -50,6 +62,7 @@ export function Cart() {
     <div>
       <h1>Cart</h1>
       <p>You are logged in as {authData.email_address}. Your cart items are listed below.</p>
+      {removalResult ? renderRemovalMessage() : null}
       {renderCartItems()}
     </div>
   );
