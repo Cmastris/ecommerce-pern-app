@@ -1,7 +1,8 @@
 import { Form, Link, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 
-import { getProductDetailPath, getProductImagePath } from "./utils";
+import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import StarRating from "../../components/StarRating/StarRating";
+import { getProductDetailPath, getProductImagePath } from "./utils";
 
 
 export async function addToCartAction({ params }) {
@@ -37,9 +38,9 @@ export async function productDetailLoader({ params }) {
 
     if (res.status === 404) {
       // https://reactrouter.com/en/main/route/error-element#throwing-manually
-      throw new Response('Not Found', { status: 404 });
+      throw new Response("Not Found", { status: 404 });
     } else if (!res.ok) {
-      throw new Error('Unsuccessful product fetch.');
+      throw new Error("Unsuccessful product fetch.");
     }
 
     const productData = await res.json();
@@ -57,7 +58,7 @@ export async function productDetailLoader({ params }) {
     if (error.status === 404) {
       throw error;  // Serve 404 error page
     }
-    return { error: 'Sorry, product data could not be loaded.' };
+    return { error: "Sorry, this product could not be loaded." };
   }
 }
 
@@ -69,12 +70,7 @@ export function ProductDetail() {
   const navigate = useNavigate();
 
   if (error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error}</p>
-      </div>
-    );
+    return <InlineErrorPage pageName="Error" message={error} />;
   }
 
   const { short_description, long_description, avg_rating, rating_count, price } = productData;
