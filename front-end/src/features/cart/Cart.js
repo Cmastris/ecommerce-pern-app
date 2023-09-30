@@ -68,7 +68,7 @@ export function Cart() {
     <div>
       <h1>Cart</h1>
       <p>You are logged in as {authData.email_address}.</p>
-      {cartData.length > 2 ? renderCheckoutButton() : null}
+      {cartData?.length > 2 ? renderCheckoutButton() : null}
       {removalResult ? renderRemovalMessage() : null}
       {renderCartItems()}
       <hr />
