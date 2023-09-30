@@ -33,7 +33,7 @@ export default function MainNav() {
         <li><NavLink to="/category/movies">Movies</NavLink></li>
       </ul>
       
-      {authData.logged_in ?
+      {authData?.logged_in ?
       <ul>
         <li><NavLink to="/account">Account</NavLink></li>
         <li><NavLink to="/cart">Cart</NavLink></li>
