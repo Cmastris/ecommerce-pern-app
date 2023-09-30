@@ -26,6 +26,17 @@ export async function cartLoader() {
 }
 
 
+export function renderCartItems(cartData, error, editable=true) {
+  if (error) {
+    return <p>{error}</p>;
+  }
+  const cartItems = cartData.map(
+    item => <CartItem key={item.product_id} productData={item} editable={editable} />
+  );
+  return <div>{cartItems}</div>;
+}
+
+
 export function Cart() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
@@ -56,23 +67,13 @@ export function Cart() {
     }
   }
 
-  function renderCartItems() {
-    if (error) {
-      return <p>{error}</p>;
-    }
-    const cartItems = cartData.map(
-      item => <CartItem key={item.product_id} productData={item} editable={true} />
-    );
-    return <div>{cartItems}</div>;
-  }
-
   return (
     <div>
       <h1>Cart</h1>
       <p>You are logged in as {authData.email_address}.</p>
       {cartData?.length > 2 ? renderCheckoutButton() : null}
       {removalResult ? renderRemovalMessage() : null}
-      {renderCartItems()}
+      {renderCartItems(cartData, error)}
       <hr />
       {renderCheckoutButton()}
     </div>
