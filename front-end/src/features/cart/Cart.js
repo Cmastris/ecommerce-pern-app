@@ -1,6 +1,7 @@
 import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import CartItem from "./CartItem";
+import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import { getProductDetailPath } from "../products/utils";
 
 
@@ -14,9 +15,6 @@ export async function cartLoader() {
     );
     if (res.ok) {
       const cartData = await res.json();
-      if (cartData.length === 0) {
-        return { cartLoaderError: "Your cart is empty." };
-      }
       return { cartData };
     }
     throw new Error('Unexpected status code.');
@@ -26,9 +24,9 @@ export async function cartLoader() {
 }
 
 
-export function renderCartItems(cartData, error, editable=true) {
-  if (error) {
-    return <p>{error}</p>;
+export function renderCartItems(cartData, editable=true) {
+  if (cartData.length === 0) {
+    return <p>Your cart is empty.</p>;
   }
   const cartItems = cartData.map(
     item => <CartItem key={item.product_id} productData={item} editable={editable} />
@@ -44,12 +42,9 @@ export function Cart() {
   const removalResult = useActionData();
 
   if (!authData.logged_in) {
-    return (
-      <div>
-        <h1>Cart</h1>
-        <p>Please <Link to="/login?redirect=/cart">log in</Link> to view your cart.</p>
-      </div>
-    );
+    return <InlineErrorPage pageName="Cart" type="login_required" loginRedirect="/cart" />;
+  } else if (cartLoaderError) {
+    return <InlineErrorPage pageName="Cart" message="Sorry, your cart could not be loaded. Please try again later." />;
   }
 
   function renderRemovalMessage() {
@@ -75,7 +70,7 @@ export function Cart() {
       {removalResult ? renderRemovalMessage() : null}
       {renderCartItems(cartData, cartLoaderError)}
       <hr />
-      {renderCheckoutButton()}
+      {cartData?.length > 0 ? renderCheckoutButton() : null}
     </div>
   );
 }
