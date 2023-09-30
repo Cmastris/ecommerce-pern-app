@@ -27,7 +27,7 @@ export async function removeCartItemAction({ request }) {
 }
 
 
-export default function CartItem({ productData }) {
+export default function CartItem({ productData, editable }) {
   const { product_id, product_name, product_price } = productData;
   const productPath = getProductDetailPath(product_id, product_name);
 
@@ -37,11 +37,13 @@ export default function CartItem({ productData }) {
       <div>
         <h3><Link to={productPath}>{product_name}</Link></h3>
         <p>{product_price}</p>
+        {editable ?
         <Form method="post">
           <input type="hidden" name="product_id" value={product_id}></input>
           <input type="hidden" name="product_name" value={product_name}></input>
           <button type="submit">Remove</button>
         </Form>
+        : null}
       </div>
     </article>
   );

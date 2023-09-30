@@ -60,7 +60,9 @@ export function Cart() {
     if (error) {
       return <p>{error}</p>;
     }
-    const cartItems = cartData.map(item => <CartItem key={item.product_id} productData={item} />);
+    const cartItems = cartData.map(
+      item => <CartItem key={item.product_id} productData={item} editable={true} />
+    );
     return <div>{cartItems}</div>;
   }
 
