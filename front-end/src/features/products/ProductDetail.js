@@ -17,7 +17,7 @@ export async function addToCartAction({ params }) {
     );
 
     if (res.ok) {
-      return <div>This product has been added to your <Link to="/cart">cart</Link>.</div>;
+      return <span>This product has been added to your <Link to="/cart">cart</Link>.</span>;
     } else if (res.status === 400) {
       const errorMessage = await res.text();
       return errorMessage;
