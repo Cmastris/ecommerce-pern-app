@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
 import { createRouterProvider } from "../test-setup/testRouters";
-import App from './App';
+import { App } from './App';
 
 // https://testing-library.com/docs/react-testing-library/intro
 // https://testing-library.com/docs/react-testing-library/example-intro
