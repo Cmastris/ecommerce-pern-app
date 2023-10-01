@@ -7,6 +7,7 @@ import { CheckoutPage, checkoutAction } from "./components/CheckoutPage/Checkout
 import { removeCartItemAction } from "./features/orders/CartItem";
 import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
+import { OrderDetailsPage } from "./features/orders/OrderDetailsPage";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
 import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
         element: <CheckoutPage />,
         loader: cartLoader,
         action: checkoutAction,
+      },
+      {
+        path: "checkout/:id/success",
+        element: <OrderDetailsPage checkoutSuccess={true} />,
       },
       {
         path: "login",
