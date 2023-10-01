@@ -1,6 +1,6 @@
 import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import { renderCartItems } from "./utils";
+import { renderOrderItems } from "./utils";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 
 
@@ -59,7 +59,7 @@ export function CheckoutPage() {
       <h1>Checkout</h1>
       <p>You are logged in as {authData.email_address}. Complete your order below.</p>
       <h2>Cart items</h2>
-      {renderCartItems(cartData, false)}
+      {renderOrderItems(cartData, false)}
       <hr />
       {renderTotalCost()}
       <h2>Payment</h2>

@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
-import { getDateTimeString, renderCartItems } from "./utils";
+import { getDateTimeString, renderOrderItems } from "./utils";
 
 
 export async function orderDetailsLoader({ params }) {
@@ -60,7 +60,7 @@ export function OrderDetailsPage({ checkoutSuccess }) {
       </section>
       <section>
         <h2>Items</h2>
-        {renderCartItems(order_items, false)}
+        {renderOrderItems(order_items, false)}
         <hr />
       </section>
       <section>

@@ -2,7 +2,7 @@ import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-ro
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import { getProductDetailPath } from "../products/utils";
-import { renderCartItems } from "./utils";
+import { renderOrderItems } from "./utils";
 
 
 export async function cartLoader() {
@@ -57,7 +57,7 @@ export function Cart() {
       <p>You are logged in as {authData.email_address}.</p>
       {cartData?.length > 2 ? renderCheckoutButton() : null}
       {removalResult ? renderRemovalMessage() : null}
-      {renderCartItems(cartData, cartLoaderError)}
+      {renderOrderItems(cartData, cartLoaderError)}
       <hr />
       {cartData?.length > 0 ? renderCheckoutButton() : null}
     </div>
