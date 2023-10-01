@@ -1,7 +1,7 @@
 import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import { renderCartItems } from "../../features/orders/Cart";
-import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
+import { renderCartItems } from "./Cart";
+import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 
 
 export async function checkoutAction({ request }) {
