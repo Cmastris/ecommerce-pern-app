@@ -1,4 +1,4 @@
-import { Form, redirect, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import { renderCartItems } from "../../features/orders/Cart";
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
@@ -36,6 +36,7 @@ export function CheckoutPage() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
   const { cartData, cartLoaderError } = useLoaderData();
+  const checkoutError = useActionData()?.checkoutError;
 
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Checkout" type="login_required" loginRedirect="/cart" />;
@@ -71,7 +72,12 @@ export function CheckoutPage() {
         <input id="postcode" type="text" name="postcode" minLength={5} maxLength={10} required />
         <button type="submit">Submit order</button>
       </Form>
-      {/* TODO: render errors */}
+      {checkoutError ? (
+        <div>
+          <p>{checkoutError}</p>
+          <Link to="/">Continue shopping</Link>
+        </div>
+      ) : null}
     </div>
   );
 }
