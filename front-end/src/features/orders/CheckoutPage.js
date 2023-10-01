@@ -1,6 +1,6 @@
 import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import { renderCartItems } from "./Cart";
+import { renderCartItems } from "./utils";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 
 

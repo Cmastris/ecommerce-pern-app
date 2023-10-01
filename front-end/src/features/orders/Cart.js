@@ -1,8 +1,8 @@
 import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import CartItem from "./CartItem";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import { getProductDetailPath } from "../products/utils";
+import { renderCartItems } from "./utils";
 
 
 export async function cartLoader() {
@@ -21,17 +21,6 @@ export async function cartLoader() {
   } catch (error) {
     return { cartLoaderError: "Sorry, your cart items could not be retrieved." };
   }
-}
-
-
-export function renderCartItems(cartData, editable=true) {
-  if (cartData.length === 0) {
-    return <p>Your cart is empty.</p>;
-  }
-  const cartItems = cartData.map(
-    item => <CartItem key={item.product_id} productData={item} editable={editable} />
-  );
-  return <div>{cartItems}</div>;
 }
 
 

@@ -1,8 +1,7 @@
 import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import { renderCartItems } from "./Cart";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
-import { getDateTimeString } from "./utils";
+import { getDateTimeString, renderCartItems } from "./utils";
 
 
 export async function orderDetailsLoader({ params }) {
