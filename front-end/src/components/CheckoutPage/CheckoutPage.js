@@ -1,6 +1,6 @@
-import { useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-import { renderCartItems } from "../../features/cart/Cart";
+import { renderCartItems } from "../../features/orders/Cart";
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
 
 
@@ -33,7 +33,17 @@ export default function CheckoutPage() {
       {renderCartItems(cartData, false)}
       <hr />
       {renderTotalCost()}
-      {/* TODO: Add address form; create checkout action; render errors */}
+      <h2>Payment</h2>
+      <p>This isn't a real ecommerce website!</p>
+      <h2>Delivery address</h2>
+      <Form method="post">
+        <label htmlFor="address">Delivery name and address</label>
+        <textarea id="address" name="address" rows="5" minLength={15} required />
+        <label htmlFor="postcode">Postcode</label>
+        <input id="postcode" type="text" name="postcode" minLength={5} maxLength={10} required />
+        <button type="submit">Submit order</button>
+      </Form>
+      {/* TODO: create checkout action; render errors */}
     </div>
   );
 }
