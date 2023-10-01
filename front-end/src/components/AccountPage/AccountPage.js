@@ -1,5 +1,8 @@
 import { Link, useRouteLoaderData } from "react-router-dom";
+
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
+import { OrdersHistory } from "../../features/orders/OrdersHistory";
+
 
 export default function AccountPage() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
@@ -14,6 +17,8 @@ export default function AccountPage() {
       <h1>Your account</h1>
       <p>You are logged in as {authData.email_address}.</p>
       <Link to="/cart">Go to cart</Link>
+      <h2>Your orders</h2>
+      <OrdersHistory />
     </div>
   );
 }
