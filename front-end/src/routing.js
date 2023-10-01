@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import { Cart, cartLoader } from "./features/orders/Cart";
-import CheckoutPage from "./components/CheckoutPage/CheckoutPage";
+import { CheckoutPage, checkoutAction } from "./components/CheckoutPage/CheckoutPage";
 import { removeCartItemAction } from "./features/orders/CartItem";
 import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
@@ -40,6 +40,7 @@ export const router = createBrowserRouter([
         path: "checkout",
         element: <CheckoutPage />,
         loader: cartLoader,
+        action: checkoutAction,
       },
       {
         path: "login",

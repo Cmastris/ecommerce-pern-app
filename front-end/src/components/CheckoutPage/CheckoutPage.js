@@ -1,10 +1,38 @@
-import { Form, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import { renderCartItems } from "../../features/orders/Cart";
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
 
 
-export default function CheckoutPage() {
+export async function checkoutAction({ request }) {
+  // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
+  // https://reactrouter.com/en/main/route/action
+  let formData = await request.formData();
+  try {
+    const address = formData.get("address");
+    const postcode = formData.get("postcode");
+    const res = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/cart/checkout`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ address, postcode })
+      }
+    );
+
+    if (res.ok) {
+      const { order_id } = await res.json();
+      return redirect(`/checkout/${order_id}/success`);
+    }
+    throw new Error("Unexpected status code.");
+  } catch (error) {
+    return { checkoutError: "Sorry, your order could not be placed. Please try again later." };
+  }
+}
+
+
+export function CheckoutPage() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
   const { cartData, cartLoaderError } = useLoaderData();
@@ -43,7 +71,7 @@ export default function CheckoutPage() {
         <input id="postcode" type="text" name="postcode" minLength={5} maxLength={10} required />
         <button type="submit">Submit order</button>
       </Form>
-      {/* TODO: create checkout action; render errors */}
+      {/* TODO: render errors */}
     </div>
   );
 }
