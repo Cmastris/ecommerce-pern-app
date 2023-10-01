@@ -1,7 +1,9 @@
 import { OrderItem } from "./OrderItem";
 
 export function getDateTimeString(rawString) {
-  return new Date(rawString).toLocaleString("en-GB");
+  const n = "numeric";
+  const options = { year: n, month: n, day: n, hour: n, minute: n };
+  return new Date(rawString).toLocaleString("en-GB", options);
 }
 
 export function renderOrderItems(orderItemsData, editable=true) {
