@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
-import { Cart, cartLoader } from "./features/cart/Cart";
+import { Cart, cartLoader } from "./features/orders/Cart";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage";
-import { removeCartItemAction } from "./features/cart/CartItem";
+import { removeCartItemAction } from "./features/orders/CartItem";
 import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
