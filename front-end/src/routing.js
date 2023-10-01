@@ -4,7 +4,7 @@ import AccountPage from "./components/AccountPage/AccountPage";
 import { App, authLoader } from "./App/App";
 import { Cart, cartLoader } from "./features/orders/Cart";
 import { CheckoutPage, checkoutAction } from "./features/orders/CheckoutPage";
-import { removeCartItemAction } from "./features/orders/CartItem";
+import { removeCartItemAction } from "./features/orders/OrderItem";
 import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { OrderDetailsPage, orderDetailsLoader } from "./features/orders/OrderDetailsPage";

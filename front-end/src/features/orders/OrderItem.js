@@ -27,7 +27,7 @@ export async function removeCartItemAction({ request }) {
 }
 
 
-export default function CartItem({ productData, editable }) {
+export function OrderItem({ productData, editable }) {
   const { product_id, product_name, product_price } = productData;
   const productPath = getProductDetailPath(product_id, product_name);
 

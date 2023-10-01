@@ -1,4 +1,4 @@
-import CartItem from "./CartItem";
+import { OrderItem } from "./OrderItem";
 
 export function getDateTimeString(rawString) {
   return new Date(rawString).toLocaleString("en-GB");
@@ -9,7 +9,7 @@ export function renderCartItems(cartData, editable=true) {
     return <p>Your cart is empty.</p>;
   }
   const cartItems = cartData.map(
-    item => <CartItem key={item.product_id} productData={item} editable={editable} />
+    item => <OrderItem key={item.product_id} productData={item} editable={editable} />
   );
   return <div>{cartItems}</div>;
 }
