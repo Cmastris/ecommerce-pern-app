@@ -8,6 +8,7 @@ import { removeCartItemAction } from "./features/orders/OrderItem";
 import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage";
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { OrderDetailsPage, orderDetailsLoader } from "./features/orders/OrderDetailsPage";
+import { ordersLoader } from "./features/orders/OrdersHistory";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
 import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <AccountPage />,
+        loader: ordersLoader
       },
       {
         path: "cart",
