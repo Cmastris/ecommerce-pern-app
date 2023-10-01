@@ -54,6 +54,11 @@ export const router = createBrowserRouter([
         action: loginAction,
       },
       {
+        path: "orders/:id",
+        element: <OrderDetailsPage />,
+        loader: orderDetailsLoader,
+      },
+      {
         path: "register",
         element: <RegistrationPage />,
         action: registerAction,
