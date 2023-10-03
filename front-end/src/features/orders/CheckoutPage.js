@@ -41,7 +41,7 @@ export function CheckoutPage() {
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Checkout" type="login_required" loginRedirect="/cart" />;
   } else if (cartLoaderError) {
-    return <InlineErrorPage pageName="Checkout" message="Sorry, your cart could not be loaded. Please try again later." />;
+    return <InlineErrorPage pageName="Checkout" message={cartLoaderError} />;
   } else if (cartData.length === 0) {
     return <InlineErrorPage pageName="Checkout" message="Your cart is empty so it is not possible to checkout." />;
   }

@@ -12,7 +12,7 @@ export async function ordersLoader() {
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { error: "Sorry, your orders could not be retrieved." };
+    return { error: "Sorry, your orders could not be retrieved. Please try again later." };
   }
 }
 

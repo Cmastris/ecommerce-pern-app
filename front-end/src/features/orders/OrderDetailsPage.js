@@ -28,7 +28,7 @@ export async function orderDetailsLoader({ params }) {
     if (error.status === 404) {
       throw error;  // Serve 404 error page
     }
-    return { error: "Sorry, this order could not be loaded." };
+    return { error: "Sorry, this order could not be loaded. Please try again later." };
   }
 }
 
@@ -41,7 +41,7 @@ export function OrderDetailsPage({ checkoutSuccess }) {
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Order details" type="login_required" loginRedirect="/orders" />;
   } else if (error) {
-    return <InlineErrorPage pageName="Order details" message="Sorry, this order could not be loaded. Please try again later." />;
+    return <InlineErrorPage pageName="Order details" message={error} />;
   }
 
   const { address, order_id, order_items, order_placed_time, order_status, postcode, total_cost } = orderData;

@@ -19,7 +19,7 @@ export async function cartLoader() {
     }
     throw new Error('Unexpected status code.');
   } catch (error) {
-    return { cartLoaderError: "Sorry, your cart items could not be retrieved." };
+    return { cartLoaderError: "Sorry, your cart could not be loaded. Please try again later." };
   }
 }
 
@@ -33,7 +33,7 @@ export function Cart() {
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Cart" type="login_required" loginRedirect="/cart" />;
   } else if (cartLoaderError) {
-    return <InlineErrorPage pageName="Cart" message="Sorry, your cart could not be loaded. Please try again later." />;
+    return <InlineErrorPage pageName="Cart" message={cartLoaderError} />;
   }
 
   function renderRemovalMessage() {
