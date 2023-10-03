@@ -10,9 +10,9 @@ export async function registerAction({ request }) {
     const res = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
       {
-        method: 'POST',
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({ email_address, password })
       }
     );
@@ -22,7 +22,7 @@ export async function registerAction({ request }) {
     } else if (res.status === 400) {
       return "Sorry, someone is already registered with this email address.";
     }
-    throw new Error('Unexpected status code.');
+    throw new Error("Unexpected status code.");
   } catch (error) {
     return "Sorry, registration failed. Please try again later.";
   }

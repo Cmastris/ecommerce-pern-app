@@ -72,8 +72,8 @@ export function ProductFeed() {
 
   return (
     <div>
-      <h1>{categoryData ? categoryData.name : 'All Products'}</h1>
-      <p>{categoryData ? categoryData.description : 'Browse our full range of products.'}</p>
+      <h1>{categoryData ? categoryData.name : "All Products"}</h1>
+      <p>{categoryData ? categoryData.description : "Browse our full range of products."}</p>
       {renderFeedItems()}
     </div>
   );

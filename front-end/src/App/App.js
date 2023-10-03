@@ -8,13 +8,13 @@ export async function authLoader() {
   try {
     const res = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/auth/status`,
-      { credentials: 'include' }
+      { credentials: "include" }
     );
     if (res.ok) {
       const authData = await res.json();
       return authData;
     }
-    throw new Error('Unexpected status code.');
+    throw new Error("Unexpected status code.");
   } catch (error) {
     return { logged_in: false, id: null, email_address: null };
   }

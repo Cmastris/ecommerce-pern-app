@@ -1,4 +1,4 @@
-import { MdStar, MdStarOutline, MdStarHalf } from 'react-icons/md';
+import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
 
 export default function StarRating({ rating }) {
 

@@ -17,7 +17,7 @@ export async function cartLoader() {
       const cartData = await res.json();
       return { cartData };
     }
-    throw new Error('Unexpected status code.');
+    throw new Error("Unexpected status code.");
   } catch (error) {
     return { cartLoaderError: "Sorry, your cart could not be loaded. Please try again later." };
   }

@@ -10,29 +10,29 @@ export async function loginAction({ request }) {
     const res = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
       {
-        method: 'POST',
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({ username, password })
       }
     );
 
     if (res.ok) {
-      let redirectPath = new URL(request.url).searchParams.get('redirect');
+      let redirectPath = new URL(request.url).searchParams.get("redirect");
       if (redirectPath) {
-        if (redirectPath[0] !== '/') {
+        if (redirectPath[0] !== "/") {
           // Prevent external navigation
           redirectPath = `/${redirectPath}`;
         }
       } else {
-        redirectPath = '/account';
+        redirectPath = "/account";
       }
       return redirect(redirectPath);
 
     } else if (res.status === 401) {
       return "Login failed. The username or password is incorrect.";
     }
-    throw new Error('Unexpected status code.');
+    throw new Error("Unexpected status code.");
   } catch (error) {
     return "Sorry, login failed. Please try again later.";
   }

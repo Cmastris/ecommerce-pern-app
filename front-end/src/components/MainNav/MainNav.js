@@ -10,13 +10,13 @@ export default function MainNav() {
       const res = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/auth/logout`,
         {
-          method: 'POST',
+          method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: 'include',
+          credentials: "include",
         }
       );
       if (!res.ok) {
-        throw new Error('Unexpected status code.');
+        throw new Error("Unexpected status code.");
       }
     } catch (error) {
       console.log(error);
