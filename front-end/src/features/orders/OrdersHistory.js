@@ -1,3 +1,7 @@
+import { useLoaderData } from "react-router-dom";
+import OrderSummary from "./OrderSummary";
+
+
 export async function ordersLoader() {
   // https://reactrouter.com/en/main/start/tutorial#loading-data
   // https://reactrouter.com/en/main/route/loader
@@ -18,9 +22,21 @@ export async function ordersLoader() {
 
 
 export function OrdersHistory() {
+  // https://reactrouter.com/en/main/hooks/use-loader-data
+  const { error, ordersData } = useLoaderData();
+
+  function renderOrderSummaries() {
+    if (error) {
+      return <p>{error}</p>;
+    } else if (ordersData.length === 0) {
+      return <p>There are no orders to display.</p>;
+    }
+    return ordersData.map(order => <OrderSummary key={order.order_id} orderData={order} />);
+  }
+
   return (
     <div>
-      <p>Orders</p>
+      {renderOrderSummaries()}
     </div>
   );
 }
