@@ -67,9 +67,9 @@ export function CheckoutPage() {
       <h2>Delivery address</h2>
       <Form method="post">
         <label htmlFor="address">Delivery name and address</label>
-        <textarea id="address" name="address" rows="5" minLength={15} required />
+        <textarea id="address" name="address" rows="5" minLength={15} maxLength={300} required />
         <label htmlFor="postcode">Postcode</label>
-        <input id="postcode" type="text" name="postcode" minLength={5} maxLength={10} required />
+        <input id="postcode" type="text" name="postcode" minLength={5} maxLength={8} required />
         <button type="submit">Submit order</button>
       </Form>
       {checkoutError ? (
