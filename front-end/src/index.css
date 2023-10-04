@@ -2,3 +2,7 @@
 https://create-react-app.dev/docs/adding-css-reset/ 
 https://github.com/csstools/postcss-normalize */
 @import-normalize;
+
+body, html {
+  font-family: 'PT Sans', sans-serif;
+}
