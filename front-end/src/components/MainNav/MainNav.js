@@ -27,40 +27,32 @@ export default function MainNav() {
     }
   }
 
+  function renderNavItem(path, anchor, onClick=null) {
+    return (
+      <li className={styles.listItem}>
+        <NavLink to={path} className={styles.link} onClick={onClick}>{anchor}</NavLink>
+      </li>
+    );
+  }
+
   return (
     <nav className={styles.mainNav}>
       <ul className={styles.navList}>
-        <li className={styles.listItem}>
-          <NavLink to="/" className={styles.link}>Home</NavLink>
-        </li>
-        <li className={styles.listItem}>
-          <NavLink to="/category/books" className={styles.link}>Books</NavLink>
-        </li>
-        <li className={styles.listItem}>
-          <NavLink to="/category/movies" className={styles.link}>Movies</NavLink>
-        </li>
+        {renderNavItem("/", "Home")}
+        {renderNavItem("/category/books", "Books")}
+        {renderNavItem("/category/movies", "Movies")}
       </ul>
       
       {authData?.logged_in ?
       <ul className={styles.navList}>
-        <li className={styles.listItem}>
-          <NavLink to="/account" className={styles.link}>Account</NavLink>
-        </li>
-        <li className={styles.listItem}>
-          <NavLink to="/cart" className={styles.link}>Cart</NavLink>
-        </li>
-        <li className={styles.listItem}>
-          <NavLink to="#" onClick={handleClickLogOut} className={styles.link}>Log Out</NavLink>
-        </li>
+        {renderNavItem("/account", "Account")}
+        {renderNavItem("/cart", "Cart")}
+        {renderNavItem("#", "Log Out", handleClickLogOut)}
       </ul>
       :
       <ul className={styles.navList}>
-        <li className={styles.listItem}>
-          <NavLink to="/login" className={styles.link}>Log In</NavLink>
-        </li>
-        <li className={styles.listItem}>
-          <NavLink to="/register" className={styles.link}>Register</NavLink>
-        </li>
+        {renderNavItem("/login", "Log In")}
+        {renderNavItem("/register", "Register")}
       </ul>
       }
     </nav>
