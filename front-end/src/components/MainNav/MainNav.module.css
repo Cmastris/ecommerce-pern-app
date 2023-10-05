@@ -1,0 +1,57 @@
+.mainNav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5%;
+  font-size: 1.05em;
+}
+
+.navList {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.listItem {
+  height: 100%;
+}
+
+.link {
+  display: inline-block;
+  height: 100%;
+  padding: 1.25rem 1.5rem;
+  height: 100%;
+}
+
+
+@media screen and (max-width: 1050px) {
+  .mainNav {
+    padding-right: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .mainNav {
+    width: 100%;
+  }
+
+  .listItem {
+    height: auto;  /* Ensure appropriate height if links wrap */
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .mainNav {
+    flex-direction: column;  /* Stacked, full-width sub-navigations */
+  }
+  .navList {
+    justify-content: center;
+  }
+}
