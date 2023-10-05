@@ -2,13 +2,19 @@
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 2em;
+  background-color: rgb(19, 25, 33);
 }
 
 .logo {
   flex-grow: 1;
   align-self: center;
   padding: 0.3em 2.5%;
+  color: rgb(255, 255, 255);
   font-size: 2em;
+}
+
+.orange {
+  color: rgb(255, 153, 0);
 }
 
 @media screen and (max-width: 600px) {

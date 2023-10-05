@@ -10,5 +10,6 @@ import { App } from "./App";
 
 test("App name is rendered", () => {
   render(createRouterProvider(<App />));
-  expect(screen.getByText("Pernecom")).toBeInTheDocument();
+  expect(screen.getByText("Pern")).toBeInTheDocument();
+  expect(screen.getByText("ecom")).toBeInTheDocument();
 });
