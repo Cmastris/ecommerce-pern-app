@@ -25,7 +25,23 @@
   display: inline-block;
   height: 100%;
   padding: 1.25rem 1.5rem;
-  height: 100%;
+  border: 1px solid transparent;  /* Prevent element size increase on hover */
+}
+
+.link,
+.link:link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.link:focus,
+.link:hover {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.link:active {
+  border: 1px solid rgb(255, 255, 255);
+  color: rgb(204, 204, 204);
 }
 
 
