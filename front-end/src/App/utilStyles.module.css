@@ -46,3 +46,17 @@
   border: 2px solid rgb(0, 180, 240);
   box-shadow: 0 2px 5px rgb(200, 240, 250);
 }
+
+
+/* ===== Other HTML Elements ===== */
+
+.h1 {
+  margin-bottom: 0.8em;
+}
+
+
+/* ===== Miscellaneous ===== */
+
+.separator {
+  margin: 2em 0;
+}
