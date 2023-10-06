@@ -18,3 +18,31 @@
     padding-right: 2.5%;
   }
 }
+
+
+/* ===== Links ===== */
+
+.buttonLink,
+.buttonLink:link,
+.buttonLink:visited {
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  background-color: rgb(255, 216, 20);
+  border: 2px solid rgb(252, 210, 0);
+  border-radius: 25px;
+  box-shadow: 0 2px 5px rgb(217, 217, 217);
+  color: rgb(15, 17, 17);
+  text-decoration: none;
+}
+
+.buttonLink:focus,
+.buttonLink:hover {
+  background-color: rgb(247, 202, 0);
+  border: 2px solid rgb(242, 194, 0);
+}
+
+.buttonLink:active {
+  background-color: rgb(240, 184, 0);
+  border: 2px solid rgb(0, 180, 240);
+  box-shadow: 0 2px 5px rgb(200, 240, 250);
+}
