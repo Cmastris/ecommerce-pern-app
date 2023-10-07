@@ -25,7 +25,12 @@ export default function ProductFeedItem({ productData }) {
           </Link>
         </div>
         {avg_rating ?
-        <StarRating rating={avg_rating} />
+        <div className={styles.ratingContainer}>
+          <StarRating rating={avg_rating} />
+          <span className={styles.ratingCount}>{rating_count}
+          {rating_count > 1 ? " ratings" : " rating"}
+          </span>
+        </div>
         : null}
         <div className={styles.price}>{price}</div>
       </div> 
