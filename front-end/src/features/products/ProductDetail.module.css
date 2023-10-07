@@ -16,10 +16,12 @@
   padding-left: 2.5%;
   min-width: 300px;
   width: 45%;
+  line-height: 1.3;
 }
 
 .productName {
   margin-top: 0;
+  line-height: 1;
 }
 
 .price {
