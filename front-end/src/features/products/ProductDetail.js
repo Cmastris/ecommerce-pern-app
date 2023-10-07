@@ -4,6 +4,9 @@ import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import StarRating from "../../components/StarRating/StarRating";
 import { getProductDetailPath, getProductImagePath } from "./utils";
 
+import utilStyles from "../../App/utilStyles.module.css";
+import styles from "./ProductDetail.module.css";
+
 
 export async function addToCartAction({ params }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -18,7 +21,7 @@ export async function addToCartAction({ params }) {
     );
 
     if (res.ok) {
-      return <span>This product has been added to your <Link to="/cart">cart</Link>.</span>;
+      return <>This item has been added to your <Link to="/cart" className={utilStyles.link}>cart</Link>.</>;
     } else if (res.status === 400) {
       const errorMessage = await res.text();
       return errorMessage;
@@ -79,34 +82,43 @@ export function ProductDetail() {
 
   function renderButton() {
     if (stock_count < 1) {
-      return <button disabled>Out of stock</button>;
+      return <p className={utilStyles.largeText}><em>Out of stock</em></p>;
+
     } else if (authData.logged_in) {
-      return <Form method="post"><button type="submit">Add to cart</button></Form>;
+      return (
+        <Form method="post">
+          <button type="submit" className={`${utilStyles.button} ${styles.button}`}>Add to cart</button>
+        </Form>
+      );
+
     } else {
       const currentPath = getProductDetailPath(productData.id, productData.name);
-      return <button onClick={() => navigate(`/login?redirect=${currentPath}`)}>Log in</button>;
+      return <button
+              className={`${utilStyles.button} ${styles.button}`}
+              onClick={() => navigate(`/login?redirect=${currentPath}`)}
+              >Log in to buy</button>;
     }
   }
 
   return (
-    <div>
-      <section>
+    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+      <section className={styles.summarySection}>
         <div>
-          <img src={imagePath} alt={productData.name}></img>
+          <img src={imagePath} alt={productData.name} className={styles.image}></img>
         </div>
-        <div>
-          <h1>{productData.name}</h1>
-          <p>{price}</p>
+        <div className={styles.summaryTextContent}>
+          <h1 className={styles.productName}>{productData.name}</h1>
+          <p className={styles.price}>{price}</p>
           <hr />
           <p>{short_description}</p>
           <hr />
-          {(stock_count >= 1 && stock_count <= 5) ? <p>Only {stock_count} left in stock!</p> : null }
+          {(stock_count >= 1 && stock_count <= 5) ? <p><strong>Only {stock_count} left in stock!</strong></p> : null }
           {renderButton()}
-          {addToCartMessage ? <p>{addToCartMessage}</p> : null}
+          {addToCartMessage ? <p className={styles.buttonMessage}>{addToCartMessage}</p> : null}
           {avg_rating ?
           <div>
             <StarRating rating={avg_rating} />
-            <p>Rated {avg_rating}/5.00 based on {rating_count} ratings</p>
+            <div className={styles.ratingText}>Rated {avg_rating}/5.00 based on {rating_count} ratings</div>
           </div>
           : null}
         </div>

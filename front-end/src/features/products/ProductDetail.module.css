@@ -1,0 +1,67 @@
+/* ===== Summary Section ===== */
+
+.summarySection {
+  /* Image on left and summary text section on right */
+  display: flex;
+  align-items: flex-start;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 500px;
+  border: 1px solid rgb(220, 220, 220);
+}
+
+.summaryTextContent {
+  padding-left: 2.5%;
+  min-width: 300px;
+  width: 45%;
+}
+
+.productName {
+  margin-top: 0;
+}
+
+.price {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.button {
+  width: 20em;
+  margin: 1em 0 2em 0;
+}
+
+.buttonMessage {
+  margin: 0 0 1.4em 0;
+  font-size: 0.95em;
+}
+
+.ratingText {
+  margin: 0.4em 0 1em 0;
+  font-size: 0.95em;
+  font-style: italic;
+}
+
+
+@media screen and (max-width: 768px) {
+  /* Column layout (image, summary text section, description section) */
+  .summarySection {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image {
+    max-height: 450px;
+  }
+
+  .summaryTextContent {
+    min-width: 0;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .productName {
+    margin-top: 0.8em;
+  }
+}
