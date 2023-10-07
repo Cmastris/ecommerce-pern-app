@@ -1,0 +1,19 @@
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  column-gap: 2.5%;
+  row-gap: 2rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .productGrid {
+    column-gap: 4%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .productGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    column-gap: 7.5%;
+  }
+}

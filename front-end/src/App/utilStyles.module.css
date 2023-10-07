@@ -19,6 +19,10 @@
   }
 }
 
+.mb4rem {
+  margin-bottom: 4rem;
+}
+
 
 /* ===== Links ===== */
 
@@ -54,9 +58,18 @@
   margin-bottom: 0.8em;
 }
 
+.image {
+  max-width: 100%;
+}
+
 
 /* ===== Miscellaneous ===== */
 
 .separator {
   margin: 2em 0;
+}
+
+.emptyFeedMessage {
+  margin-top: 2.5em;
+  font-style: italic;
 }

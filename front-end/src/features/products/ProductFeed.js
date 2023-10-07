@@ -3,6 +3,9 @@ import { useLoaderData } from "react-router-dom";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import ProductFeedItem from "./ProductFeedItem";
 
+import utilStyles from "../../App/utilStyles.module.css";
+import styles from "./ProductFeed.module.css";
+
 
 async function fetchCategoryData(categorySlug) {
   // Fetch all categories data
@@ -64,16 +67,18 @@ export function ProductFeed() {
 
   function renderFeedItems() {
     if (productsData.length === 0) {
-      return <p>Sorry, no products were found.</p>;
+      return <p className={utilStyles.emptyFeedMessage}>Sorry, no products were found.</p>;
     }
     const feedItems = productsData.map(p => <ProductFeedItem key={p.id} productData={p} />);
-    return <div>{feedItems}</div>;
+    return <div className={`${styles.productGrid} ${utilStyles.mb4rem}`}>{feedItems}</div>;
   }
 
   return (
-    <div>
-      <h1>{categoryData ? categoryData.name : "All Products"}</h1>
-      <p>{categoryData ? categoryData.description : "Browse our full range of products."}</p>
+    <div className={utilStyles.pageXPadding}>
+      <div className={utilStyles.mb4rem}>
+        <h1 className={utilStyles.h1}>{categoryData ? categoryData.name : "All Products"}</h1>
+        <p>{categoryData ? categoryData.description : "Browse our full range of products."}</p>
+      </div>
       {renderFeedItems()}
     </div>
   );
