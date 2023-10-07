@@ -1,4 +1,6 @@
 import { MdStar, MdStarOutline, MdStarHalf } from "react-icons/md";
+import styles from "./StarRating.module.css";
+
 
 export default function StarRating({ rating }) {
 
@@ -23,8 +25,8 @@ export default function StarRating({ rating }) {
   }
 
   return (
-    <div>
+    <span className={styles.stars}>
       {renderStars()}
-    </div>
+    </span>
   );
 }
