@@ -20,7 +20,7 @@ export default function FallbackErrorPage() {
           <em>{error.statusText || error.message}</em>
         </p>
         <hr className={utilStyles.separator}></hr>
-        <Link to="/" className={utilStyles.buttonLink}>Visit the homepage</Link>
+        <Link to="/" className={utilStyles.button}>Visit the homepage</Link>
       </main>
     </>
   );

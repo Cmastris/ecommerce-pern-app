@@ -24,7 +24,7 @@
 }
 
 
-/* ===== Links ===== */
+/* ===== Links and Buttons ===== */
 
 .link,
 .link:link {
@@ -47,9 +47,9 @@
   text-decoration: none;
 }
 
-.buttonLink,
-.buttonLink:link,
-.buttonLink:visited {
+.button,
+.button:link,
+.button:visited {
   display: inline-block;
   padding: 0.5em 1.5em;
   background-color: rgb(255, 216, 20);
@@ -60,13 +60,14 @@
   text-decoration: none;
 }
 
-.buttonLink:focus,
-.buttonLink:hover {
+.button:focus,
+.button:hover {
+  cursor: pointer;
   background-color: rgb(247, 202, 0);
   border: 2px solid rgb(242, 194, 0);
 }
 
-.buttonLink:active {
+.button:active {
   background-color: rgb(240, 184, 0);
   border: 2px solid rgb(0, 180, 240);
   box-shadow: 0 2px 5px rgb(200, 240, 250);
