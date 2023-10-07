@@ -123,9 +123,9 @@ export function ProductDetail() {
           : null}
         </div>
       </section>
-      <section>
+      <section className={styles.descriptionSection}>
         <h2>Description</h2>
-        <p>{short_description}</p>
+        <p className={utilStyles.XLText}>{short_description}</p>
         <p>{long_description}</p>
       </section>
     </div>
