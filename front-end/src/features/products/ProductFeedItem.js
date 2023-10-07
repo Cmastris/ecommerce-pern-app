@@ -8,8 +8,10 @@ import styles from "./ProductFeedItem.module.css";
 
 
 export default function ProductFeedItem({ productData }) {
+
   const detailPath = getProductDetailPath(productData.id, productData.name);
   const imagePath = getProductImagePath(productData.id, productData.name);
+  const { avg_rating, rating_count, price } = productData;
 
   return (
     <article className={styles.feedItem}>
@@ -22,8 +24,10 @@ export default function ProductFeedItem({ productData }) {
             <strong className={styles.name}>{productData.name}</strong>
           </Link>
         </div>
-        <StarRating rating={productData.avg_rating} />
-        <div className={styles.price}>{productData.price}</div>
+        {avg_rating ?
+        <StarRating rating={avg_rating} />
+        : null}
+        <div className={styles.price}>{price}</div>
       </div> 
     </article>
   );
