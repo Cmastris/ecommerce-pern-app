@@ -103,8 +103,12 @@ export function ProductDetail() {
           {(stock_count >= 1 && stock_count <= 5) ? <p>Only {stock_count} left in stock!</p> : null }
           {renderButton()}
           {addToCartMessage ? <p>{addToCartMessage}</p> : null}
-          <StarRating rating={avg_rating} />
-          <p>Rated {avg_rating}/5.00 based on {rating_count} ratings</p>
+          {avg_rating ?
+          <div>
+            <StarRating rating={avg_rating} />
+            <p>Rated {avg_rating}/5.00 based on {rating_count} ratings</p>
+          </div>
+          : null}
         </div>
       </section>
       <section>
