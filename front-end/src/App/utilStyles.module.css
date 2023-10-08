@@ -78,6 +78,28 @@
 }
 
 
+/* ===== Forms ===== */
+
+.stackedForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 25rem;
+}
+
+.label {
+  margin-bottom: 0.4rem;
+  margin-left: 0.15rem;
+  font-weight: 700;
+}
+
+.input {
+  min-height: 2rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgb(140, 140, 140);
+  border-radius: 5px;
+}
+
+
 /* ===== Other HTML Elements ===== */
 
 .h1 {
