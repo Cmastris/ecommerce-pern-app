@@ -1,4 +1,5 @@
-import { Form, Link, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
+import InlineLink from "../../components/InlineLink/InlineLink";
 
 export async function loginAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -46,7 +47,7 @@ export function LoginPage() {
   const authData = useRouteLoaderData("app");
   const loginError = useActionData();
 
-  const registerLink = <Link to="/register">register</Link>;
+  const registerLink = <InlineLink path="/register" anchor="register" />;
   const loggedOutContent = <p>If you haven't created an account, please {registerLink} instead.</p>;
   const loggedInContent = <p>You are already logged in as {authData.email_address}.</p>;
 

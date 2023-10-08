@@ -1,6 +1,7 @@
-import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
+import InlineLink from "../../components/InlineLink/InlineLink";
 import { getDateTimeString, renderOrderItems } from "./utils";
 
 
@@ -68,7 +69,7 @@ export function OrderDetailsPage({ checkoutSuccess }) {
         <p>{address}</p>
         <p>{postcode}</p>
       </section>
-      <Link to="/">Continue shopping</Link>
+      <InlineLink path="/" anchor="Continue shopping" />
     </div>
   );
 }

@@ -1,6 +1,7 @@
-import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
+import InlineLink from "../../components/InlineLink/InlineLink";
 import { getProductDetailPath } from "../products/utils";
 import { renderOrderItems } from "./utils";
 
@@ -42,12 +43,12 @@ export function Cart() {
       return <p>Sorry, '{productName}' couldn't be removed from your cart.</p>;
     }
     const productPath = getProductDetailPath(productId, productName);
-    return <p>'<Link to={productPath}>{productName}</Link>' was removed from your cart.</p>;
+    return <p>'<InlineLink path={productPath} anchor={productName} />' was removed from your cart.</p>;
   }
 
   function renderCheckoutButton() {
     if (!cartLoaderError) {
-      return <Link to="/checkout">Go to checkout</Link>;
+      return <InlineLink path="/checkout" anchor="Go to checkout" />;
     }
   }
 

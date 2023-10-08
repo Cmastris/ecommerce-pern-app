@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import InlineLink from "../InlineLink/InlineLink";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
@@ -7,8 +7,8 @@ export default function InlineErrorPage({ pageName, type, message, loginRedirect
   function renderMessage() {
     if (type === "login_required") {
       const path = loginRedirect ? `/login?redirect=${loginRedirect}` : "/login";
-      const link = <Link to={path} className={utilStyles.link}>log in</Link>;
-      return <p>Please {link} to view this page.</p>;
+      const loginLink = <InlineLink path={path} anchor="log in" />;
+      return <p>Please {loginLink} to view this page.</p>;
     } else {
       return <p>{message}</p>;
     }

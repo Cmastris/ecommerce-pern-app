@@ -1,7 +1,8 @@
-import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import { renderOrderItems } from "./utils";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
+import InlineLink from "../../components/InlineLink/InlineLink";
 
 
 export async function checkoutAction({ request }) {
@@ -75,7 +76,7 @@ export function CheckoutPage() {
       {checkoutError ? (
         <div>
           <p>{checkoutError}</p>
-          <Link to="/">Continue shopping</Link>
+          <InlineLink path="/" anchor="Continue shopping" />
         </div>
       ) : null}
     </div>

@@ -1,6 +1,7 @@
-import { Form, Link, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
+import InlineLink from "../../components/InlineLink/InlineLink";
 import StarRating from "../../components/StarRating/StarRating";
 import { getProductDetailPath, getProductImagePath } from "./utils";
 
@@ -21,7 +22,8 @@ export async function addToCartAction({ params }) {
     );
 
     if (res.ok) {
-      return <>This item has been added to your <Link to="/cart" className={utilStyles.link}>cart</Link>.</>;
+      const cartLink = <InlineLink path="/cart" anchor="cart" />
+      return <>This item has been added to your {cartLink}.</>;
     } else if (res.status === 400) {
       const errorMessage = await res.text();
       return errorMessage;
