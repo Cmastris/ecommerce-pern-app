@@ -1,5 +1,8 @@
 import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
+
 import InlineLink from "../../components/InlineLink/InlineLink";
+import utilStyles from "../../App/utilStyles.module.css";
+
 
 export async function registerAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -38,19 +41,19 @@ export function RegistrationPage() {
   const registrationError = useActionData();
 
   const loginLink = <InlineLink path="/login" anchor="log in" />;
-  const loggedOutContent = <p>If you already have an account, please {loginLink} instead.</p>;
-  const loggedInContent = <p>You are already logged in as {authData.email_address}.</p>;
+  const loggedOutContent = <>If you already have an account, please {loginLink} instead.</>;
+  const loggedInContent = <>You are already logged in as {authData.email_address}.</>;
 
   return (
-    <div>
-      <h1>Create your account</h1>
-      {authData.logged_in ? loggedInContent : loggedOutContent}
-      <Form method="post">
-        <label htmlFor="email_address">Email</label>
-        <input id="email_address" type="email" name="email_address" minLength={5} required />
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" name="password" minLength={8} maxLength={25} required />
-        <button type="submit">Register</button>
+    <div className={utilStyles.pageXPadding}>
+      <h1 className={utilStyles.h1}>Create your account</h1>
+      <p className={utilStyles.mb2rem}>{authData.logged_in ? loggedInContent : loggedOutContent}</p>
+      <Form method="post" className={utilStyles.stackedForm}>
+        <label htmlFor="email_address" className={utilStyles.label}>Email</label>
+        <input id="email_address" className={utilStyles.input} type="email" name="email_address" minLength={5} required />
+        <label htmlFor="password" className={utilStyles.label}>Password</label>
+        <input id="password" className={utilStyles.input} type="password" name="password" minLength={8} maxLength={25} required />
+        <button type="submit" className={utilStyles.button}>Register</button>
       </Form>
       <p>{registrationError ? registrationError : null}</p>
     </div>
