@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData, useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import InlineLink from "../../components/InlineLink/InlineLink";
@@ -72,7 +72,6 @@ export function ProductDetail() {
   const { productData, error } = useLoaderData();
   const authData = useRouteLoaderData("app");
   const addToCartMessage = useActionData();
-  const navigate = useNavigate();
 
   if (error) {
     return <InlineErrorPage pageName="Error" message={error} />;
@@ -83,22 +82,21 @@ export function ProductDetail() {
   const imagePath = getProductImagePath(productData.id, productData.name);
 
   function renderButton() {
+    const buttonStyles = `${utilStyles.button} ${styles.button}`;
     if (stock_count < 1) {
       return <p className={utilStyles.largeText}><em>Out of stock</em></p>;
 
     } else if (authData.logged_in) {
       return (
         <Form method="post">
-          <button type="submit" className={`${utilStyles.button} ${styles.button}`}>Add to cart</button>
+          <button type="submit" className={buttonStyles}>Add to cart</button>
         </Form>
       );
 
     } else {
       const currentPath = getProductDetailPath(productData.id, productData.name);
-      return <button
-              className={`${utilStyles.button} ${styles.button}`}
-              onClick={() => navigate(`/login?redirect=${currentPath}`)}
-              >Log in to buy</button>;
+      const linkPath = `/login?redirect=${currentPath}`;
+      return <Link to={linkPath} className={buttonStyles}>Log in to buy</Link>;
     }
   }
 
