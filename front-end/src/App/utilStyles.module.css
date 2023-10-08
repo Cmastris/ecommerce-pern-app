@@ -50,13 +50,17 @@
 .button,
 .button:link,
 .button:visited {
-  display: inline-block;
-  padding: 0.5em 1.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  padding: 0.5em 2em;
   background-color: rgb(255, 216, 20);
   border: 2px solid rgb(252, 210, 0);
   border-radius: 25px;
   box-shadow: 0 2px 5px rgb(217, 217, 217);
   color: rgb(15, 17, 17);
+  font-size: 0.95rem;
   text-decoration: none;
 }
 
