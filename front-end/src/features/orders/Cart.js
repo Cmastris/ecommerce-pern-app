@@ -47,9 +47,7 @@ export function Cart() {
   }
 
   function renderCheckoutButton() {
-    if (!cartLoaderError) {
-      return <InlineLink path="/checkout" anchor="Go to checkout" />;
-    }
+    return <InlineLink path="/checkout" anchor="Go to checkout" />;
   }
 
   return (
