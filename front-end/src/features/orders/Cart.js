@@ -1,9 +1,10 @@
-import { useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Link, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import InlineLink from "../../components/InlineLink/InlineLink";
 import { getProductDetailPath } from "../products/utils";
 import { renderOrderItems } from "./utils";
+import utilStyles from "../../App/utilStyles.module.css";
 
 
 export async function cartLoader() {
@@ -39,26 +40,26 @@ export function Cart() {
 
   function renderRemovalMessage() {
     const { error, productId, productName } = removalResult;
+    let message;
     if (error) {
-      return <p>Sorry, '{productName}' couldn't be removed from your cart.</p>;
+      message = `Sorry, '${productName}' couldn't be removed from your cart.`;
+    } else {
+      const productPath = getProductDetailPath(productId, productName);
+      message = <>'<InlineLink path={productPath} anchor={productName} />' was removed from your cart.</>;
     }
-    const productPath = getProductDetailPath(productId, productName);
-    return <p>'<InlineLink path={productPath} anchor={productName} />' was removed from your cart.</p>;
-  }
-
-  function renderCheckoutButton() {
-    return <InlineLink path="/checkout" anchor="Go to checkout" />;
+    return <p><strong>{message}</strong></p>;
   }
 
   return (
-    <div>
-      <h1>Cart</h1>
-      <p>You are logged in as {authData.email_address}.</p>
-      {cartData?.length > 2 ? renderCheckoutButton() : null}
+    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+      <h1 className={utilStyles.h1}>Cart</h1>
+      <p>You are logged in as {authData.email_address}.
+      View your cart below or <InlineLink path="/checkout" anchor="check out" />.</p>
       {removalResult ? renderRemovalMessage() : null}
       {renderOrderItems(cartData, cartLoaderError)}
-      <hr />
-      {cartData?.length > 0 ? renderCheckoutButton() : null}
+      {cartData?.length > 0 ?
+      <Link to="/checkout" className={utilStyles.button}>Go to checkout</Link>
+      : null}
     </div>
   );
 }
