@@ -27,7 +27,7 @@ export async function removeCartItemAction({ request }) {
 }
 
 
-export function OrderItem({ productData, editable }) {
+export function OrderItem({ productData, editable, lastItem }) {
   const { product_id, product_name, product_price } = productData;
   const productPath = getProductDetailPath(product_id, product_name);
 
@@ -45,6 +45,7 @@ export function OrderItem({ productData, editable }) {
         </Form>
         : null}
       </div>
+      {lastItem ? <hr /> : null}
     </article>
   );
 }

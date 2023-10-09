@@ -8,11 +8,16 @@ export function getDateTimeString(rawString) {
 
 export function renderOrderItems(orderItemsData, editable=true) {
   // Cart items (i.e. pending order items) or completed order items
-  if (orderItemsData.length === 0) {
+  const itemsCount = orderItemsData.length;
+  if (itemsCount === 0) {
     return <p>Your cart is empty.</p>;
   }
-  const orderItems = orderItemsData.map(
-    item => <OrderItem key={item.product_id} productData={item} editable={editable} />
+  const orderItems = orderItemsData.map((item, index) => {
+    if (index + 1 === itemsCount) {
+      return <OrderItem key={item.product_id} productData={item} editable={editable} lastItem={true} />;
+    }
+    return <OrderItem key={item.product_id} productData={item} editable={editable} />;
+  }
   );
   return <div>{orderItems}</div>;
 }
