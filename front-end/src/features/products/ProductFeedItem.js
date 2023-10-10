@@ -19,9 +19,9 @@ export default function ProductFeedItem({ productData }) {
         <img src={imagePath} alt={productData.name} className={`${utilStyles.image} ${styles.image}`}></img>
       </Link>
       <div className={styles.textContainer}>
-        <div className={styles.nameContainer}>
+        <div className={utilStyles.mb1rem}>
           <Link to={detailPath} className={styles.nameLink}>
-            <strong className={styles.name}>{productData.name}</strong>
+            <strong className={`${utilStyles.regularWeight} ${utilStyles.XLText}`}>{productData.name}</strong>
           </Link>
         </div>
         {avg_rating ?

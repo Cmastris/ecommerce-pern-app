@@ -11,18 +11,9 @@
   color: rgb(15, 17, 17);
 }
 
-.nameContainer {
-  margin-bottom: 1em;
-}
-
 .nameLink {
   color: rgb(15, 17, 17);
   text-decoration: none;
-}
-
-.name {
-  font-size: 1.2em;
-  font-weight: 400;
 }
 
 .ratingContainer {

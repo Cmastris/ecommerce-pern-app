@@ -19,6 +19,10 @@
   }
 }
 
+.mb1rem {
+  margin-bottom: 1rem;
+}
+
 .mb2rem {
   margin-bottom: 2rem;
 }
@@ -115,6 +119,25 @@
 }
 
 
+/* ===== Font Size & Weight ===== */
+
+.bold {
+  font-weight: 700;
+}
+
+.regularWeight {
+  font-weight: 400;
+}
+
+.largeText {
+  font-size: 1.1em;
+}
+
+.XLText {
+  font-size: 1.2em;
+}
+
+
 /* ===== Miscellaneous ===== */
 
 .separator {
@@ -124,12 +147,4 @@
 .emptyFeedMessage {
   margin-top: 2.5em;
   font-style: italic;
-}
-
-.largeText {
-  font-size: 1.1em;
-}
-
-.XLText {
-  font-size: 1.2em;
 }
