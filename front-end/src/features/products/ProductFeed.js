@@ -70,11 +70,11 @@ export function ProductFeed() {
       return <p className={utilStyles.emptyFeedMessage}>Sorry, no products were found.</p>;
     }
     const feedItems = productsData.map(p => <ProductFeedItem key={p.id} productData={p} />);
-    return <div className={`${styles.productGrid} ${utilStyles.mb4rem}`}>{feedItems}</div>;
+    return <div className={styles.productGrid}>{feedItems}</div>;
   }
 
   return (
-    <div className={utilStyles.pageXPadding}>
+    <div className={utilStyles.pagePadding}>
       <div className={utilStyles.mb4rem}>
         <h1 className={utilStyles.h1}>{categoryData ? categoryData.name : "All Products"}</h1>
         <p>{categoryData ? categoryData.description : "Browse our full range of products."}</p>

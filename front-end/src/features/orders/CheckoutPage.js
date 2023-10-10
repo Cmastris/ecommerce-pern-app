@@ -56,7 +56,7 @@ export function CheckoutPage() {
   }
 
   return (
-    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+    <div className={utilStyles.pagePadding}>
       <h1 className={utilStyles.h1}>Checkout</h1>
       <p className={utilStyles.mb3rem}>Complete your order below.</p>
       <h2>Order items</h2>

@@ -51,7 +51,7 @@ export function Cart() {
   }
 
   return (
-    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+    <div className={utilStyles.pagePadding}>
       <h1 className={utilStyles.h1}>Cart</h1>
       <p>
         You are logged in as {authData.email_address}.

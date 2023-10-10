@@ -101,7 +101,7 @@ export function ProductDetail() {
   }
 
   return (
-    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+    <div className={utilStyles.pagePadding}>
       <section className={styles.summarySection}>
         <div>
           <img src={imagePath} alt={productData.name} className={styles.image}></img>

@@ -1,21 +1,18 @@
 /* ===== Page Layout & Spacing ===== */
 
-.pageXPadding {
-  padding-left: 12.5%;
-  padding-right: 12.5%;
+.pagePadding {
+  padding: 0 12.5% 4rem 12.5%;
 }
 
 @media screen and (max-width: 1400px) {
-  .pageXPadding {
-    padding-left: 5%;
-    padding-right: 5%;
+  .pagePadding {
+    padding: 0 5% 4rem 5%;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .pageXPadding {
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+  .pagePadding {
+    padding: 0 2.5% 4rem 2.5%;
   }
 }
 

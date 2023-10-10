@@ -45,7 +45,7 @@ export function RegistrationPage() {
   const loggedInContent = <>You are already logged in as {authData.email_address}.</>;
 
   return (
-    <div className={utilStyles.pageXPadding}>
+    <div className={utilStyles.pagePadding}>
       <h1 className={utilStyles.h1}>Create your account</h1>
       <p className={utilStyles.mb2rem}>{authData.logged_in ? loggedInContent : loggedOutContent}</p>
       <Form method="post" className={utilStyles.stackedForm}>

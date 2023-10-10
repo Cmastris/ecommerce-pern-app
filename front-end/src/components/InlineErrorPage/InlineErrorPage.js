@@ -15,7 +15,7 @@ export default function InlineErrorPage({ pageName, type, message, loginRedirect
   }
 
   return (
-    <div className={utilStyles.pageXPadding}>
+    <div className={utilStyles.pagePadding}>
       <h1 className={utilStyles.h1}>{pageName}</h1>
       <div className={utilStyles.largeText}>
         {renderMessage()}
