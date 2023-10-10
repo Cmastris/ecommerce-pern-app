@@ -53,8 +53,12 @@ export function Cart() {
   return (
     <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
       <h1 className={utilStyles.h1}>Cart</h1>
-      <p>You are logged in as {authData.email_address}.
-      View your cart below or <InlineLink path="/checkout" anchor="check out" />.</p>
+      <p>
+        You are logged in as {authData.email_address}.
+        {cartData?.length > 0 ?
+        <> View your cart below or <InlineLink path="/checkout" anchor="check out" />.</>
+        : null }
+      </p>
       {removalResult ? renderRemovalMessage() : null}
       {renderOrderItems(cartData, cartLoaderError)}
       {cartData?.length > 0 ?
