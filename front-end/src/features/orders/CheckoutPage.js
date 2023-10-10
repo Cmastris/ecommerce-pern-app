@@ -1,8 +1,8 @@
-import { Form, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import { renderOrderItems } from "./utils";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
-import InlineLink from "../../components/InlineLink/InlineLink";
+import utilStyles from "../../App/utilStyles.module.css";
 
 
 export async function checkoutAction({ request }) {
@@ -28,7 +28,7 @@ export async function checkoutAction({ request }) {
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { checkoutError: "Sorry, your order could not be placed. Please try again later." };
+    return { checkoutError: "Sorry, your order could not be completed. Please try again later." };
   }
 }
 
@@ -47,36 +47,37 @@ export function CheckoutPage() {
     return <InlineErrorPage pageName="Checkout" message="Your cart is empty so it is not possible to checkout." />;
   }
 
-  function renderTotalCost() {
+  function getTotalCost() {
     let totalCost = 0;
     cartData.forEach(item => {
       totalCost += Number(item.product_price.substring(1)) * item.product_quantity;
     });
-    return <p>Total cost: ${totalCost}</p>;
+    return totalCost;
   }
 
   return (
-    <div>
-      <h1>Checkout</h1>
-      <p>You are logged in as {authData.email_address}. Complete your order below.</p>
-      <h2>Cart items</h2>
+    <div className={`${utilStyles.pageXPadding} ${utilStyles.mb4rem}`}>
+      <h1 className={utilStyles.h1}>Checkout</h1>
+      <p className={utilStyles.mb3rem}>Complete your order below.</p>
+      <h2>Order items</h2>
       {renderOrderItems(cartData, false)}
-      <hr />
-      {renderTotalCost()}
+      <div className={`${utilStyles.mb3rem} ${utilStyles.XLText}`}>
+        <strong>Total cost: <span className={utilStyles.red}>${getTotalCost()}</span></strong>
+      </div>
       <h2>Payment</h2>
-      <p>This isn't a real ecommerce website!</p>
+      <p className={utilStyles.mb3rem}>This isn't a real ecommerce website :)</p>
       <h2>Delivery address</h2>
-      <Form method="post">
-        <label htmlFor="address">Delivery name and address</label>
-        <textarea id="address" name="address" rows="5" minLength={15} maxLength={300} required />
-        <label htmlFor="postcode">Postcode</label>
-        <input id="postcode" type="text" name="postcode" minLength={5} maxLength={8} required />
-        <button type="submit">Submit order</button>
+      <Form method="post" className={utilStyles.stackedForm}>
+        <label htmlFor="address" className={utilStyles.label}>Delivery name and address</label>
+        <textarea id="address" className={utilStyles.input} name="address" rows="5" minLength={15} maxLength={300} required />
+        <label htmlFor="postcode" className={utilStyles.label}>Postcode</label>
+        <input id="postcode" className={utilStyles.input} type="text" name="postcode" minLength={5} maxLength={8} required />
+        <button type="submit" className={`${utilStyles.mt2rem} ${utilStyles.button}`}>Submit order</button>
       </Form>
       {checkoutError ? (
-        <div>
-          <p>{checkoutError}</p>
-          <InlineLink path="/" anchor="Continue shopping" />
+        <div className={utilStyles.mt2rem}>
+          <p className={`${utilStyles.mb2rem} ${utilStyles.red}`}><strong>{checkoutError}</strong></p>
+          <Link to="/" className={utilStyles.button}>Continue shopping</Link>
         </div>
       ) : null}
     </div>

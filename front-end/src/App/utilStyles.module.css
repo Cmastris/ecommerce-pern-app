@@ -23,12 +23,20 @@
   margin-top: 1rem;
 }
 
+.mt2rem {
+  margin-top: 2rem;
+}
+
 .mb1rem {
   margin-bottom: 1rem;
 }
 
 .mb2rem {
   margin-bottom: 2rem;
+}
+
+.mb3rem {
+  margin-bottom: 3rem;
 }
 
 .mb4rem {
@@ -143,6 +151,10 @@
 
 
 /* ===== Miscellaneous ===== */
+
+.red {
+  color: rgb(175, 40, 5);
+}
 
 .separator {
   margin: 2em 0;
