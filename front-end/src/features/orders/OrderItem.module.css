@@ -1,0 +1,29 @@
+.orderItem {
+  max-width: 40rem;
+}
+
+.flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contentContainer {
+  padding-right: 3em;
+}
+
+.button {
+  padding: 0.6em 0.8em;
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 8px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: rgb(215, 215, 215);
+}
+
+.button:active {
+  background-color: rgb(180, 180, 180);
+}
