@@ -1,8 +1,9 @@
-import { useLoaderData, useRouteLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
-import InlineLink from "../../components/InlineLink/InlineLink";
 import { getDateTimeString, renderOrderItems } from "./utils";
+import utilStyles from "../../App/utilStyles.module.css";
+import styles from "./OrderDetailsPage.module.css";
 
 
 export async function orderDetailsLoader({ params }) {
@@ -49,27 +50,28 @@ export function OrderDetailsPage({ checkoutSuccess }) {
   const formattedTime = getDateTimeString(order_placed_time);
 
   return (
-    <div>
-      <h1>Order details</h1>
+    <div className={utilStyles.pagePadding}>
+      <h1 className={utilStyles.mb3rem}>Order details</h1>
       {checkoutSuccess ? <p>Your order was placed successfully.</p> : null}
-      <section>
+      <section className={utilStyles.mb3rem}>
         <h2>Key details</h2>
-        <p>Order ID: {order_id}</p>
-        <p>Status: {order_status}</p>
-        <p>Date/time: {formattedTime}</p>
-        <p>Total cost: {total_cost}</p>
+        <div className={styles.detailsContainer}>
+          <p><span className={utilStyles.bold}>Order ID:</span> {order_id}</p>
+          <p><span className={utilStyles.bold}>Status:</span> {order_status}</p>
+          <p><span className={utilStyles.bold}>Placed:</span> {formattedTime}</p>
+          <p><span className={utilStyles.bold}>Total cost:</span> {total_cost}</p>
+        </div>
       </section>
-      <section>
+      <section className={utilStyles.mb3rem}>
         <h2>Items</h2>
         {renderOrderItems(order_items, false)}
-        <hr />
       </section>
-      <section>
-        <h2>Delivery address</h2>
+      <section className={utilStyles.mb3rem}>
+        <h2 className={utilStyles.mb2rem}>Delivery address</h2>
         <p>{address}</p>
         <p>{postcode}</p>
       </section>
-      <InlineLink path="/" anchor="Continue shopping" />
+      <Link to="/" className={utilStyles.button}>Continue shopping</Link>
     </div>
   );
 }

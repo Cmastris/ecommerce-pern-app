@@ -1,0 +1,12 @@
+.detailsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+  max-width: 40rem;
+}
+
+@media screen and (max-width: 500px) {
+  .detailsContainer {
+    grid-template-columns: 1fr;
+  }
+}
