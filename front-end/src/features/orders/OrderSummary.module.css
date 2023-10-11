@@ -1,0 +1,27 @@
+.orderSummary {
+  max-width: 40rem;
+}
+
+.flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contentContainer {
+  padding-right: 2.5em;
+}
+
+.button {
+  min-width: 10em;
+}
+
+@media screen and (max-width: 350px) {
+  .contentContainer {
+    padding-right: 1.5em;
+  }
+  .button {
+    min-width: 0;
+    width: 6em;
+  }
+}
