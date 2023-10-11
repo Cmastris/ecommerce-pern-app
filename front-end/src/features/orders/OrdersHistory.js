@@ -32,7 +32,12 @@ export function OrdersHistory() {
       return <p>There are no orders to display.</p>;
     }
     ordersData.sort((a, b) => b.order_id - a.order_id);  // Render latest orders first
-    return ordersData.map(order => <OrderSummary key={order.order_id} orderData={order} />);
+    return ordersData.map((order, index) => {
+      if (index + 1 === ordersData.length) {
+        return <OrderSummary key={order.order_id} orderData={order} lastItem={true} />; 
+      }
+      return <OrderSummary key={order.order_id} orderData={order} />;
+    });
   }
 
   return (
