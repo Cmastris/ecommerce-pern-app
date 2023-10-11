@@ -3,6 +3,7 @@ import { useRouteLoaderData } from "react-router-dom";
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
 import InlineLink from "../InlineLink/InlineLink";
 import { OrdersHistory } from "../../features/orders/OrdersHistory";
+import utilStyles from "../../App/utilStyles.module.css";
 
 
 export default function AccountPage() {
@@ -14,10 +15,12 @@ export default function AccountPage() {
   }
 
   return (
-    <div>
-      <h1>Your account</h1>
+    <div className={utilStyles.pagePadding}>
+      <h1 className={utilStyles.h1}>Your account</h1>
       <p>You are logged in as {authData.email_address}.</p>
-      <InlineLink path="/cart" anchor="Go to cart" />
+      <p className={utilStyles.mb3rem}>
+        View your previous orders below or <InlineLink path="/cart" anchor="visit your cart" />.
+      </p>
       <h2>Your orders</h2>
       <OrdersHistory />
     </div>
