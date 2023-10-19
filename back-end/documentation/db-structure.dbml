@@ -3,7 +3,7 @@
 Table users {
   id serial [pk, increment]
   email_address varchar(100) [not null, unique]
-  hashed_pw text [not null]
+  hashed_pw text
 }
 
 Table addresses {

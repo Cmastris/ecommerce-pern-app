@@ -1,7 +1,7 @@
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
   "email_address" varchar(100) UNIQUE NOT NULL,
-  "hashed_pw" text NOT NULL
+  "hashed_pw" text
 );
 
 CREATE TABLE "addresses" (
