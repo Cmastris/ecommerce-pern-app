@@ -32,7 +32,7 @@ const getUserByEmail = async (email_address) => {
   }
 };
 
-const addUser = (email_address, hashed_pw) => {
+const addLocalUser = (email_address, hashed_pw) => {
   throwIfArgsUndefined([email_address, hashed_pw]);
   return { "id": 1, "email_address": email_address };
 };
@@ -67,7 +67,7 @@ const getCategories = () => {
 module.exports = {
   emailExists,
   getUserByEmail,
-  addUser,
+  addLocalUser,
   updateUserPassword,
   getProducts,
   getProductById,

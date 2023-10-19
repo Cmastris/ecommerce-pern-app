@@ -27,10 +27,10 @@ const getUserByEmail = async (email_address) => {
   return res.rows[0];
 };
 
-const addUser = async (email_address, hashed_pw) => {
+const addLocalUser = async (email_address, hashed_pw) => {
   const res = await query(
-    'INSERT INTO users(email_address, hashed_pw) VALUES($1, $2) RETURNING id, email_address',
-    [email_address, hashed_pw]
+    'INSERT INTO users(email_address, hashed_pw, auth_method) VALUES($1, $2, $3) RETURNING id, email_address',
+    [email_address, hashed_pw, 'local']
   );
   return res.rows[0];
 };
@@ -285,7 +285,7 @@ module.exports = {
   query,
   emailExists,
   getUserByEmail,
-  addUser,
+  addLocalUser,
   updateUserPassword,
   getProducts,
   getProductById,

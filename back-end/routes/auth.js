@@ -68,7 +68,7 @@ router.post('/register', jsonParser, async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const userData = await db.addUser(email_address, hashedPassword);
+    const userData = await db.addLocalUser(email_address, hashedPassword);
     
     try {
       req.login(userData, function() {
