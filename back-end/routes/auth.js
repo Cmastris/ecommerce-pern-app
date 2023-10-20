@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const express = require('express');
+const GoogleStrategy = require('passport-google-oidc');
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 
@@ -14,6 +14,9 @@ const jsonParser = bodyParser.json();
 
 // https://www.passportjs.org/concepts/authentication/password/
 passport.use(new LocalStrategy(auth.localVerify));
+
+// https://www.passportjs.org/concepts/authentication/google/
+passport.use(new GoogleStrategy(auth.googleConfig, auth.googleVerify));
 
 
 router.get('/status', (req, res) => {
@@ -84,6 +87,13 @@ router.post('/login',
     });
   }
 );
+
+router.get('/google', passport.authenticate('google'));
+
+router.get('/google/redirect', passport.authenticate('google', {
+  successRedirect: `${process.env.FRONT_END_BASE_URL}/account`,
+  failureRedirect: `${process.env.FRONT_END_BASE_URL}/login?googleAuthError=true`
+}));
 
 router.post('/logout', (req, res) => {
   if (req.isAuthenticated()) {

@@ -41,6 +41,38 @@ async function localVerify(username, password, done) {
 }
 
 
+// ==== Google Login ====
+
+// https://www.passportjs.org/concepts/authentication/google/
+// https://www.passportjs.org/tutorials/google/
+// https://www.passportjs.org/reference/normalized-profile/
+// https://console.cloud.google.com/apis/dashboard
+
+const googleConfig = {
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/redirect',
+  scope: ['email']
+}
+
+async function googleVerify(issuer, profile, done) {
+  const email_address = profile.emails[0].value;
+  try {
+    let user = await db.getUserByEmail(email_address, 'google');
+    if (!user) {
+      user = await db.addGoogleUser(email_address);
+    }
+    return done(null, {
+      id: user.id,
+      email_address: user.email_address,
+      auth_method: 'google'
+    });
+  } catch(err) {
+    return done(null, null);
+  }
+}
+
+
 // ==== Serialization and Deserialization ====
 
 // https://www.passportjs.org/concepts/authentication/sessions/
@@ -67,6 +99,8 @@ function deserialize(user, done) {
 module.exports = {
   hashPassword,
   localVerify,
+  googleConfig,
+  googleVerify,
   serialize,
   deserialize
 };

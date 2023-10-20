@@ -17,6 +17,7 @@
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
+    "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
     "swagger-ui-express": "^5.0.0"
