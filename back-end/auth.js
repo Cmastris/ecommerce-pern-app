@@ -19,7 +19,7 @@ async function hashPassword(password) {
 async function localVerify(username, password, done) {
   const email_address = username;
   try {
-    const user = await db.getUserByEmail(email_address);
+    const user = await db.getUserByEmail(email_address, 'local');
     if (!user) {
       return done(null, false,
         { message: `An account with the email address '${email_address}' does not exist.` }

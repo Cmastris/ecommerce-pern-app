@@ -19,11 +19,10 @@ const emailExists = async (email_address) => {
   return res.rowCount > 0;
 };
 
-const getUserByEmail = async (email_address) => {
-  const res = await query(
-    'SELECT id, email_address, hashed_pw, auth_method FROM users WHERE email_address=$1',
-    [email_address]
-  );
+const getUserByEmail = async (email_address, auth_method) => {
+  const baseQuery = 'SELECT id, email_address, hashed_pw, auth_method FROM users';
+  const filter = ' WHERE email_address=$1 AND auth_method=$2';
+  const res = await query(baseQuery + filter, [email_address, auth_method]);
   return res.rows[0];
 };
 

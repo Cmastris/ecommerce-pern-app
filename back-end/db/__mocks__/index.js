@@ -22,8 +22,8 @@ const emailExists = (email_address) => {
   return email_address === "emailExists@example.com";
 };
 
-const getUserByEmail = async (email_address) => {
-  throwIfArgsUndefined([email_address]);
+const getUserByEmail = async (email_address, auth_method) => {
+  throwIfArgsUndefined([email_address, auth_method]);
   if (email_address === "emailExists@example.com") {
     const hashedPassword = await bcrypt.hash("pw", 1);
     return {
