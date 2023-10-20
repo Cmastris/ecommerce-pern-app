@@ -43,7 +43,11 @@ api.use(passport.authenticate('session'));
 
 passport.serializeUser(function(user, done) {
   process.nextTick(function() {
-    return done(null, { id: user.id, email_address: user.email_address });
+    return done(null, {
+      id: user.id,
+      email_address: user.email_address,
+      auth_method: user.auth_method
+    });
   });
 });
 

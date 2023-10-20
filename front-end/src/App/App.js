@@ -16,7 +16,7 @@ export async function authLoader() {
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { logged_in: false, id: null, email_address: null };
+    return { logged_in: false, id: null, email_address: null, auth_method: null };
   }
 }
 

@@ -12,6 +12,8 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 
+// ==== Local Login ====
+
 // https://www.passportjs.org/concepts/authentication/password/
 // https://www.passportjs.org/tutorials/password/
 // https://www.passportjs.org/howtos/password/
@@ -30,7 +32,11 @@ async function verify(username, password, done) {
     if (!matchedPassword) {
       return done(null, false, { message: 'Incorrect email address or password.' });
     }
-    return done(null, { id: user.id, email_address: user.email_address });
+    return done(null, {
+      id: user.id,
+      email_address: user.email_address,
+      auth_method: user.auth_method
+    });
 
   } catch(err) {
     return done(err);
@@ -40,12 +46,19 @@ async function verify(username, password, done) {
 passport.use(new LocalStrategy(verify));
 
 
+// ==== Routes ====
+
 router.get('/status', (req, res) => {
   let jsonData;
   if (!req.isAuthenticated()) {
-    jsonData = { logged_in: false, id: null, email_address: null };
+    jsonData = { logged_in: false, id: null, email_address: null, auth_method: null };
   } else {
-    jsonData = { logged_in: true, id: req.user.id, email_address: req.user.email_address };
+    jsonData = {
+      logged_in: true,
+      id: req.user.id,
+      email_address: req.user.email_address,
+      auth_method: req.user.auth_method
+    };
   }
   res.status(200).json(jsonData);
 });
@@ -93,7 +106,11 @@ router.post('/login',
   jsonParser,
   passport.authenticate('local', { failureMessage: true }),
   function(req, res) {
-    res.status(200).json({ id: req.user.id, email_address: req.user.email_address });
+    res.status(200).json({
+      id: req.user.id,
+      email_address: req.user.email_address,
+      auth_method: req.user.auth_method
+    });
   }
 );
 

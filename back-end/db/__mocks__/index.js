@@ -26,7 +26,12 @@ const getUserByEmail = async (email_address) => {
   throwIfArgsUndefined([email_address]);
   if (email_address === "emailExists@example.com") {
     const hashedPassword = await bcrypt.hash("pw", 1);
-    return { "id": 1, "email_address": "emailExists@example.com", hashed_pw: hashedPassword };
+    return {
+      id: 1,
+      email_address: "emailExists@example.com",
+      hashed_pw: hashedPassword,
+      auth_method: "local"
+    };
   } else {
     return undefined;
   }

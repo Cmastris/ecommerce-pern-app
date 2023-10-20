@@ -63,7 +63,11 @@ test('POST /auth/login with correct data returns a success response', async () =
   });
 
   expect(res.statusCode).toBe(200);
-  expect(res.body).toStrictEqual({ id: 1, email_address: "emailExists@example.com" });
+  expect(res.body).toStrictEqual({
+    id: 1,
+    email_address: "emailExists@example.com",
+    auth_method: "local"
+  });
 });
 
 afterAll(() => {

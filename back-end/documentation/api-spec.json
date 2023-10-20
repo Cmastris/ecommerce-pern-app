@@ -526,6 +526,10 @@
           "email_address": {
             "type": "string",
             "nullable": true
+          },
+          "auth_method": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

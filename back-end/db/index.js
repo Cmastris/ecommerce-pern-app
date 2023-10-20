@@ -21,7 +21,7 @@ const emailExists = async (email_address) => {
 
 const getUserByEmail = async (email_address) => {
   const res = await query(
-    'SELECT id, email_address, hashed_pw FROM users WHERE email_address=$1',
+    'SELECT id, email_address, hashed_pw, auth_method FROM users WHERE email_address=$1',
     [email_address]
   );
   return res.rows[0];
