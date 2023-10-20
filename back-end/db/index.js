@@ -35,6 +35,14 @@ const addLocalUser = async (email_address, hashed_pw) => {
   return res.rows[0];
 };
 
+const addGoogleUser = async (email_address) => {
+  const res = await query(
+    'INSERT INTO users(email_address, auth_method) VALUES($1, $2) RETURNING id, email_address',
+    [email_address, 'google']
+  );
+  return res.rows[0];
+};
+
 const updateUserPassword = async (id, hashed_pw) => {
   await query(
     'UPDATE users SET hashed_pw = $1 WHERE id=$2',
@@ -286,6 +294,7 @@ module.exports = {
   emailExists,
   getUserByEmail,
   addLocalUser,
+  addGoogleUser,
   updateUserPassword,
   getProducts,
   getProductById,
