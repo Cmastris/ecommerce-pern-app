@@ -5,6 +5,8 @@ const logging = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 
+const auth = require('./auth');
+
 const authRouter = require('./routes/auth');
 const cartRouter = require('./routes/cart');
 const categoriesRouter = require('./routes/categories');
@@ -40,22 +42,8 @@ api.use(session({
 // Authenticate all routes and add user data to req.user
 api.use(passport.initialize());
 api.use(passport.authenticate('session'));
-
-passport.serializeUser(function(user, done) {
-  process.nextTick(function() {
-    return done(null, {
-      id: user.id,
-      email_address: user.email_address,
-      auth_method: user.auth_method
-    });
-  });
-});
-
-passport.deserializeUser(function(user, done) {
-  process.nextTick(function() {
-    return done(null, user);
-  });
-});
+passport.serializeUser(auth.serialize);
+passport.deserializeUser(auth.deserialize);
 
 
 api.get('/', (req, res) => {

@@ -4,6 +4,7 @@ const express = require('express');
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 
+const auth = require('../auth');
 const db = require('../db/index');
 
 const router = express.Router();
@@ -11,42 +12,9 @@ const router = express.Router();
 // https://expressjs.com/en/resources/middleware/body-parser.html
 const jsonParser = bodyParser.json();
 
-
-// ==== Local Login ====
-
 // https://www.passportjs.org/concepts/authentication/password/
-// https://www.passportjs.org/tutorials/password/
-// https://www.passportjs.org/howtos/password/
-// https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
+passport.use(new LocalStrategy(auth.localVerify));
 
-async function verify(username, password, done) {
-  const email_address = username;
-  try {
-    const user = await db.getUserByEmail(email_address);
-    if (!user) {
-      return done(null, false,
-        { message: `An account with the email address '${email_address}' does not exist.` }
-      );
-    }
-    const matchedPassword = await bcrypt.compare(password, user.hashed_pw);
-    if (!matchedPassword) {
-      return done(null, false, { message: 'Incorrect email address or password.' });
-    }
-    return done(null, {
-      id: user.id,
-      email_address: user.email_address,
-      auth_method: user.auth_method
-    });
-
-  } catch(err) {
-    return done(err);
-  }
-}
-
-passport.use(new LocalStrategy(verify));
-
-
-// ==== Routes ====
 
 router.get('/status', (req, res) => {
   let jsonData;
@@ -78,13 +46,16 @@ router.post('/register', jsonParser, async (req, res) => {
       );
     }
 
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
+    const hashedPassword = await auth.hashPassword(password);
     const userData = await db.addLocalUser(email_address, hashedPassword);
     
     try {
-      req.login(userData, function() {
+      const authData = {
+        id: userData.id,
+        email_address: userData.email_address,
+        auth_method: 'local'
+      };
+      req.login(authData, function() {
         return res.status(201).json(userData);
       });
     } catch(err) {
