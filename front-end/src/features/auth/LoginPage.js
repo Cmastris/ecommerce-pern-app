@@ -1,7 +1,9 @@
-import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useRouteLoaderData, useSearchParams } from "react-router-dom";
 
 import InlineLink from "../../components/InlineLink/InlineLink";
 import utilStyles from "../../App/utilStyles.module.css";
+import GoogleAuthButton from "./GoogleAuthButton";
+
 
 export async function loginAction({ request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
@@ -48,13 +50,16 @@ export function LoginPage() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app");
   const loginError = useActionData();
+  const [searchParams] = useSearchParams();
+  const isGoogleError = searchParams.get("googleAuthError");
 
   const registerLink = <InlineLink path="/register" anchor="register" />;
-  const loggedOutContent = <>If you haven't created an account, please {registerLink} instead.</>;
+  const loggedOutContent = <>If you haven't created an account, please {registerLink} first or sign in with Google below.</>;
   const loggedInContent = <>You are already logged in as {authData.email_address}.</>;
+  const googleError = <>Sorry, Google sign in failed. Please try again later or {registerLink} instead.</>;
 
   return (
-    <div className={utilStyles.pagePadding}>
+    <div className={`${utilStyles.pagePadding} ${utilStyles.mw80rem}`}>
       <h1 className={utilStyles.h1}>Log in</h1>
       <p className={utilStyles.mb2rem}>{authData.logged_in ? loggedInContent : loggedOutContent}</p>
       <Form method="post" className={utilStyles.stackedForm}>
@@ -65,6 +70,9 @@ export function LoginPage() {
         <button type="submit" className={utilStyles.button}>Log in</button>
       </Form>
       <p>{loginError ? loginError : null}</p>
+      <hr className={utilStyles.separator} />
+      <GoogleAuthButton />
+      <p>{isGoogleError ? googleError : null}</p>
     </div>
   );
 }

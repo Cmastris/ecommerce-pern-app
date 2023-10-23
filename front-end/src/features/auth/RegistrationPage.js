@@ -2,6 +2,7 @@ import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-
 
 import InlineLink from "../../components/InlineLink/InlineLink";
 import utilStyles from "../../App/utilStyles.module.css";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 
 export async function registerAction({ request }) {
@@ -41,11 +42,14 @@ export function RegistrationPage() {
   const registrationError = useActionData();
 
   const loginLink = <InlineLink path="/login" anchor="log in" />;
-  const loggedOutContent = <>If you already have an account, please {loginLink} instead.</>;
+  const loggedOutContent = (
+    <>Create an account or alternatively sign in with Google.
+    If you already have an account, please {loginLink} instead.</>
+  );
   const loggedInContent = <>You are already logged in as {authData.email_address}.</>;
 
   return (
-    <div className={utilStyles.pagePadding}>
+    <div className={`${utilStyles.pagePadding} ${utilStyles.mw80rem}`}>
       <h1 className={utilStyles.h1}>Create your account</h1>
       <p className={utilStyles.mb2rem}>{authData.logged_in ? loggedInContent : loggedOutContent}</p>
       <Form method="post" className={utilStyles.stackedForm}>
@@ -56,6 +60,8 @@ export function RegistrationPage() {
         <button type="submit" className={utilStyles.button}>Register</button>
       </Form>
       <p>{registrationError ? registrationError : null}</p>
+      <hr className={utilStyles.separator} />
+      <GoogleAuthButton />
     </div>
   );
 }
