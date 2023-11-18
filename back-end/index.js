@@ -10,6 +10,7 @@ const auth = require('./auth');
 const authRouter = require('./routes/auth');
 const cartRouter = require('./routes/cart');
 const categoriesRouter = require('./routes/categories');
+const checkoutRouter = require('./routes/checkout');
 const docsRouter = require('./routes/docs');
 const ordersRouter = require('./routes/orders');
 const productsRouter = require('./routes/products');
@@ -55,6 +56,7 @@ api.get('/', (req, res) => {
 api.use('/auth', authRouter);
 api.use('/cart', cartRouter);
 api.use('/categories', categoriesRouter);
+api.use('/checkout', checkoutRouter);
 api.use('/docs', docsRouter);
 api.use('/orders', ordersRouter);
 api.use('/products', productsRouter);

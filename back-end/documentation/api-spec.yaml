@@ -256,12 +256,12 @@ paths:
           description: The cart can't be accessed because the user isn't logged in.
       tags:
         - cart
-  /cart/checkout:
+  /checkout/create-order:
     summary: Used to place an order for the current cart items.
     post:
       summary: Places an order for the items in the cart.
       description: Places an order for the items in the logged in user's cart and empties the cart.
-      operationId: checkout
+      operationId: create_order
       requestBody:
         required: true
         description: A postal address object (postal address and postcode).
@@ -281,7 +281,7 @@ paths:
         '401':
           description: The cart can't be accessed because the user isn't logged in.
       tags:
-        - cart
+        - checkout
   /orders:
     summary: Used to retrieve a summary of all previous orders by the logged in user.
     get:

@@ -382,12 +382,12 @@
         ]
       }
     },
-    "/cart/checkout": {
+    "/checkout/create-order": {
       "summary": "Used to place an order for the current cart items.",
       "post": {
         "summary": "Places an order for the items in the cart.",
         "description": "Places an order for the items in the logged in user's cart and empties the cart.",
-        "operationId": "checkout",
+        "operationId": "create_order",
         "requestBody": {
           "required": true,
           "description": "A postal address object (postal address and postcode).",
@@ -418,7 +418,7 @@
           }
         },
         "tags": [
-          "cart"
+          "checkout"
         ]
       }
     },
