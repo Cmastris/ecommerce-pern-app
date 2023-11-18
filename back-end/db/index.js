@@ -151,7 +151,7 @@ const addAddress = async (address, postcode) => {
 
 
 // Checkout
-const checkout = async (user_id, address_id) => {
+const createOrder = async (user_id, address_id) => {
 
   // Get cart items
   const cartItems = await getCartItems(user_id);
@@ -305,7 +305,7 @@ module.exports = {
   getAddressById,
   getAddressId,
   addAddress,
-  checkout,
+  createOrder,
   getOrdersSummary,
   getOrderUserId,
   getOrderStatus,

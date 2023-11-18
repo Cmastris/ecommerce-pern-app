@@ -32,7 +32,7 @@ router.post('/create-order', requireLogin, jsonParser, async (req, res) => {
     }
 
     // Create order
-    const orderDetails = await db.checkout(userId, addressId);
+    const orderDetails = await db.createOrder(userId, addressId);
     res.status(201).json(orderDetails);
 
   } catch(err) {
