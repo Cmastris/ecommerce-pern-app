@@ -163,7 +163,7 @@ const createOrder = async (user_id, address_id) => {
 
     // Create initial order record
     let total_cost = 0;
-    const order_status = "pending";
+    const order_status = "payment pending";
     const orderCreationRes = await client.query(
       'INSERT INTO orders(user_id, address_id, status, total_cost) VALUES($1, $2, $3, $4) RETURNING id',
       [user_id, address_id, order_status, total_cost]
