@@ -152,6 +152,7 @@ const addAddress = async (address, postcode) => {
 
 // Checkout
 const createPendingOrder = async (user_id, address_id) => {
+  // Create a pending order for all current cart items ahead of successful payment
 
   // Get cart items
   const cartItems = await getCartItems(user_id);
@@ -161,24 +162,18 @@ const createPendingOrder = async (user_id, address_id) => {
   try {
     await client.query('BEGIN');
 
-    // Create initial order record
+    // Create pending order record
     let total_cost = 0;
-    const order_status = "payment pending";
+    const order_status = 'payment pending';
     const orderCreationRes = await client.query(
       'INSERT INTO orders(user_id, address_id, status, total_cost) VALUES($1, $2, $3, $4) RETURNING id',
       [user_id, address_id, order_status, total_cost]
     );
     const order_id = orderCreationRes.rows[0].id;
 
-    // Update `products` and `order_products` tables; calculate total order cost
+    // Update order_products table and calculate total order cost
     for await (const p of cartItems) {
       const { product_id, product_quantity, product_price } = p;
-
-      // Reduce product stock count
-      await client.query(
-        'UPDATE products SET stock_count = (stock_count - $1) WHERE id=$2',
-        [product_quantity, product_id]
-      );
 
       // Add product to order_products table
       await client.query(
@@ -189,9 +184,6 @@ const createPendingOrder = async (user_id, address_id) => {
       // Increment total order cost
       total_cost += Number(product_price.substring(1)) * product_quantity;
     };
-
-    // Delete all items from cart
-    await client.query('DELETE FROM cart_products WHERE user_id=$1', [user_id]);
 
     // Update order total_cost and retrieve order details
     const orderSummaryRes = await client.query(
@@ -220,6 +212,50 @@ const createPendingOrder = async (user_id, address_id) => {
       address,
       postcode
     };
+
+  } catch(err) {
+    await client.query('ROLLBACK');
+    throw err;
+
+  } finally {
+    client.release();
+  }
+};
+
+
+const confirmPaidOrder = async (order_id) => {
+  // Confirm an order after successful payment
+  // Update order status; reduce product stock count; clear cart
+
+  // Update order status
+  await updateOrderStatus(order_id, 'processing order');
+
+  const order = await getOrderById(order_id);
+
+  // https://node-postgres.com/features/transactions
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // For each order item, reduce stock count and delete cart item
+    for await (const product of order.order_items) {
+      const { product_id, product_quantity } = product;
+
+      // Reduce the product's stock count
+      await client.query(
+        'UPDATE products SET stock_count = (stock_count - $1) WHERE id=$2',
+        [product_quantity, product_id]
+      );
+
+      // Delete the product from the user's cart
+      await client.query(
+        'DELETE FROM cart_products WHERE user_id=$1 AND product_id=$2',
+        [order.user_id, product_id]
+      );
+    };
+
+    // Commit updates and return order details
+    await client.query('COMMIT');
 
   } catch(err) {
     await client.query('ROLLBACK');
@@ -306,6 +342,7 @@ module.exports = {
   getAddressId,
   addAddress,
   createPendingOrder,
+  confirmPaidOrder,
   getOrdersSummary,
   getOrderUserId,
   getOrderStatus,

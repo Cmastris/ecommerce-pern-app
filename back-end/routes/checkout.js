@@ -92,7 +92,7 @@ router.get('/payment-session-status', async (req, res) => {
       }
       const orderStatus = await db.getOrderStatus(orderId);
       if (orderStatus === 'payment pending') {
-        await db.updateOrderStatus(orderId, 'processing order');
+        await db.confirmPaidOrder(orderId);
       }
     } catch(err) {
       // In production, log/alert to investigate and update order status manually
