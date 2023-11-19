@@ -9,6 +9,8 @@ import FallbackErrorPage from "./components/FallbackErrorPage/FallbackErrorPage"
 import { LoginPage, loginAction } from "./features/auth/LoginPage";
 import { OrderDetailsPage, orderDetailsLoader } from "./features/orders/OrderDetailsPage";
 import { ordersLoader } from "./features/orders/OrdersHistory";
+import PaymentPage from "./features/orders/PaymentPage";
+import PaymentReturn from "./features/orders/PaymentReturn";
 import { ProductDetail, productDetailLoader, addToCartAction } from "./features/products/ProductDetail";
 import { ProductFeed, productFeedLoader } from "./features/products/ProductFeed";
 import { RegistrationPage, registerAction } from "./features/auth/RegistrationPage";
@@ -44,6 +46,14 @@ export const router = createBrowserRouter([
         element: <CheckoutPage />,
         loader: cartLoader,
         action: checkoutAction,
+      },
+      {
+        path: "checkout/:orderId/payment",
+        element: <PaymentPage />,
+      },
+      {
+        path: "checkout/:orderId/payment-return",
+        element: <PaymentReturn />,
       },
       {
         path: "checkout/:id/success",

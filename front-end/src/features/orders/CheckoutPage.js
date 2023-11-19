@@ -24,7 +24,7 @@ export async function checkoutAction({ request }) {
 
     if (res.ok) {
       const { order_id } = await res.json();
-      return redirect(`/checkout/${order_id}/success`);
+      return redirect(`/checkout/${order_id}/payment`);
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
@@ -64,15 +64,13 @@ export function CheckoutPage() {
       <div className={`${utilStyles.mb3rem} ${utilStyles.XLText}`}>
         <strong>Total cost: <span className={utilStyles.red}>${getTotalCost()}</span></strong>
       </div>
-      <h2>Payment</h2>
-      <p className={utilStyles.mb3rem}>This isn't a real ecommerce website :)</p>
       <h2>Delivery address</h2>
       <Form method="post" className={utilStyles.stackedForm}>
         <label htmlFor="address" className={utilStyles.label}>Delivery name and address</label>
         <textarea id="address" className={utilStyles.input} name="address" rows="5" minLength={15} maxLength={300} required />
         <label htmlFor="postcode" className={utilStyles.label}>Postcode</label>
         <input id="postcode" className={utilStyles.input} type="text" name="postcode" minLength={5} maxLength={8} required />
-        <button type="submit" className={`${utilStyles.mt2rem} ${utilStyles.button}`}>Submit order</button>
+        <button type="submit" className={`${utilStyles.mt2rem} ${utilStyles.button}`}>Continue to payment</button>
       </Form>
       {checkoutError ? (
         <div className={utilStyles.mt2rem}>
