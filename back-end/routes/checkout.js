@@ -9,6 +9,52 @@ const router = express.Router();
 // https://expressjs.com/en/resources/middleware/body-parser.html
 const jsonParser = bodyParser.json();
 
+// https://stripe.com/docs/checkout/embedded/quickstart?client=react&lang=node
+// https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=embedded-checkout
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
+
+
+router.post('/create-payment-session', requireLogin, async (req, res) => {
+  // Create a Stripe payment session before payment
+  try {
+    const orderId = req.query.order_id;
+    const orderData = await db.getOrderById(orderId);
+
+    // Generate checkout session Price objects (payment line items)
+    const orderItemsData = orderData.order_items.map(item => {
+      return {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: item.product_name,
+          },
+          unit_amount: (Number(item.product_price.substring(1)) * 100),  // Price in cents
+        },
+        quantity: Number(item.product_quantity),
+      }
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
+      line_items: orderItemsData,
+      mode: 'payment',
+      return_url: `${process.env.FRONT_END_BASE_URL}/checkout/${orderId}/payment-return?session_id={CHECKOUT_SESSION_ID}`,
+    });
+  
+    res.send({clientSecret: session.client_secret});
+
+  } catch(err) {
+    res.status(500).send();
+  }
+});
+
+
+router.get('/payment-session-status', async (req, res) => {
+  // Retrieve the payment status (complete or failed/cancelled) after an attempted payment
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  res.send({ status: session.status });
+});
+
 
 router.post('/create-order', requireLogin, jsonParser, async (req, res) => {
   try {

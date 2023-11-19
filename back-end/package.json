@@ -20,6 +20,7 @@
     "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
+    "stripe": "^14.5.0",
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
