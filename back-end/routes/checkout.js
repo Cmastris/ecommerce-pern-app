@@ -82,6 +82,12 @@ router.post('/create-payment-session', requireLogin, async (req, res) => {
 
 router.get('/payment-session-status', async (req, res) => {
   // Retrieve the payment status (complete or failed/cancelled) after an attempted payment
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  res.send({ status: session.status });
+});
+
+
+router.put('/confirm-paid-order', async (req, res) => {
   // Update the order status if payment was pending and has now been completed
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
   if (session.status === 'complete') {
@@ -99,10 +105,8 @@ router.get('/payment-session-status', async (req, res) => {
       console.log(err);
     }
   }
-  res.send({ status: session.status });
+  res.send();
 });
-
-
 
 
 module.exports = router;
