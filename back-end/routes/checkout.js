@@ -51,7 +51,24 @@ router.post('/create-payment-session', requireLogin, async (req, res) => {
 
 router.get('/payment-session-status', async (req, res) => {
   // Retrieve the payment status (complete or failed/cancelled) after an attempted payment
+  // Update the order status if payment was pending and has now been completed
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  if (session.status === 'complete') {
+    try {
+      const orderId = req.query.order_id;
+      if (!orderId) {
+        throw new Error('Order ID not included in request; order status could not be updated.');
+      }
+      const orderStatus = await db.getOrderStatus(orderId);
+      console.log(orderStatus);
+      if (orderStatus === 'payment pending') {
+        await db.updateOrderStatus(orderId, 'processing order');
+      }
+    } catch(err) {
+      // In production, log/alert to investigate and update order status manually
+      console.log(err);
+    }
+  }
   res.send({ status: session.status });
 });
 
