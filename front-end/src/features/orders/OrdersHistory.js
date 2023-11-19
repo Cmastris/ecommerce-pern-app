@@ -28,12 +28,18 @@ export function OrdersHistory() {
   function renderOrderSummaries() {
     if (error) {
       return <p>{error}</p>;
-    } else if (ordersData.length === 0) {
+    }
+
+    // Exclude orders with incomplete or failed payments
+    const filteredOrders = ordersData.filter(order => order.order_status !== "payment pending");
+
+    if (filteredOrders.length === 0) {
       return <p>There are no orders to display.</p>;
     }
+
     ordersData.sort((a, b) => b.order_id - a.order_id);  // Render latest orders first
-    return ordersData.map((order, index) => {
-      if (index + 1 === ordersData.length) {
+    return filteredOrders.map((order, index) => {
+      if (index + 1 === filteredOrders.length) {
         return <OrderSummary key={order.order_id} orderData={order} lastItem={true} />; 
       }
       return <OrderSummary key={order.order_id} orderData={order} />;
