@@ -278,10 +278,10 @@ const getOrderById = async (id) => {
   };
 };
 
-const cancelOrder = async (id) => {
+const updateOrderStatus = async (id, status) => {
   await query(
     'UPDATE orders SET status=$1 WHERE id=$2',
-    ['cancelled', id]
+    [status, id]
   );
   return;
 };
@@ -310,5 +310,5 @@ module.exports = {
   getOrderUserId,
   getOrderStatus,
   getOrderById,
-  cancelOrder
+  updateOrderStatus,
 };

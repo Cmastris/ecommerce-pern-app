@@ -55,7 +55,7 @@ router.delete('/:id', requireLogin, checkIdValidity, async (req, res) => {
         `Only 'pending' orders can be cancelled; this order's status is '${orderStatus}'.`
       );
     }
-    await db.cancelOrder(orderId);
+    await db.updateOrderStatus(orderId, 'cancelled');
     res.status(204).send();
 
   } catch(err) {
