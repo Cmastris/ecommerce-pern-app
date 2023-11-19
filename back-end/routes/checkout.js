@@ -14,6 +14,37 @@ const jsonParser = bodyParser.json();
 const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
 
+router.post('/create-pending-order', requireLogin, jsonParser, async (req, res) => {
+  try {
+    // Check address details were provided
+    const { address, postcode } = req.body;
+    if (!(address && postcode)) {
+      return res.status(400).send('Please provide a valid address and postcode in the request body.');
+    }
+
+    // Check cart isn't empty
+    const userId = req.user.id;
+    const cartItems = await db.getCartItems(userId);
+    if (cartItems.length < 1) {
+      return res.status(400).send('Your cart is empty.');
+    }
+
+    // Retrieve or create address
+    let addressId = await db.getAddressId(address, postcode);
+    if (!addressId) {
+      addressId = await db.addAddress(address, postcode);
+    }
+
+    // Create pending order
+    const orderDetails = await db.createPendingOrder(userId, addressId);
+    res.status(201).json(orderDetails);
+
+  } catch(err) {
+    res.status(500).send('Order creation failed. Please ensure you are providing valid data.');
+  }
+});
+
+
 router.post('/create-payment-session', requireLogin, async (req, res) => {
   // Create a Stripe payment session before payment
   try {
@@ -60,7 +91,6 @@ router.get('/payment-session-status', async (req, res) => {
         throw new Error('Order ID not included in request; order status could not be updated.');
       }
       const orderStatus = await db.getOrderStatus(orderId);
-      console.log(orderStatus);
       if (orderStatus === 'payment pending') {
         await db.updateOrderStatus(orderId, 'processing order');
       }
@@ -73,36 +103,6 @@ router.get('/payment-session-status', async (req, res) => {
 });
 
 
-router.post('/create-order', requireLogin, jsonParser, async (req, res) => {
-  try {
-    // Check address details were provided
-    const { address, postcode } = req.body;
-    if (!(address && postcode)) {
-      return res.status(400).send('Please provide a valid address and postcode in the request body.');
-    }
-
-    // Check cart isn't empty
-    const userId = req.user.id;
-    const cartItems = await db.getCartItems(userId);
-    if (cartItems.length < 1) {
-      return res.status(400).send('Your cart is empty.');
-    }
-
-    // Retrieve or create address
-    let addressId = await db.getAddressId(address, postcode);
-    if (!addressId) {
-      addressId = await db.addAddress(address, postcode);
-    }
-
-    // Create order
-    const orderDetails = await db.createOrder(userId, addressId);
-    res.status(201).json(orderDetails);
-
-  } catch(err) {
-    console.log(err);
-    res.status(500).send('Checkout failed. Please ensure you are providing valid data.');
-  }
-});
 
 
 module.exports = router;

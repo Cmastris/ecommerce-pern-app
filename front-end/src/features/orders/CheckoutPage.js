@@ -13,7 +13,7 @@ export async function checkoutAction({ request }) {
     const address = formData.get("address");
     const postcode = formData.get("postcode");
     const res = await fetch(
-      `${process.env.REACT_APP_API_BASE_URL}/checkout/create-order`,
+      `${process.env.REACT_APP_API_BASE_URL}/checkout/create-pending-order`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
