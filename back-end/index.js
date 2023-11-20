@@ -24,8 +24,12 @@ api.use(logging(process.env.LOGGING));
 
 
 // https://expressjs.com/en/resources/middleware/cors.html
+const devOrigin = ["https://web.postman.co/", "http://localhost", /http:\/\/localhost:.*/];
+const prodOrigin = process.env.PROD_FRONT_END_BASE_URL;
+const origin = process.env.NODE_ENV !== "production" ? devOrigin : prodOrigin;
+
 api.use(cors({
-  origin: ["http://localhost:3000", "https://web.postman.co/"],  // Change in PROD
+  origin,
   credentials: true,
 }));
 
@@ -37,7 +41,7 @@ api.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false },  // Change in PROD
+  cookie: { secure: process.env.NODE_ENV === "production" },
 }))
 
 // Authenticate all routes and add user data to req.user
