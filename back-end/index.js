@@ -25,7 +25,7 @@ api.use(logging(process.env.LOGGING));
 
 // https://expressjs.com/en/resources/middleware/cors.html
 const devOrigin = ["https://web.postman.co/", "http://localhost", /http:\/\/localhost:.*/];
-const prodOrigin = process.env.PROD_FRONT_END_BASE_URL;
+const prodOrigin = process.env.FRONT_END_BASE_URL;
 const origin = process.env.NODE_ENV !== "production" ? devOrigin : prodOrigin;
 
 api.use(cors({
