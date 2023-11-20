@@ -225,10 +225,14 @@ const createPendingOrder = async (user_id, address_id) => {
 
 const confirmPaidOrder = async (order_id) => {
   // Confirm an order after successful payment
-  // Update order status; reduce product stock count; clear cart
+  // Update order status and time; reduce product stock count; clear cart
 
-  // Update order status
-  await updateOrderStatus(order_id, 'processing order');
+  // Update order status and order placed time
+  const status = 'processing order';
+  await query(
+    'UPDATE orders SET order_placed_time=(SELECT LOCALTIMESTAMP), status=$1 WHERE id=$2',
+    [status, order_id]
+  );  
 
   const order = await getOrderById(order_id);
 
