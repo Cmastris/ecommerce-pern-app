@@ -41,7 +41,7 @@ api.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === "production" },
+  cookie: { secure: false },
 }))
 
 // Authenticate all routes and add user data to req.user
