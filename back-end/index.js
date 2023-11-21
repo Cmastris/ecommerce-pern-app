@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: true,
       sameSite: 'none'
     },
   }));
