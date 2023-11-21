@@ -6,9 +6,18 @@
   align-items: flex-start;
 }
 
-.image {
+.imageContainer {
+  width: 500px;
   max-width: 100%;
+}
+
+.image {
+  /* https://web.dev/articles/aspect-ratio#example_preventing_layout_shift */
+  width: 100%;
+  height: auto;
+  max-width: 500px;
   max-height: 500px;
+  aspect-ratio: 1 / 1;
   border: 1px solid rgb(220, 220, 220);
 }
 
@@ -51,6 +60,10 @@
   .summarySection {
     flex-direction: column;
     align-items: center;
+  }
+
+  .imageContainer {
+    width: 450px;
   }
 
   .image {

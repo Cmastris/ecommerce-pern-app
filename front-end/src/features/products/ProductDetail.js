@@ -103,8 +103,13 @@ export function ProductDetail() {
   return (
     <div className={utilStyles.pagePadding}>
       <section className={styles.summarySection}>
-        <div>
-          <img src={imagePath} alt={productData.name} className={styles.image}></img>
+        <div className={styles.imageContainer}>
+          <img
+            src={imagePath}
+            alt={productData.name}
+            height="500"
+            width="500"
+            className={styles.image}></img>
         </div>
         <div className={styles.summaryTextContent}>
           <h1 className={styles.productName}>{productData.name}</h1>
