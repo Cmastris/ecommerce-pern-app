@@ -37,12 +37,25 @@ api.use(cors({
 // https://www.passportjs.org/concepts/authentication/sessions/
 // https://www.passportjs.org/howtos/session/
 // https://expressjs.com/en/resources/middleware/session.html
-api.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false },
-}))
+
+if (process.env.NODE_ENV === 'production') {
+  api.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      sameSite: 'none'
+    },
+  }));
+} else {
+  api.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  }));
+}
 
 // Authenticate all routes and add user data to req.user
 api.use(passport.initialize());
