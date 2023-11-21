@@ -39,6 +39,10 @@ api.use(cors({
 // https://expressjs.com/en/resources/middleware/session.html
 
 if (process.env.NODE_ENV === 'production') {
+  // https://expressjs.com/en/guide/behind-proxies.html
+  // https://stackoverflow.com/a/75418142/11262798
+  api.set('trust proxy', 1);
+
   api.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -48,6 +52,7 @@ if (process.env.NODE_ENV === 'production') {
       sameSite: 'none'
     },
   }));
+
 } else {
   api.use(session({
     secret: process.env.SESSION_SECRET,
