@@ -16,7 +16,13 @@ export default function ProductFeedItem({ productData }) {
   return (
     <article className={styles.feedItem}>
       <Link to={detailPath}>
-        <img src={imagePath} alt={productData.name} className={`${utilStyles.image} ${styles.image}`}></img>
+        <img
+          src={imagePath}
+          alt={productData.name}
+          height="500"
+          width="500"
+          className={styles.image}
+        ></img>
       </Link>
       <div className={styles.textContainer}>
         <div className={utilStyles.mb1rem}>
