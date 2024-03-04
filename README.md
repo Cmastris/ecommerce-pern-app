@@ -59,9 +59,9 @@ A visitor's authentication status is used to dynamically render and/or restrict 
 
 
 ### Cart and checkout
-Authenticated visitors can manage their cart (add & remove products) and then check out. All of these actions modify product actual and/or available stock count in the database to prevent orders exceeding stock count for any given item.
+Authenticated visitors can add items to their cart, remove items from in their cart, and check out. These actions modify database stock counts (actual and available) to prevent orders exceeding stock.
 
-The checkout process includes payment integration via Stripe Checkout (test mode). Several API calls are used to create a pending order, establish a payment session, and ultimately confirm the order. Database transactions are used to ensure that data (e.g. stock counts) is only modified if all related queries are successful.
+The checkout process includes (test mode) payment integration via Stripe Checkout. Several API calls are used to create a pending order, establish a payment session, and ultimately confirm the order. Database transactions are used to ensure that data (e.g. stock counts) is only modified if all related queries are successful.
 
 ![Stripe Checkout integration](/readme-images/checkout.png)
 
@@ -69,11 +69,11 @@ The checkout process includes payment integration via Stripe Checkout (test mode
 
 
 ### Previous orders
-Authenticated visitors can view a summary of all of their previous orders (status, date, and total cost) on the main account page, with full details (also including order item summaries and the delivery address) available via order detail pages.
+Authenticated visitors can view a summary of their previous orders (status; date; total cost) on the main account page, with extra details (order item summaries and delivery address) available via order detail pages.
 
 ![Previous order details](/readme-images/order-details.png)
 
-*Relevant code: [front-end order components](front-end/src/features/orders); [orders API endpoints](back-end/routes/orders.js); [database query functions](back-end/db/index.js).*
+*Relevant code: [front-end orders components](front-end/src/features/orders); [orders API endpoints](back-end/routes/orders.js); [database query functions](back-end/db/index.js).*
 
 
 ### Dynamic routing
@@ -97,7 +97,7 @@ The database structure is documented via a [Database Markup Language file](/back
 
 ![Database diagram](/back-end/documentation/db-structure-diagram-v4.png)
 
-The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagger-ui/), available at http://localhost:8000/docs/ (refer to [setup](#setup)) or in [JSON](/back-end/documentation/api-spec.json) & [YAML](/back-end/documentation/api-spec.yaml) files.
+The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagger-ui/), available at http://localhost:8000/docs/ (refer to [setup](#setup)) or in [JSON](/back-end/documentation/api-spec.json) & [YAML](/back-end/documentation/api-spec.yaml) source files.
 
 ![Back-end endpoints Swagger UI documentation](/readme-images/back-end-endpoints-swaggger-ui-documentation.png)
 
@@ -126,7 +126,7 @@ The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagg
 ## Setup
 1. Clone/download a local copy of this repository. 
 2. Using the command line, navigate to the `/back-end` subdirectory and run `npm install` to install package dependencies (using the `package-lock.json` file).
-3. Create a PostgreSQL database, optionally using the SQL provided in `/back-end/db/db-creation.sql`, using a PostgreSQL client (e.g. pgAdmin) or the command line (psql).
+3. Create a PostgreSQL database, optionally using the SQL provided in `/back-end/db/db-creation.sql`, using a PostgreSQL client application (e.g. pgAdmin) or the command line (psql).
 4. Create and populate the database tables using the SQL provided in `/back-end/db/table-creation.sql` and `/back-end/db/table-population.sql` respectively.
 5. In the `/back-end` subdirectory, rename the `example.env` file to `.env`.
 6. In the `.env` file, update the values corresponding to secrets, IDs, and the PostgreSQL database configuration as required. Refer to the following documentation for more details:
