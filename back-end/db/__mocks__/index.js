@@ -47,9 +47,11 @@ const updateUserPassword = (id, hashed_pw) => {
   return;
 };
 
-const getProducts = (category_id=undefined) => {
+const getProducts = (category_id=undefined, search_term=undefined) => {
   if (category_id) {
     res = [{}, {}, {}];
+  } else if (search_term) {
+    res = [{}, {}, {}, {}];
   } else {
     res = [{}, {}, {}, {}, {}];
   }

@@ -196,16 +196,25 @@
       "summary": "Used to retrieve the details of multiple products.",
       "get": {
         "summary": "Retrieves the details of multiple products.",
-        "description": "",
+        "description": "Retrieves the details of multiple products, optionally filtering all products by either category ID or by a search term.",
         "operationId": "get_products",
         "parameters": [
           {
             "in": "query",
             "name": "category_id",
             "required": false,
-            "description": "The category id to filter products by (optional).",
+            "description": "A category id to filter products by (optional).",
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search_term",
+            "required": false,
+            "description": "A case insensitive search term to filter products by, based on the search term's inclusion within the product name (optional).",
+            "schema": {
+              "type": "string"
             }
           }
         ],

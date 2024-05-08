@@ -52,13 +52,18 @@ const updateUserPassword = async (id, hashed_pw) => {
 
 
 // Products
-const getProducts = async (category_id=undefined) => {
+const getProducts = async (category_id=undefined, search_term=undefined) => {
   const baseQuery = 'SELECT id, name, price, available_stock_count, short_description, long_description, avg_rating, rating_count FROM products';
   let res;
   if (category_id) {
     res = await query(
       baseQuery + ' JOIN product_categories ON products.id=product_categories.product_id WHERE product_categories.category_id=$1',
       [category_id]
+    );
+  } else if (search_term) {
+    res = await query(
+      baseQuery + ' WHERE LOWER(name) LIKE $1',
+      ['%' + search_term.toLowerCase() + '%']
     );
   } else {
     res = await query(baseQuery);

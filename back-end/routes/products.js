@@ -7,7 +7,10 @@ const router = express.Router();
 
 router.get('', async (req, res) => {
   try {
-    productsData = await db.getProducts(req.query.category_id);
+    productsData = await db.getProducts(
+      category_id=req.query.category_id,
+      search_term=req.query.search_term,
+    );
     res.status(200).json(productsData);
   } catch(err) {
     res.status(500).send('Query failed.');
