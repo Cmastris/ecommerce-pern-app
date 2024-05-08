@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header/Header";
+import UpperHeader from "../components/UpperHeader/UpperHeader";
 
 
 export async function authLoader() {
@@ -24,7 +24,7 @@ export async function authLoader() {
 export function App() {
   return (
     <div className="App">
-      <Header />
+      <UpperHeader />
       <main>
         <Outlet />
       </main>
