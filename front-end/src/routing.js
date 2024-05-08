@@ -42,6 +42,11 @@ export const router = createBrowserRouter([
         action: removeCartItemAction,
       },
       {
+        path: "category/:categorySlug",
+        element: <ProductFeed />,
+        loader: productFeedLoader,
+      },
+      {
         path: "checkout",
         element: <CheckoutPage />,
         loader: cartLoader,
@@ -71,20 +76,20 @@ export const router = createBrowserRouter([
         loader: orderDetailsLoader,
       },
       {
+        path: "products/:id/:productNameSlug",
+        element: <ProductDetail />,
+        loader: productDetailLoader,
+        action: addToCartAction,
+      },
+      {
         path: "register",
         element: <RegistrationPage />,
         action: registerAction,
       },
       {
-        path: "category/:categorySlug",
-        element: <ProductFeed />,
+        path: "search",
+        element: <ProductFeed isSearchResults={true} />,
         loader: productFeedLoader,
-      },
-      {
-        path: "products/:id/:productNameSlug",
-        element: <ProductDetail />,
-        loader: productDetailLoader,
-        action: addToCartAction,
       },
     ],
   },
