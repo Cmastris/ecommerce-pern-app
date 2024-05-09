@@ -1,7 +1,6 @@
 .header {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2em;
   background-color: rgb(19, 25, 33);
 }
 
