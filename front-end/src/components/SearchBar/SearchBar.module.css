@@ -1,0 +1,40 @@
+.searchBar {
+  display: flex;
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.searchBar:has(.input:focus) {
+  outline: solid rgb(255, 153, 0);
+}
+
+.input {
+  height: 3em;
+  width: 35em;
+  padding: 0.8em;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.btn {
+  flex-shrink: 0;
+  height: 3em;
+  width: 3em;
+  background-color: rgb(254, 189, 105);
+  border: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.btn:hover {
+  background-color: rgb(243, 168, 71);
+  cursor: pointer;
+}
+
+.icon {
+  vertical-align: middle;
+  font-size: 24px;
+}
