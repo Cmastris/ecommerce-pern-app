@@ -1,5 +1,5 @@
 # Ecommerce PERN App <!-- omit in toc -->
-An ecommerce website that uses the PERN (PostgreSQL, Express, React, Node) stack. It also uses React Router for front-end routing, Passport.js for authentication, and Stripe Checkout for payment integration.
+Pernecom is a simplified ecommerce website built with the PERN (PostgreSQL, Express, React, Node) stack. It includes front-end routing (React Router), authentication (Passport.js), and checkout/payment integration (Stripe Checkout).
 
 Take a look: https://ecommerce-pern-app-z9pn.onrender.com/.
 
@@ -21,13 +21,12 @@ Take a look: https://ecommerce-pern-app-z9pn.onrender.com/.
 - [FAQs](#faqs)
   - [Can I see an example?](#can-i-see-an-example)
   - [Why did you build this?](#why-did-you-build-this)
-  - [Is this project in active development?](#is-this-project-in-active-development)
 
 
 ## Key features
 
 ### Product listing pages
-Product listing pages are dynamically rendered via requests to back-end API endpoints, which return JSON data based on the category URL path.
+Product listing pages are dynamically rendered based on the URL path (homepage, category, or search results), using JSON data fetched from back-end API endpoints.
 
 ![Product listing page example](/readme-images/product-listing-page.png)
 
@@ -35,9 +34,9 @@ Product listing pages are dynamically rendered via requests to back-end API endp
 
 
 ### Product detail pages
-Product detail pages are dynamically rendered via a request to a back-end API endpoint, which returns JSON data based on the product ID in the front-end URL.
+Product detail pages are dynamically rendered based on the product ID in the URL path, using JSON data fetched from a back-end API endpoint.
 
-Content is dynamically rendered depending on authentication status (log in vs add to cart button) and available stock count (low stock message and out of stock message).
+Content is dynamically rendered depending on authentication status (log in or add to cart button) and available stock count (no stock message, low stock message, or out of stock message).
 
 ![Product detail page example](/readme-images/product-detail-page.png)
 
@@ -45,7 +44,7 @@ Content is dynamically rendered depending on authentication status (log in vs ad
 
 
 ### Authentication and authorisation
-Authentication is implemented via Passport.js and Express session middleware, including both local login and *Sign In With Google*. In the case of local login, passwords are hashed and verified using node.bcrypt.js.
+Authentication is implemented using Passport.js and Express session middleware, including both local login and *Sign In With Google*. In the case of local login, passwords are hashed and verified using node.bcrypt.js.
 
 A visitor's authentication status is used to dynamically render and/or restrict access to content and functionality across both the back end and front end:
 
@@ -61,7 +60,7 @@ A visitor's authentication status is used to dynamically render and/or restrict 
 ### Cart and checkout
 Authenticated visitors can add items to their cart, remove items from in their cart, and check out. These actions modify database stock counts (actual and available) to prevent orders exceeding stock.
 
-The checkout process includes (test mode) payment integration via Stripe Checkout. Several API calls are used to create a pending order, establish a payment session, and ultimately confirm the order. Database transactions are used to ensure that data (e.g. stock counts) is only modified if all related queries are successful.
+The checkout journey includes Stripe Checkout payment integration (in test mode). Several API calls are used to create a pending order, establish a payment session, and ultimately confirm the order. Database transactions are used where appropriate to ensure that changes (e.g. stock counts) are made only if all related queries are successful.
 
 ![Stripe Checkout integration](/readme-images/checkout.png)
 
@@ -77,7 +76,7 @@ Authenticated visitors can view a summary of their previous orders (status; date
 
 
 ### Dynamic routing
-Front-end URL routing is implemented using React Router v6, utilising dynamic paths (*params*, e.g. category URL slugs and order IDs) and data retrieval functions (*loaders*) to load content via requests to the back-end API.
+Front-end URL routing is implemented using React Router v6, utilising dynamic paths (*params*, e.g. category URL slugs and order IDs) and data retrieval functions (*loaders*) to fetch relevant JSON data from back-end API endpoints.
 
 *Relevant code: [routing configuration](front-end/src/routing.js); various React components (e.g. [ProductFeed](front-end/src/features/products/ProductFeed.js)).*
 
@@ -93,7 +92,7 @@ Comprehensive error handling is used throughout the back end and front end. Non-
 
 
 ### Database and API documentation
-The database structure is documented via a [Database Markup Language file](/back-end/documentation/db-structure.dbml) and visualised in a [diagram](/back-end/documentation/db-structure-diagram-v4.png).
+The database structure is documented in a [Database Markup Language file](/back-end/documentation/db-structure.dbml) and visualised in a [diagram](/back-end/documentation/db-structure-diagram-v4.png).
 
 ![Database diagram](/back-end/documentation/db-structure-diagram-v4.png)
 
@@ -121,6 +120,7 @@ The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagg
 * [Stripe Checkout](https://stripe.com/gb/payments/checkout)
 * [React Stripe.js](https://www.npmjs.com/package/@stripe/react-stripe-js)
 * [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+* [React Icons](https://www.npmjs.com/package/react-icons)
 
 
 ## Setup
@@ -149,7 +149,7 @@ The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagg
 ## FAQs
 
 ### Can I see an example?
-Yes! A production version of the website can be found here: https://ecommerce-pern-app-z9pn.onrender.com/. (The checkout payment functionality is in test mode, so you won't be charged).
+Yes! A deployed version of the website can be found here: https://ecommerce-pern-app-z9pn.onrender.com/. (The checkout payment functionality is in test mode, so you won't be charged).
 
 
 ### Why did you build this?
@@ -159,11 +159,8 @@ I planned and built it almost entirely independently; only the key requirements 
 
 In particular, I now have significantly more experience with:
 
-* Database design, table creation, and querying
+* Database design and documentation
+* API design and documentation
 * Local and third-party authentication, using Passport.js and Express session configuration
 * Checkout/payment functionality using Stripe and a lot of SQL
-* Database & API documentation
-
-
-### Is this project in active development?
-I'm not currently working on further improvements/features.
+* Data loading using React Router v6
