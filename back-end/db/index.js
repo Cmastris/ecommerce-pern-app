@@ -280,7 +280,7 @@ const confirmPaidOrder = async (order_id) => {
 const getOrdersSummary = async (user_id) => {
   const select = 'SELECT id AS order_id, order_placed_time, status AS order_status, total_cost';
   res = await query(
-    `${select} FROM orders WHERE user_id=$1`,
+    `${select} FROM orders WHERE user_id=$1 ORDER BY order_id DESC`,
     [user_id]
   );
   return res.rows;
