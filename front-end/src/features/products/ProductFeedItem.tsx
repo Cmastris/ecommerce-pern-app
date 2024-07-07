@@ -7,7 +7,23 @@ import utilStyles from "../../App/utilStyles.module.css";
 import styles from "./ProductFeedItem.module.css";
 
 
-export default function ProductFeedItem({ productData }) {
+type ProductFeedItemProps = {
+  productData: ProductData
+}
+
+type ProductData = {
+  available_stock_count: number, 
+  avg_rating: string,
+  id: number,
+  long_description: string,
+  name: string,
+  price: string,
+  rating_count: number,
+  short_description: string,
+}
+
+
+export default function ProductFeedItem({ productData }: ProductFeedItemProps) {
 
   const detailPath = getProductDetailPath(productData.id, productData.name);
   const imagePath = getProductImagePath(productData.id, productData.name);
