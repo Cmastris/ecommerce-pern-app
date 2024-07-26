@@ -1,5 +1,6 @@
 import { redirect, useLoaderData } from "react-router-dom";
 
+import { ProductData } from "./productData";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import ProductFeedItem from "./ProductFeedItem";
 
@@ -7,13 +8,32 @@ import utilStyles from "../../App/utilStyles.module.css";
 import styles from "./ProductFeed.module.css";
 
 
-async function fetchCategoryData(categorySlug) {
+type ProductFeedProps = {
+  isSearchResults: boolean | undefined
+}
+
+type CategoryData = {
+  id: number,
+  name: string,
+  description: string,
+  url_slug: string
+}
+
+type LoaderData = {
+  categoryData: CategoryData | null,
+  productsData: ProductData[],
+  searchTerm: string | null,
+  errMsg: string | null
+}
+
+
+async function fetchCategoryData(categorySlug: string) {
   // Fetch all categories data
   const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/categories`);
   if (!res.ok) {
     throw new Error("Unsuccessful categories fetch.");
   }
-  const categories = await res.json();
+  const categories: CategoryData[] = await res.json();
 
   // Find matching category, otherwise return a 404
   const filteredCategories = categories.filter(c => c.url_slug === categorySlug);
@@ -28,11 +48,17 @@ async function fetchCategoryData(categorySlug) {
 export async function productFeedLoader({ params, request }) {
   // https://reactrouter.com/en/main/start/tutorial#loading-data
   // https://reactrouter.com/en/main/route/loader
+
+  let { categoryData, productsData, searchTerm, errMsg } = {
+    categoryData: null,
+    productsData: [],
+    searchTerm: null,
+    errMsg: null
+  } as LoaderData;
+  
   try {
-    const url = new URL(request.url);
     let productsFetchURL = `${process.env.REACT_APP_API_BASE_URL}/products`;
-    let categoryData = null;
-    let searchTerm = null;
+    const url = new URL(request.url);
 
     if (params.categorySlug) {
       // Fetch category data
@@ -55,26 +81,25 @@ export async function productFeedLoader({ params, request }) {
     if (!res.ok) {
       throw new Error("Unsuccessful products fetch.");
     }
-    const productsData = await res.json();
-
-    // Return all available data
-    return { productsData, categoryData, searchTerm };
+    productsData = await res.json();
 
   } catch (error) {
     if (error.status === 404) {
       throw error;  // Serve 404 error page
     }
-    return { error: "Sorry, products could not be loaded." };
+    errMsg = "Sorry, products could not be loaded.";
   }
+
+  return { productsData, categoryData, searchTerm, errMsg };
 }
 
 
-export function ProductFeed({ isSearchResults }) {
+export function ProductFeed({ isSearchResults }: ProductFeedProps) {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const { categoryData, productsData, searchTerm, error } = useLoaderData();
+  const { categoryData, productsData, searchTerm, errMsg } = useLoaderData() as LoaderData;
 
-  if (error) {
-    return <InlineErrorPage pageName="Error" message={error} />;
+  if (errMsg) {
+    return <InlineErrorPage pageName="Error" message={errMsg} />;
   }
 
   function getHeadingText() {
