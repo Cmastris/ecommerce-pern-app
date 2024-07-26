@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { ProductData } from "./productData";
 import { getProductDetailPath, getProductImagePath } from "./utils";
 import StarRating from "../../components/StarRating/StarRating";
 
@@ -9,17 +10,6 @@ import styles from "./ProductFeedItem.module.css";
 
 type ProductFeedItemProps = {
   productData: ProductData
-}
-
-type ProductData = {
-  available_stock_count: number, 
-  avg_rating: string,
-  id: number,
-  long_description: string,
-  name: string,
-  price: string,
-  rating_count: number,
-  short_description: string,
 }
 
 
