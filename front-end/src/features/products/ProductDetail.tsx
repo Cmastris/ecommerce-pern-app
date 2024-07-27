@@ -1,5 +1,7 @@
 import { Form, Link, redirect, useActionData, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
+import { AuthData } from "../auth/authData";
+import { ProductData } from "./productData";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import InlineLink from "../../components/InlineLink/InlineLink";
 import StarRating from "../../components/StarRating/StarRating";
@@ -7,6 +9,12 @@ import { getProductDetailPath, getProductImagePath } from "./utils";
 
 import utilStyles from "../../App/utilStyles.module.css";
 import styles from "./ProductDetail.module.css";
+
+
+type LoaderData = {
+  productData: ProductData,
+  errMsg: string | null
+}
 
 
 export async function addToCartAction({ params }) {
@@ -38,6 +46,9 @@ export async function addToCartAction({ params }) {
 export async function productDetailLoader({ params }) {
   // https://reactrouter.com/en/main/start/tutorial#loading-data
   // https://reactrouter.com/en/main/route/loader
+
+  let { productData, errMsg } = { productData: {}, errMsg: null } as LoaderData;
+
   try {
     const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/products/${params.id}`);
 
@@ -48,7 +59,7 @@ export async function productDetailLoader({ params }) {
       throw new Error("Unsuccessful product fetch.");
     }
 
-    const productData = await res.json();
+    productData = await res.json();
 
     // Redirect non-canonical matched paths to the canonical path
     const currentPath = `/products/${params.id}/${params.productNameSlug}`;
@@ -57,24 +68,24 @@ export async function productDetailLoader({ params }) {
       return redirect(canonicalPath);
     }
 
-    return { productData };
-
   } catch (error) {
     if (error.status === 404) {
       throw error;  // Serve 404 error page
     }
-    return { error: "Sorry, this product could not be loaded." };
+    errMsg = "Sorry, this product could not be loaded.";
   }
+
+  return { productData, errMsg };
 }
 
 
 export function ProductDetail() {
-  const { productData, error } = useLoaderData();
-  const authData = useRouteLoaderData("app");
-  const addToCartMessage = useActionData();
+  const { productData, errMsg } = useLoaderData() as LoaderData;
+  const authData = useRouteLoaderData("app") as AuthData;
+  const addToCartMessage = useActionData() as string;
 
-  if (error) {
-    return <InlineErrorPage pageName="Error" message={error} />;
+  if (errMsg) {
+    return <InlineErrorPage pageName="Error" message={errMsg} />;
   }
 
   const { short_description, long_description, avg_rating, rating_count, price } = productData;
