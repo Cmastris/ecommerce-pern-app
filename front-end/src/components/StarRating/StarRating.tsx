@@ -4,9 +4,7 @@ import styles from "./StarRating.module.css";
 
 export default function StarRating({ rating }: { rating: string | number }) {
 
-  function renderStars() {
-    const wholeAndHalfStars = Math.round(Number(rating) * 2) / 2;  // Rounded to the nearest .5
-    const wholeStars = Math.floor(wholeAndHalfStars);  // Rounded down to whole stars
+  function renderStars(wholeAndHalfStars: number, wholeStars: number) {
     const ratingElements: React.JSX.Element[] = [];
 
     for (let x=0; x < wholeStars; x++) {
@@ -21,9 +19,22 @@ export default function StarRating({ rating }: { rating: string | number }) {
     return ratingElements;
   }
 
+  let wholeAndHalfStars: number;
+  let wholeStars: number;
+  try {
+    wholeAndHalfStars = Math.round(Number(rating) * 2) / 2;  // Rounded to the nearest .5
+    wholeStars = Math.floor(wholeAndHalfStars);  // Rounded down to whole stars
+    if (wholeAndHalfStars > 5 || wholeAndHalfStars < 1) {
+      throw new Error("Invalid rating value (must be 1-5 inclusive)");
+    }
+  } catch(error) {
+    console.log(error);
+    return <></>;
+  }
+
   return (
     <span className={styles.stars}>
-      {renderStars()}
+      {renderStars(wholeAndHalfStars, wholeStars)}
     </span>
   );
 }
