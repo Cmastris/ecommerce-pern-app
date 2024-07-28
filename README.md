@@ -116,6 +116,7 @@ The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagg
 
 ### Front end
 * [React v18](https://react.dev/)
+* [TypeScript v4](https://www.typescriptlang.org/)
 * [React Router v6](https://reactrouter.com/en/main)
 * [Stripe Checkout](https://stripe.com/gb/payments/checkout)
 * [React Stripe.js](https://www.npmjs.com/package/@stripe/react-stripe-js)
@@ -153,7 +154,7 @@ Yes! A deployed version of the website can be found here: https://ecommerce-pern
 
 
 ### Why did you build this?
-This is one of the practice projects that I completed as part of the Codecademy Full-Stack Engineer career path.
+This is one of the practice projects that I completed as part of the Codecademy Full-Stack Engineer career path. Later, I used this project to practice implementing TypeScript (converted from the existing JavaScript).
 
 I planned and built it almost entirely independently; only the key requirements (core functionality and technologies) and a few links to documentation were provided. Some aspects were definitely challenging, requiring a lot of reading through documentation and Stack Overflow!
 
@@ -164,3 +165,4 @@ In particular, I now have significantly more experience with:
 * Local and third-party authentication, using Passport.js and Express session configuration
 * Checkout/payment functionality using Stripe and a lot of SQL
 * Data loading using React Router v6
+* TypeScript
