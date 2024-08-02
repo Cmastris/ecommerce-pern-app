@@ -1,11 +1,13 @@
 import { Form, redirect, useActionData, useRouteLoaderData, useSearchParams } from "react-router-dom";
 
+import { AuthData } from "./authData";
 import InlineLink from "../../components/InlineLink/InlineLink";
-import utilStyles from "../../App/utilStyles.module.css";
 import GoogleAuthButton from "./GoogleAuthButton";
 
+import utilStyles from "../../App/utilStyles.module.css";
 
-export async function loginAction({ request }) {
+
+export async function loginAction({ request }: { request: Request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
   // https://reactrouter.com/en/main/route/action
   let formData = await request.formData();
@@ -23,14 +25,10 @@ export async function loginAction({ request }) {
     );
 
     if (res.ok) {
-      let redirectPath = new URL(request.url).searchParams.get("redirect");
-      if (redirectPath) {
-        if (redirectPath[0] !== "/") {
-          // Prevent external navigation
-          redirectPath = `/${redirectPath}`;
-        }
-      } else {
-        redirectPath = "/account";
+      let redirectPath = new URL(request.url).searchParams.get("redirect") || "/account";
+      if (redirectPath.charAt(0) !== "/") {
+        // Prevent external navigation
+        redirectPath = `/${redirectPath}`;
       }
       return redirect(redirectPath);
 
@@ -48,8 +46,8 @@ export function LoginPage() {
   // https://reactrouter.com/en/main/components/form
   // https://reactrouter.com/en/main/hooks/use-action-data
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const authData = useRouteLoaderData("app");
-  const loginError = useActionData();
+  const authData = useRouteLoaderData("app") as AuthData;
+  const loginError = useActionData() as string;
   const [searchParams] = useSearchParams();
   const isGoogleError = searchParams.get("googleAuthError");
 
