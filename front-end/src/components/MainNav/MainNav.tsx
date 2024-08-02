@@ -1,13 +1,14 @@
 import { NavLink, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { AuthData } from "../../features/auth/authData";
 import styles from "./MainNav.module.css";
 
 
 export default function MainNav() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const authData = useRouteLoaderData("app");
+  const authData = useRouteLoaderData("app") as AuthData;
   const navigate = useNavigate();
 
-  async function handleClickLogOut () {
+  async function handleClickLogOut() {
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/auth/logout`,
@@ -27,7 +28,7 @@ export default function MainNav() {
     }
   }
 
-  function renderNavItem(path, anchor, onClick=null) {
+  function renderNavItem(path: string, anchor: string, onClick?: () => void) {
     return (
       <li className={styles.listItem}>
         <NavLink to={path} className={styles.link} onClick={onClick}>{anchor}</NavLink>
