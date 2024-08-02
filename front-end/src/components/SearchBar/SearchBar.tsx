@@ -10,11 +10,11 @@ export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const trimmedTerm = searchTerm.trim();  // Remove whitespace before & after
     setSearchTerm(trimmedTerm);
