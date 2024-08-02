@@ -4,9 +4,16 @@ import Header from "../Header/Header";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
+type Error = {
+  status: number | undefined,
+  statusText: string | undefined,
+  message: string | undefined,
+}
+
+
 export default function FallbackErrorPage() {
 
-  const error = useRouteError();
+  const error = useRouteError() as Error;
   const is404 = error.status === 404;
   console.error(error);
 
