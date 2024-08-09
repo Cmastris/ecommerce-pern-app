@@ -1,5 +1,6 @@
 import { useRouteLoaderData } from "react-router-dom";
 
+import { AuthData } from "../../features/auth/authData";
 import InlineErrorPage from "../InlineErrorPage/InlineErrorPage";
 import InlineLink from "../InlineLink/InlineLink";
 import { OrdersHistory } from "../../features/orders/OrdersHistory";
@@ -8,7 +9,7 @@ import utilStyles from "../../App/utilStyles.module.css";
 
 export default function AccountPage() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const authData = useRouteLoaderData("app");
+  const authData = useRouteLoaderData("app") as AuthData;
 
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Your account" type="login_required" />;
