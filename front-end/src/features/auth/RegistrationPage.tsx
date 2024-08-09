@@ -1,11 +1,12 @@
 import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
 
+import { AuthData } from "./authData";
 import InlineLink from "../../components/InlineLink/InlineLink";
 import utilStyles from "../../App/utilStyles.module.css";
 import GoogleAuthButton from "./GoogleAuthButton";
 
 
-export async function registerAction({ request }) {
+export async function registerAction({ request }: { request: Request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
   // https://reactrouter.com/en/main/route/action
   let formData = await request.formData();
@@ -38,8 +39,8 @@ export function RegistrationPage() {
   // https://reactrouter.com/en/main/components/form
   // https://reactrouter.com/en/main/hooks/use-action-data
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const authData = useRouteLoaderData("app");
-  const registrationError = useActionData();
+  const authData = useRouteLoaderData("app") as AuthData;
+  const registrationError = useActionData() as string | undefined;
 
   const loginLink = <InlineLink path="/login" anchor="log in" />;
   const loggedOutContent = (
