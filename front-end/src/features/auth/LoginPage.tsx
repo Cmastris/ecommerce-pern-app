@@ -47,7 +47,7 @@ export function LoginPage() {
   // https://reactrouter.com/en/main/hooks/use-action-data
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app") as AuthData;
-  const loginError = useActionData() as string;
+  const loginError = useActionData() as string | undefined;
   const [searchParams] = useSearchParams();
   const isGoogleError = searchParams.get("googleAuthError");
 

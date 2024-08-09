@@ -82,7 +82,7 @@ export async function productDetailLoader({ params }) {
 export function ProductDetail() {
   const { productData, errMsg } = useLoaderData() as LoaderData;
   const authData = useRouteLoaderData("app") as AuthData;
-  const addToCartMessage = useActionData() as string;
+  const addToCartMessage = useActionData() as string | undefined;
 
   if (errMsg) {
     return <InlineErrorPage pageName="Error" message={errMsg} />;
