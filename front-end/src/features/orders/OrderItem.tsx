@@ -1,11 +1,25 @@
 import { Form, Link } from "react-router-dom";
 
+import { OrderItemData } from "./orderItemData";
 import { getProductDetailPath } from "../products/utils";
 import styles from "./OrderItem.module.css";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
-export async function removeCartItemAction({ request }) {
+export type RemoveCartItemActionData = {
+  error: boolean,
+  productId: string,
+  productName: string
+}
+
+type OrderItemProps = {
+  orderItemData: OrderItemData,
+  editable?: boolean,
+  lastItem?: boolean
+}
+
+
+export async function removeCartItemAction({ request }: { request: Request }) {
   // https://reactrouter.com/en/main/start/tutorial#data-writes--html-forms
   // https://reactrouter.com/en/main/route/action
   let formData = await request.formData();
@@ -30,7 +44,7 @@ export async function removeCartItemAction({ request }) {
 }
 
 
-export function OrderItem({ orderItemData, editable, lastItem }) {
+export function OrderItem({ orderItemData, editable, lastItem }: OrderItemProps) {
   const { product_id, product_name, product_price } = orderItemData;
   const productPath = getProductDetailPath(product_id, product_name);
 
