@@ -17,9 +17,9 @@ export function renderOrderItems(orderItemsData, editable=true) {
   }
   const orderItems = orderItemsData.map((item, index) => {
     if (index + 1 === itemsCount) {
-      return <OrderItem key={item.product_id} productData={item} editable={editable} lastItem={true} />;
+      return <OrderItem key={item.product_id} orderItemData={item} editable={editable} lastItem={true} />;
     }
-    return <OrderItem key={item.product_id} productData={item} editable={editable} />;
+    return <OrderItem key={item.product_id} orderItemData={item} editable={editable} />;
   }
   );
   return <div>{orderItems}</div>;

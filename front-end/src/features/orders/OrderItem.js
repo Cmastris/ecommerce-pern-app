@@ -30,8 +30,8 @@ export async function removeCartItemAction({ request }) {
 }
 
 
-export function OrderItem({ productData, editable, lastItem }) {
-  const { product_id, product_name, product_price } = productData;
+export function OrderItem({ orderItemData, editable, lastItem }) {
+  const { product_id, product_name, product_price } = orderItemData;
   const productPath = getProductDetailPath(product_id, product_name);
 
   return (
