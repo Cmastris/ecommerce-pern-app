@@ -41,7 +41,7 @@ export function Cart() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app") as AuthData;
   const { cartData, loaderErrMsg } = useLoaderData() as LoaderData;
-  const removalResult = useActionData() as RemoveCartItemActionData;
+  const removalResult = useActionData() as RemoveCartItemActionData | undefined;
 
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Cart" type="login_required" loginRedirect="/cart" />;
@@ -50,7 +50,11 @@ export function Cart() {
   }
 
   function renderRemovalMessage() {
+    if (!removalResult) {
+      return null;
+    }
     const { error, productId, productName } = removalResult;
+
     let message: string | React.JSX.Element;
     if (error) {
       message = `Sorry, '${productName}' couldn't be removed from your cart.`;
