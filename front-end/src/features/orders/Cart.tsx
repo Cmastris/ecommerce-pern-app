@@ -11,9 +11,9 @@ import { renderOrderItems } from "./utils";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
-type LoaderData = {
+export type CartLoaderData = {
   cartData: OrderItemData[],
-  loaderErrMsg?: string
+  cartLoaderErrMsg?: string
 }
 
 
@@ -32,7 +32,7 @@ export async function cartLoader() {
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { cartData, loaderErrMsg: "Sorry, your cart could not be loaded. Please try again later." };
+    return { cartData, cartLoaderErrMsg: "Sorry, your cart could not be loaded. Please try again later." };
   }
 }
 
@@ -40,13 +40,13 @@ export async function cartLoader() {
 export function Cart() {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
   const authData = useRouteLoaderData("app") as AuthData;
-  const { cartData, loaderErrMsg } = useLoaderData() as LoaderData;
+  const { cartData, cartLoaderErrMsg } = useLoaderData() as CartLoaderData;
   const removalResult = useActionData() as RemoveCartItemActionData | undefined;
 
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Cart" type="login_required" loginRedirect="/cart" />;
-  } else if (loaderErrMsg) {
-    return <InlineErrorPage pageName="Cart" message={loaderErrMsg} />;
+  } else if (cartLoaderErrMsg) {
+    return <InlineErrorPage pageName="Cart" message={cartLoaderErrMsg} />;
   }
 
   function renderRemovalMessage() {
