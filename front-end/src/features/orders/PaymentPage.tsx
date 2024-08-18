@@ -3,18 +3,19 @@ import { useParams, useRouteLoaderData } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 
+import { AuthData } from "../auth/authData";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
-// https://stripe.com/docs/checkout/embedded/quickstart?client=react&lang=node
-// https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=embedded-checkout#mount-checkout
+// https://docs.stripe.com/checkout/embedded/quickstart?client=react&lang=node
+// https://docs.stripe.com/payments/accept-a-payment?platform=web&ui=embedded-form#mount-checkout
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`);
 
 export default function PaymentPage() {
   
   const { orderId } = useParams();
-  const authData = useRouteLoaderData("app");
+  const authData = useRouteLoaderData("app") as AuthData;
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function PaymentPage() {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data: { clientSecret: string }) => setClientSecret(data.clientSecret));
   }, [orderId]);
 
   if (!authData.logged_in) {
