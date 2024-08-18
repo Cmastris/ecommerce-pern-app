@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 
-// https://stripe.com/docs/checkout/embedded/quickstart?client=react&lang=node
-// https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=embedded-checkout#return-page
+// https://docs.stripe.com/checkout/embedded/quickstart?client=react&lang=node
+// https://docs.stripe.com/payments/accept-a-payment?platform=web&ui=embedded-form#return-page
 export default function PaymentReturn() {
 
   const { orderId } = useParams();
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState<string | null>(null);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function PaymentReturn() {
 
     fetch(`${basePath}?order_id=${orderId}&session_id=${sessionId}`)
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: { status: string }) => {
         setStatus(data.status);
       });
   }, [orderId]);
