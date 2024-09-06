@@ -5,7 +5,21 @@ import styles from "./OrderSummary.module.css";
 import utilStyles from "../../App/utilStyles.module.css";
 
 
-export default function OrderSummary({ orderData, lastItem }) {
+type OrderSummaryProps = {
+  orderData: OrderSummaryData,
+  /** Whether the order summary is the final one in a list, which renders an additional separator line */
+  lastItem?: boolean
+}
+
+export type OrderSummaryData = {
+  order_id: number,
+  order_placed_time: string,
+  order_status: string,
+  total_cost: string
+}
+
+
+export default function OrderSummary({ orderData, lastItem }: OrderSummaryProps) {
   const { order_id, order_placed_time, order_status, total_cost } = orderData;
   const formattedTime = getDateTimeString(order_placed_time);
   const orderDetailsPath = `/orders/${order_id}`;
