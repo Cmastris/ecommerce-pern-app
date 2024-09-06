@@ -1,49 +1,78 @@
 import { Link, useLoaderData, useRouteLoaderData } from "react-router-dom";
 
+import { AuthData } from "../auth/authData";
+import { OrderItemData } from "./orderItemData";
 import InlineErrorPage from "../../components/InlineErrorPage/InlineErrorPage";
 import { getDateTimeString, renderOrderItems } from "./utils";
+
 import utilStyles from "../../App/utilStyles.module.css";
 import styles from "./OrderDetailsPage.module.css";
+
+
+type OrderDetailsPageProps = {
+  /** Whether the page is being served immediately following a successful checkout */
+  checkoutSuccess: boolean | undefined
+}
+
+type OrderData = {
+  order_id: number,
+  user_id: number,
+  order_items: OrderItemData[],
+  order_placed_time: string,
+  order_status: string,
+  total_cost: string,
+  address: string,
+  postcode: string
+}
+
+type LoaderData = {
+  orderData: OrderData,
+  errMsg: string | null
+}
 
 
 export async function orderDetailsLoader({ params }) {
   // https://reactrouter.com/en/main/start/tutorial#loading-data
   // https://reactrouter.com/en/main/route/loader
+
+  let { orderData, errMsg } = { orderData: {}, errMsg: null } as LoaderData;
+
   try {
     const res = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/orders/${params.id}`,
       { credentials: "include" }
       );
     if (res.ok) {
-      const orderData = await res.json();
-      return { orderData };
+      orderData = await res.json();
     } else if (res.status === 404) {
       // https://reactrouter.com/en/main/route/error-element#throwing-manually
       throw new Response("Not Found", { status: 404 });
     } else if (res.status === 401) {
-      // https://reactrouter.com/en/main/route/error-element#throwing-manually
-      return { error: "You must be logged in as the correct user to view this order." };
+      errMsg = "You must be logged in as the correct user to view this order.";
+    } else {
+      throw new Error("Unsuccessful order fetch.");
     }
-    throw new Error("Unsuccessful order fetch.");
 
   } catch (error) {
     if (error.status === 404) {
       throw error;  // Serve 404 error page
     }
-    return { error: "Sorry, this order could not be loaded. Please try again later." };
+    errMsg = errMsg ? errMsg : "Sorry, this order could not be loaded. Please try again later.";
   }
+
+  return { orderData, errMsg };
 }
 
 
-export function OrderDetailsPage({ checkoutSuccess }) {
+export function OrderDetailsPage({ checkoutSuccess }: OrderDetailsPageProps) {
   // https://reactrouter.com/en/main/hooks/use-route-loader-data
-  const authData = useRouteLoaderData("app");
-  const { orderData, error } = useLoaderData();
+  const authData = useRouteLoaderData("app") as AuthData;
+  const { orderData, errMsg } = useLoaderData() as LoaderData;
 
   if (!authData.logged_in) {
     return <InlineErrorPage pageName="Order details" type="login_required" loginRedirect="/orders" />;
-  } else if (error) {
-    return <InlineErrorPage pageName="Order details" message={error} />;
+  } else if (errMsg) {
+    return <InlineErrorPage pageName="Order details" message={errMsg} />;
   }
 
   const { address, order_id, order_items, order_placed_time, order_status, postcode, total_cost } = orderData;
