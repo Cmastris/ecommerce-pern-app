@@ -1,33 +1,42 @@
 import { useLoaderData } from "react-router-dom";
+
+import { OrderSummaryData } from "./OrderSummary";
 import OrderSummary from "./OrderSummary";
+
+
+type LoaderData = {
+  ordersData: OrderSummaryData[],
+  errMsg?: string
+}
 
 
 export async function ordersLoader() {
   // https://reactrouter.com/en/main/start/tutorial#loading-data
   // https://reactrouter.com/en/main/route/loader
+  let ordersData: OrderSummaryData[] = [];
   try {
     const res = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/orders`,
       { credentials: "include" }
     );
     if (res.ok) {
-      const ordersData = await res.json();
+      ordersData = await res.json();
       return { ordersData };
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { error: "Sorry, your orders could not be retrieved. Please try again later." };
+    return { ordersData, errMsg: "Sorry, your orders could not be retrieved. Please try again later." };
   }
 }
 
 
 export function OrdersHistory() {
   // https://reactrouter.com/en/main/hooks/use-loader-data
-  const { error, ordersData } = useLoaderData();
+  const { errMsg, ordersData } = useLoaderData() as LoaderData;
 
   function renderOrderSummaries() {
-    if (error) {
-      return <p>{error}</p>;
+    if (errMsg) {
+      return <p>{errMsg}</p>;
     }
 
     // Exclude orders with incomplete or failed payments
