@@ -1,4 +1,6 @@
 import { Outlet } from "react-router-dom";
+
+import { AuthData } from "../features/auth/authData";
 import Header from "../components/Header/Header";
 
 
@@ -11,12 +13,12 @@ export async function authLoader() {
       { credentials: "include" }
     );
     if (res.ok) {
-      const authData = await res.json();
+      const authData: AuthData = await res.json();
       return authData;
     }
     throw new Error("Unexpected status code.");
   } catch (error) {
-    return { logged_in: false, id: null, email_address: null, auth_method: null };
+    return { logged_in: false, id: null, email_address: null, auth_method: null } as AuthData;
   }
 }
 
