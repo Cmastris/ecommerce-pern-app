@@ -11,7 +11,7 @@ import styles from "./OrderDetailsPage.module.css";
 
 type OrderDetailsPageProps = {
   /** Whether the page is being served immediately following a successful checkout */
-  checkoutSuccess: boolean | undefined
+  checkoutSuccess?: boolean
 }
 
 type OrderData = {

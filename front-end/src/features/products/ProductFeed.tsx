@@ -9,7 +9,8 @@ import styles from "./ProductFeed.module.css";
 
 
 type ProductFeedProps = {
-  isSearchResults: boolean | undefined
+  /** Whether the feed is generated using a search term in the URL path */
+  isSearchResults?: boolean
 }
 
 type CategoryData = {
