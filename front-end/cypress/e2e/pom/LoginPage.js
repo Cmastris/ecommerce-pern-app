@@ -2,7 +2,7 @@ class LoginPage {
   elements = {
     emailInput: () => cy.get('input#email_address'),
     passwordInput: () => cy.get('input#password'),
-    loginButton: () => cy.get('button[type="submit"]'),
+    loginButton: () => cy.get('button[type="submit"][class*="utilStyles_button__"]').contains('Log in'),
   };
 
   typeEmail(email) {
