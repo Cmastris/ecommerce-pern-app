@@ -1,7 +1,7 @@
 # Ecommerce PERN App <!-- omit in toc -->
-Pernecom is a simplified ecommerce website built with the PERN (PostgreSQL, Express, React, Node) stack. It includes front-end routing (React Router), authentication (Passport.js), and checkout/payment integration (Stripe Checkout).
+Pernecom is a simplified ecommerce website built with the PERN (PostgreSQL, Express, React, Node) stack and TypeScript. It includes front-end routing (React Router), authentication (Passport.js), and checkout/payment integration (Stripe Checkout).
 
-Take a look: https://ecommerce-pern-app-z9pn.onrender.com/.
+**Please note:** this was developed as a practice project during 2023-2024 and is no longer maintained. The repository remains publicly accessible as part of my development portfolio, but it may now be affected by broken functionality and/or potential security issues.
 
 
 ## Contents <!-- omit in toc -->
@@ -19,8 +19,8 @@ Take a look: https://ecommerce-pern-app-z9pn.onrender.com/.
   - [Front end](#front-end)
 - [Setup](#setup)
 - [FAQs](#faqs)
-  - [Can I see an example?](#can-i-see-an-example)
   - [Why did you build this?](#why-did-you-build-this)
+  - [Is this project in active development?](#is-this-project-in-active-development)
 
 
 ## Key features
@@ -149,10 +149,6 @@ The back-end API is documented using [Swagger UI](https://swagger.io/tools/swagg
 
 ## FAQs
 
-### Can I see an example?
-Yes! A deployed version of the website can be found here: https://ecommerce-pern-app-z9pn.onrender.com/. (The checkout payment functionality is in test mode, so you won't be charged).
-
-
 ### Why did you build this?
 This is one of the practice projects that I completed as part of the Codecademy Full-Stack Engineer career path. Later, I used this project to practice implementing TypeScript (converted from the existing JavaScript).
 
@@ -166,3 +162,6 @@ In particular, I now have significantly more experience with:
 * Checkout/payment functionality using Stripe and a lot of SQL
 * Data loading using React Router v6
 * TypeScript
+
+### Is this project in active development?
+No; this was developed as a practice project during 2023-2024 and is no longer maintained. The repository remains publicly accessible as part of my development portfolio, but it may now be affected by broken functionality and/or potential security issues.
